@@ -1,0 +1,90 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Arvo:ital@1&family=Dancing+Script&display=swap');
+
+/* name text style */
+@import url('https://fonts.googleapis.com/css2?family=Arvo:ital@1&family=Dancing+Script&family=Sansita+Swashed:wght@300&display=swap');
+
+body {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .certificate {
+    padding: 80px;
+    border: 2px solid #000;
+    border-radius: 10px;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.9);
+    background-image: url(../images/certificate-bg-image3.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    /* text-align: center; */
+    /* border: solid; */
+  }
+  .certificate .certificate-text {
+    text-align: center;
+    margin-bottom: 30px;
+    font-family:'Times New Roman', Times, serif;
+    letter-spacing: 1px;
+    word-spacing: 6px;
+    font-size: 45px;
+    font-weight: 700;
+    position: relative;
+    color: rgb(197, 172, 101);
+    
+}
+
+.certificate .name-text{
+    /* padding-top: 20px; */
+    font-family: 'Arvo', serif;
+    text-align: center !important;
+    font-size: 30px;
+    border-bottom: 2px solid rgb(226,202,151);
+}
+
+.text-border{
+    /* border:solid 2px red ; */
+    width:40% !important;
+}
+
+.name-text-div{
+    text-align: center !important;
+    display: flex;
+    justify-content: center;
+}
+
+.paragraph{
+    font-size: 20px;
+    font-weight: 350;
+    color: rgb(141, 142, 144);
+}
+.paragraph2{
+    font-size: 1.1rem;
+    color: rgb(113,120,129);
+    font-weight: 500;
+}
+
+.signature-text{
+    margin-left: 40%;
+    /* font-weight: 700; */
+}
+
+.logo{
+    margin-left: 36%;
+    margin-top: 7%;
+}
+
+.font-style{
+    font-size: 15px;
+    font-weight: 500;
+}
+
+
+
+
+
+

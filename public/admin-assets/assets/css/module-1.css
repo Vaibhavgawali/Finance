@@ -1,0 +1,41 @@
+.main-chapter-div
+{
+    padding-bottom: 20px;
+}
+.main-chapter-div li
+{
+    list-style: decimal;
+}
+.module-heading
+{
+ text-align: left;
+ padding: 10px;
+ font-family: 'Noto';
+ font-weight: 400;
+}
+.module-dropdown
+{
+    /* color: red; */
+}
+.module-topic-heading
+{
+    /* color: red; */
+
+}
+.topic-heading
+{
+     /* color: red; */
+}
+.topic-para
+{
+    /* color: red; */
+}
+.topic-sub-heading
+{
+    /* color: red; */
+
+}
+.sub-types-heading
+{
+    /* color:red */
+}

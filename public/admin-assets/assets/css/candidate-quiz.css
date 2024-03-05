@@ -1,0 +1,121 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300&family=Noto+Sans&family=Nunito+Sans:opsz@6..12&family=Urbanist:wght@200&display=swap');
+
+.Quiz-options{
+    padding-left: 45px;
+    font-size: 14px;
+    font-weight: 700;
+    word-spacing: 5px;
+}
+
+@media screen and (max-width:375px) {
+    .Quiz-content{
+        width: 100%;
+    }
+
+    .Quiz-options{
+        display: flex;
+    }
+
+    .reamining-time-text{
+        padding-left: 40px;
+    }
+
+    .Question-text-style{
+        font-size: 17px !important;
+       
+    }
+
+    .button-style{
+        padding: 15px  !important;
+        font-size: 15px;
+        letter-spacing: 1px !important;
+    }
+
+    .button-style-2{
+        padding: 9px  !important;
+        font-size: 15px;
+        letter-spacing: 1px !important;
+    }
+}
+
+
+@media screen and (max-width:600px){
+    .Quiz-options-text{
+        flex-direction: column !important;
+        gap:0 !important;
+        align-items: flex-start !important;
+    }
+}
+
+.card .card-body {
+    padding: 2rem !important;
+}
+
+.grid-margin{
+    margin-bottom: 1rem !important;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between; 
+}
+
+.button-style{
+    border-radius: 9px;
+    border: none;
+    /* background-color: rgb(247,186,43); */
+    background-color: rgb(177,105,255);
+    letter-spacing: 1px;
+}
+
+.button-style-2{
+    border-radius: 9px;
+    border: none;
+    background-color: rgba(184, 63, 208, 0.879);
+    letter-spacing: 1px;
+}
+.Question-text-style{
+  
+    font-family: 'noto sans';
+    font-weight: 600;
+
+}
+.options
+{
+    font-family: 'noto sans';
+}
+.question
+{
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* @media screen and (max-width: 375px ) {
+    .grid-margin {
+        margin-bottom: 1rem !important;
+    }
+    .card .card-body {
+        padding: 1rem !important;
+    }
+} */
+
+/* For screens up to 1440px wide */
+
+/* @media screen and (max-width: 1880px) and (min-width:375px) {
+    .grid-margin {
+        margin-bottom: .2rem !important;
+    }
+} */
