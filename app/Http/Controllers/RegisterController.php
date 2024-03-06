@@ -17,7 +17,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('auth:sanctum');
-        $this->middleware(['role_or_permission:Superadmin|Admin|add_distributor|add_retailor'])->only('store');
+        $this->middleware(['role_or_permission:Superadmin|Admin|add_distributor|add_retailer'])->only('store');
     }
 
     public function register(Request $request): Response
@@ -38,7 +38,7 @@ class RegisterController extends Controller
             case 'admin':
                 $uniqueReferralId = RegisterHelper::generateReferralId(5, 5);
                 $uniqueUserId = RegisterHelper::generateUserId("AD", 5);
-                $category = "Distributor";
+                $category = "Admin";
                 $role = "Admin";
                 break;
             case 'distributor':

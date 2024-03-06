@@ -12,8 +12,13 @@ class UserDocuments extends Model
 
     protected $fillable = [
         'user_id',
-        'document_title',
         'document_url',
+        'document_type',
+        'status'
     ];
 
+    public function address_proof() 
+    {
+        return $this->hasMany(SocialLinks::class,'user_document_id','id');
+    }
 }

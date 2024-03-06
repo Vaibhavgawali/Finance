@@ -26,6 +26,14 @@
             </a>
         </li>
         
+        @if(Auth::user()->hasRole('Superadmin') )
+        <li class="nav-item">
+            <a class="nav-link" href="/admin">
+                <span class="menu-title">Admin</span>
+                <i class="mdi mdi-account-card-details menu-icon"></i>
+            </a>
+        </li>
+        @endif
 
         @if(Auth::user()->hasRole('Superadmin') || Auth::user()->hasRole('Admin') || Auth::user()->can('view_distributor_list') )
         <li class="nav-item">

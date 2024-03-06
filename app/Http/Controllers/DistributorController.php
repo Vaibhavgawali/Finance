@@ -168,8 +168,8 @@ class DistributorController extends Controller
         $user = Auth::user();
 
         // Check if the authenticated user has permission to view the profile
-        if ($user->user_id == $id) {
-            $userData = User::with('address', 'profile','documents')->find($user->user_id);
+        if ($user->id == $id) {
+            $userData = User::with('address', 'profile','documents')->find($user->id);
             return view('dashboard.admin.profile', ['userData' => $userData]);
         } else {
             return response(['message' => 'Unauthorized'], 401);
@@ -190,33 +190,7 @@ class DistributorController extends Controller
      */
     public function update(Request $request, string $id)
     {    
-        $userId = Auth::user()->user_id;
-        if ($userId == $id) {
-            $formMethod = $request->method();
-            if ($formMethod == "PATCH") {
-                $validator = Validator::make($request->all(), [
-                    'name' => 'required|string',
-                    'email' => 'required|email|unique:users,email,'.$userId .',user_id',
-                    'phone' => 'required|numeric|digits:10|regex:/^[6-9]\d{9}$/'
-                ]);
-
-                if ($validator->fails()) {
-                    return Response(['status'=>false,'errors' => $validator->errors()], 422);
-                }
-
-                $user = User::where('user_id', $id);
-                if ($user) {
-                    $isUpdated = $user->update($request->all());
-                    if ($isUpdated) {
-                        return Response(['status'=>true,'message' => "User updated successfully"], 200);
-                    }
-                    return Response(['status'=>false,'message' => "Something went wrong"], 500);
-                }
-                return Response(['status'=>false,'message' => "User not found"], 404);
-            }
-            return Response(['status'=>false,'message' => "Invalid form method "], 405);
-        }
-        return Response(['status'=>false,'message' => 'Unauthorized'], 401);
+        //
     }
 
     /**
@@ -224,23 +198,7 @@ class DistributorController extends Controller
      */
     public function destroy(string $id)
     {
-        if (Auth::user()->hasRole('Superadmin')) {
-            $user = User::find($id);
-
-            if (!$user) {
-                return Response(['status' => false, 'message' => "User not found"], 404);
-            }
-
-            $isDeleted = $user->delete();
-
-            if ($isDeleted) {
-                return Response(['status' => true, 'message' => "User deleted successfully"], 200);
-            }
-
-            return Response(['status' => false, 'message' => "Something went wrong"], 500);
-        }
-
-        return Response(['status' => false, 'message' => 'Unauthorized'], 401);
+      //
     }
 
 }
