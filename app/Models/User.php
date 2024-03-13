@@ -58,15 +58,31 @@ class User extends Authenticatable
 
     public function profile() 
     {
-        return $this->hasOne(UserProfile::class,'user_id','user_id');
+        return $this->hasOne(UserProfile::class,'user_id','id');
     }
     public function address() 
     {
-        return $this->hasOne(UserAddress::class,'user_id','user_id');
+        return $this->hasOne(UserAddress::class,'user_id','id');
+    }
+    public function bank() 
+    {
+        return $this->hasOne(BankDetails::class,'user_id','id');
     }
     public function documents() 
     {
-        return $this->hasOne(UserDocuments::class,'user_id','user_id');
+        return $this->hasMany(UserDocuments::class,'user_id','id');
+    }
+    public function profession() 
+    {
+        return $this->hasOne(Profession::class,'user_id','id');
+    }
+    public function social_links() 
+    {
+        return $this->hasMany(SocialLinks::class,'user_id','id');
+    }
+    public function business() 
+    {
+        return $this->hasMany(BusinessDetails::class,'user_id','id');
     }
     public function hasCategory($category)
     {

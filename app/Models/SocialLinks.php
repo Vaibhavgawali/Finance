@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserAddress extends Model
+class SocialLinks extends Model
 {
     use HasFactory;
 
@@ -14,14 +14,11 @@ class UserAddress extends Model
      *
      * @var string
      */
-    protected $table = 'address';
+    protected $table = 'social_links';
 
     protected $fillable = [
         'user_id',
-        'address',
-        'city',
-        'state',
-        'pincode',
-        'country',
+        'social_site',
+        'profile_url',
     ];
 }

@@ -67,8 +67,6 @@ $(document).ready(function () {
         }
 
         function validatePassword(new_password) {
-            // Minimum 8 characters, at least one uppercase letter,
-            // one lowercase letter, one number, and one special character
             var passwordRegex =
                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
@@ -110,7 +108,7 @@ $(document).ready(function () {
                 console.log(response);
                 if (response.status == true) {
                     $("#reset_password_button").attr("disabled", true);
-                    quizCreatedAlert();
+                    // quizCreatedAlert();
                     setTimeout(function () {
                         window.location.href =
                             window.location.origin + "/dashboard/";

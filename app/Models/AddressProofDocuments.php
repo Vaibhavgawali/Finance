@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserAddress extends Model
+class AddressProofDocuments extends Model
 {
     use HasFactory;
 
@@ -14,14 +14,11 @@ class UserAddress extends Model
      *
      * @var string
      */
-    protected $table = 'address';
+    protected $table = 'address_proof_documents';
 
     protected $fillable = [
-        'user_id',
-        'address',
-        'city',
-        'state',
-        'pincode',
-        'country',
+        'user_document_id',
+        'address_proof_name',
+        'document_number'
     ];
 }

@@ -5,15 +5,15 @@
     <div class="page-header">
         <h3 class="page-title"> <span class="page-title-icon bg-gradient-primary text-white me-2">
                 <i class="mdi mdi-account-plus"></i>
-            </span>Add Retailer</h3>
+            </span>Add Admin</h3>
     </div>
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Add Retailer Details</h4>
+                    <h4 class="card-title">Add Admin Details</h4>
                     <form   class="form-sample"  id="add_user_form">
-                        <input type="hidden" name="user_type" id="user_type" value="retailer">
+                        <input type="hidden" name="user_type" id="user_type" value="admin">
                         <div class="form-group row">
                             <label for="name" class="col-sm-3 col-form-label">Name</label>
                             <div class="col-sm-9">
@@ -39,7 +39,7 @@
                         </div>
 
                         <button type="submit" id="add_user_button" class="btn btn-gradient-primary me-2">Submit</button>
-                        <a href="/retailer/" class="btn btn-light">Cancel</a>
+                        <a href="/admin/" class="btn btn-light">Cancel</a>
                     </form>
                 </div>
             </div>

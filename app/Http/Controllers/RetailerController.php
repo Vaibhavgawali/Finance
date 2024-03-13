@@ -137,15 +137,7 @@ class RetailerController extends Controller
      */
     public function show($id)
     {
-        $user = Auth::user();
-
-        // Check if the authenticated user has permission to view the profile
-        if ($user->user_id == $id) {
-            $userData = User::with('address', 'profile','documents')->find($user->user_id);
-            return view('dashboard.admin.profile', ['userData' => $userData]);
-        } else {
-            return response(['message' => 'Unauthorized'], 401);
-        }
+       //
     }
 
 

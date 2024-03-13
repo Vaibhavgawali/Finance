@@ -18,13 +18,17 @@
       </div>
 
       <div class="row">
-        <x-profile-image-component :data="$userData" /> <!--User Profile section comp  -->
+        <x-profile-image-component :data="$userData" /> <!-- Basic Details Component  -->
+        <x-profile-address-component :data="$userData" /> <!-- Bank Details Component   -->
+        <x-profile-personal-details-component :data="$userData" /> <!-- Professional Details Component  -->
 
-        <x-profile-personal-details-component :data="$userData" /> <!--User Personal Details comp  -->
-        <x-profile-address-component :data="$userData" /> <!--User Address Comp comp  -->
-
-
+        @if($userData->documents->count() > 0)
+          <x-kyc-update-component :data="$userData" /> <!-- Kyc details update Component  -->
+        @else
+          <x-kyc-component :data="$userData" /> <!-- Kyc details Component  -->
+        @endif
       </div>
+
     </div>
 
   </div>

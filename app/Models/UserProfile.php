@@ -26,11 +26,14 @@ class UserProfile extends Model
 
     protected $fillable = [
         'user_id',
+        'father_name',
         'date_of_birth',
         'gender',
         'age',
+        'alt_phone',
         'profile_image',
-        'preffered_line',
-        'spoc'
+        'pan',
+        'gst',
+        'msme',
     ];
 }

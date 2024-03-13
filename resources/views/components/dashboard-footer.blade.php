@@ -1,6 +1,6 @@
 <footer class="footer">
     <div class="container-fluid d-flex justify-content-between">
-        <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">Copyright © InsuranceNext.com
+        <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">Copyright © Finance
              <?php
                 $currentYear = date('Y');
                 echo $currentYear;
