@@ -20,7 +20,7 @@ class BankDetails extends Model
         'user_id',
         'bank_name',
         'acc_holder_name',
-        'acc_no',
+        'acc_number',
         'ifsc_code',
     ];
 }

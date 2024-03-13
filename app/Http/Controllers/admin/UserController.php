@@ -58,7 +58,7 @@ class UserController extends Controller
         $user = Auth::user();
 
         if ($user->id == $id) {
-            $userData = User::with( 'profile','address','documents','bank','profession','business','social_links')->find($user->id);
+            $userData = User::with( 'profile','address','documents.address_proof','bank','profession','business','social_links')->find($user->id);
             return view('dashboard.dashboard.profile', ['userData' => $userData]);
         } else {
             return response(['message' => 'Unauthorized'], 401);

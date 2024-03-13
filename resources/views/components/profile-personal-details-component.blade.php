@@ -1,175 +1,126 @@
 <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 my-3">
-  <div class="profile-birth-section card">
+  <div class="professional-birth-section card">
     <div class="d-flex justify-content-between p-3">
 
-      <h4>User Profile Details</h4>
-      @if(auth()->user()->user_id == $data->user_id)
-      <button class="btn btn-gradient-primary btn-sm " id="profile_details_edit_button"><i class="mdi mdi-table-edit"></i></button>
+      <h4>Professional Details</h4>
+      @if(auth()->user()->id == $data->id)
+      <button class="btn btn-gradient-primary btn-sm " id="professional_details_edit_button"><i class="mdi mdi-table-edit"></i></button>
       @endif
     </div>
-    <div class="profile-birth-div p-3">
-      <form class="forms-sample" id="profile_details_update_form">
-        <div id="profile_details_status"></div>
+    <div class="professional-birth-div p-3">
+      <form class="forms-sample" id="professional_details_update_form">
+        <div id="professional_details_status"></div>
         @csrf
+        <input type="text" class="form-control" id="user_id" placeholder="user_id"  value=" {{$data->id}}" hidden>
+
         <div class="form-group">
-          <label for="date_of_birth">Date of birth</label>
-          <input type="date" class="form-control p-4" name="date_of_birth" id="date_of_birth" placeholder="Date Of Birth" disabled value='{{ $data->profile->date_of_birth ?? "N/A" }}'>
-          <div id="date_of_birth_error"></div>
-        </div>
-        <div class="form-group">
-          <label for="gender">Gender</label>
-          <select class="form-control p-4" id="gender" name="gender" placeholder="Gender" disabled>
+          <label for="profession">Profession</label>
+          <select class="form-control p-4" id="profession" name="profession" placeholder="Profession" disabled>
             <option value="" selected disabled>--Select--</option>
-            <option value="M" {{ isset($data->profile) && $data->profile->gender === 'M' ? 'selected' : '' }}>Male</option>
-            <option value="F" {{ isset($data->profile) && $data->profile->gender === 'F' ? 'selected' : '' }}>Female</option>
-            <option value="O" {{ isset($data->profile) && $data->profile->gender === 'O' ? 'selected' : '' }}>Other</option>
-
+            <option value="Business" {{ isset($data->profession) && $data->profession->profession === 'Business' ? 'selected' : '' }}>Business</option>
+            <option value="Salary" {{ isset($data->profession) && $data->profession->profession === 'Salary' ? 'selected' : '' }}>Salary</option>
           </select>
-
-          <div id="gender_error"></div>
-        </div>
-        <div class="form-group">
-          <label for="age">Age</label>
-          <input type="number" class="form-control p-4" id="age" name="age" rows="8" placeholder="Age" disabled value='{{ $data->profile->age ?? "N/A" }}'>
-          <div id="age_error"></div>
+          <div id="profession_error"></div>
         </div>
 
-        @if($data->hasAnyCategory(['Candidate','Insurer','Superadmin']))
         <div class="form-group">
-          <label for="preffered_line" class="form-label ">Preffered Line</label>
-          <select class="form-control p-5" name="preffered_line" id="preffered_line" aria-label="work status" disabled>
-            <option value="" selected disabled>-- Select --</option>
-            <option value="life" {{ isset($data->profile) && $data->profile->preffered_line === 'life' ? 'selected' : '' }}>Life</option>
-            <option value="general" {{ isset($data->profile) && $data->profile->preffered_line === 'general' ? 'selected' : '' }}>General</option>
-            <option value="health" {{ isset($data->profile) && $data->profile->preffered_line === 'health' ? 'selected' : '' }}>Health</option>
-            <option value="other" {{ isset($data->profile) && !in_array($data->profile->preffered_line, ['life', 'general', 'health']) ? 'selected' : '' }}>
-              {{ isset($data->profile) && !in_array($data->profile->preffered_line, ['life', 'general', 'health']) ? $data->profile->preffered_line : 'Other' }}
-            </option>
+          <label for="company_name">Company Name</label>
+          <input type="text" class="form-control p-4" name="company_name" id="company_name" placeholder="Company Name" disabled value='{{ $data->profession->company_name ?? "" }}'>
+          <div id="company_name_error"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="monthly_income">Monthly Income</label>
+          <select class="form-control p-4" id="monthly_income" name="monthly_income" placeholder="Monthly Income" disabled>
+            <option value="" selected disabled>--Select--</option>
+            <option value="1" {{ isset($data->profession) && $data->profession->monthly_income === '1' ? 'selected' : '' }}>10k to 25k</option>
+            <option value="2" {{ isset($data->profession) && $data->profession->monthly_income === '2' ? 'selected' : '' }}>25k to 50k</option>
+            <option value="3" {{ isset($data->profession) && $data->profession->monthly_income === '3' ? 'selected' : '' }}>50k to 100k</option>
+            <option value="4" {{ isset($data->profession) && $data->profession->monthly_income === '4' ? 'selected' : '' }}>100k to 300k</option>
+            <option value="5" {{ isset($data->profession) && $data->profession->monthly_income === '5' ? 'selected' : '' }}>Above 300k</option>
           </select>
-          <!-- Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Other Preffered Line</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <div class="form-group">
-                    <label for="other_preffered_line">Other Preffered Line</label>
-                    <input type="text" class="form-control p-4" id="other_preffered_line" name="other_preffered_line">
-                    <div id="other_preffered_line_error"></div>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" id="saveChanges">Save changes</button>
-                </div>
-              </div>
-            </div>
+          <div id="monthly_income_error"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="domain">Domain</label>
+          <select class="form-control p-4" id="domain" name="domain" placeholder="Domain" disabled>
+            <option value="" selected disabled>--Select--</option> 
+            <option value="Insurance" {{ isset($data->profession) && $data->profession->domain === 'Insurance' ? 'selected' : '' }}>Insurance</option>
+            <option value="Loan" {{ isset($data->profession) && $data->profession->domain === 'Loan' ? 'selected' : '' }}>Loan</option>
+            <option value="Sales" {{ isset($data->profession) && $data->profession->domain === 'Sales' ? 'selected' : '' }}>Sales</option>
+            <option value="Marketing" {{ isset($data->profession) && $data->profession->domain === 'Marketing' ? 'selected' : '' }}>Marketing</option>
+            <option value="Telecom" {{ isset($data->profession) && $data->profession->domain === 'Telecom' ? 'selected' : '' }}>Telecom</option>
+            <option value="Other" {{ (isset($data->profession->domain) && !in_array($data->profession->domain, ['Insurance', 'Loan', 'Sales', 'Marketing', 'Telecom'])) ? 'selected' : '' }}>Other</option>
+          </select>
+          <div id="domain_error"></div>
+        </div>
+
+        <div class="form-group" id="other_domain_field" style="display: {{ !in_array($data->profession->domain ?? '', ['Insurance', 'Loan', 'Sales', 'Marketing', 'Telecom']) ? 'block' : 'none' }}">
+            <label for="other_domain">Enter Domain</label>
+            <input type="text" class="form-control" name="other_domain" id="other_domain" placeholder="Other Domain" value='{{ $data->profession->domain ?? "" }}'>
+            <div id="other_domain_error"></div>
+        </div>
+
+        @if(auth()->user()->id == $data->id)
+          <div id="professional_details_update_button_div">
+            <button type="submit" class="btn btn-gradient-primary me-2" id="professional_details_update_button">Update</button>
+            <button class="btn btn-light" id="professional_details_cancel_button">Cancel</button>
           </div>
-          <div id="preffered_line_error"></div>
-        </div>
-        @endif
-
-
-        @if($data->hasAnyCategory(['Institute','Insurer','Superadmin']))
-        <div class="form-group">
-          <label for="spoc">SPOC</label>
-          <textarea class="form-control p-4" id="spoc" name="spoc" rows="8" disabled>{{ $data->profile->spoc ?? "N/A" }}</textarea>
-          <div id="spoc_error"></div>
-        </div>
-        @endif
-
-
-        @if(auth()->user()->user_id == $data->user_id)
-
-        <div id="profile_details_update_button_div">
-          <button type="submit" class="btn btn-gradient-primary me-2" id="profile_details_update_button">Submit</button>
-          <button class="btn btn-light" id="profile_details_cancel_button">Cancel</button>
-        </div>
         @endif
       </form>
       <script>
-        let Profile_Details_toggle = () => {
-          let editProfileButton = document.getElementById(
-            "profile_details_edit_button"
+        let Professional_Details_toggle = () => {
+          let editProfessionalButton = document.getElementById(
+            "professional_details_edit_button"
           );
-          let profileUpdateButtonDiv = document.getElementById(
-            "profile_details_update_button_div"
+          let professionalUpdateButtonDiv = document.getElementById(
+            "professional_details_update_button_div"
           );
-          let profileCancelButton = document.getElementById(
-            "profile_details_cancel_button"
+          let professionalCancelButton = document.getElementById(
+            "professional_details_cancel_button"
           );
 
-          let dateBirthInput = document.getElementById("date_of_birth");
-          let genderInput = document.getElementById("gender");
-          let ageInput = document.getElementById("age");
-          let prefferedLineInput = document.getElementById("preffered_line");
-          let spocInput = document.getElementById("spoc");
-
+          let professionInput = document.getElementById("profession");
+          let monthlyIncomeInput = document.getElementById("monthly_income");
+          let companyNameInput = document.getElementById("company_name");
+          let DomainInput = document.getElementById("domain");
+          let otherDomainInput = document.getElementById("other_domain");
 
           let toggle = false;
 
-          profileUpdateButtonDiv.style.display = "none";
-          editProfileButton.addEventListener("click", () => {
+          professionalUpdateButtonDiv.style.display = "none";
+          editProfessionalButton.addEventListener("click", () => {
             toggle = !toggle;
             if (toggle) {
-              profileUpdateButtonDiv.style.display = "block";
-              dateBirthInput.removeAttribute("disabled");
-              genderInput.removeAttribute("disabled");
-              ageInput.removeAttribute("disabled");
-              prefferedLineInput.removeAttribute("disabled");
-              spocInput.removeAttribute("disabled");
+              professionalUpdateButtonDiv.style.display = "block";
+              professionInput.removeAttribute("disabled");
+              monthlyIncomeInput.removeAttribute("disabled");
+              companyNameInput.removeAttribute("disabled");
+              DomainInput.removeAttribute("disabled");
+              otherDomainInput.removeAttribute("disabled");
             } else {
-              profileUpdateButtonDiv.style.display = "none";
-              dateBirthInput.setAttribute("disabled", true);
-              genderInput.setAttribute("disabled", true);
-              ageInput.setAttribute("disabled", true);
-              prefferedLineInput.setAttribute("disabled", true);
-              spocInput.setAttribute("disabled", true);
+              professionalUpdateButtonDiv.style.display = "none";
+              professionInput.setAttribute("disabled", true);
+              monthlyIncomeInput.setAttribute("disabled", true);
+              companyNameInput.setAttribute("disabled", true);
+              DomainInput.setAttribute("disabled", true);
+              otherDomainInput.setAttribute("disabled", true);
             }
           });
-          profileCancelButton.addEventListener("click", () => {
+          professionalCancelButton.addEventListener("click", () => {
             toggle = false;
 
-            profileUpdateButtonDiv.style.display = "none";
-            dateBirthInput.setAttribute("disabled", true);
-            genderInput.setAttribute("disabled", true);
-            ageInput.setAttribute("disabled", true);
-            prefferedLineInput.setAttribute("disabled", true);
-            spocInput.setAttribute("disabled", true);
+            professionalUpdateButtonDiv.style.display = "none";
+            professionInput.setAttribute("disabled", true);
+            monthlyIncomeInput.setAttribute("disabled", true);
+            companyNameInput.setAttribute("disabled", true);
+            DomainInput.setAttribute("disabled", true);
+            otherDomainInput.setAttribute("disabled", true);
           });
-
         };
 
-        Profile_Details_toggle();
-        let prefferedLineInput = document.getElementById("preffered_line");
-        prefferedLineInput.addEventListener('change', function() {
-
-          let modal = new bootstrap.Modal(document.getElementById('exampleModal')); // Instantiate the modal
-
-          if (this.value == 'other') {
-            // Show the modal if the selected value is 'other'
-            modal.show();
-          }
-          let saveChanges = $("#saveChanges");
-          saveChanges.on('click', function() {
-            let other_preffered_line = $("#other_preffered_line").val();
-            if (other_preffered_line == '' || other_preffered_line == null || other_preffered_line == undefined || other_preffered_line == 'undefined') {
-              $("#other_preffered_line_error").html(
-                '<div class=" invalid-feedback d-block">Please enter your preferred line.</div>'
-              )
-              $("#other_preffered_line").focus();
-              return false
-            } else {
-              // $('#exampleModal').modal('hide')
-            }
-            $("#other_preffered_line_error").html("");
-            $('#exampleModal').modal('hide')
-
-          })
-        })
+        Professional_Details_toggle();
       </script>
     </div>
   </div>

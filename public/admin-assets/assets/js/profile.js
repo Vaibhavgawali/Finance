@@ -1,45 +1,16 @@
-// Alert Box
+// Finance start
 
 let loginAlert = () => {
     swal("Good job!", "You clicked the button!", "success");
 };
+
 let profileUpdateAlert = () => {
     swal("Good job!", "Profile Updated SuccessFully!", "success");
-};
-let addressUpdateAlert = () => {
-    swal("Good job!", "Address Updated SuccessFully!", "success");
-};
-let experienceAddAlert = () => {
-    swal("Good job!", "Experience Added SuccessFully!", "success");
-};
-let experienceUpdateAlert = () => {
-    swal("Good job!", "Experience Updated SuccessFully!", "success");
 };
 
 let imageUploadAlert = () => {
     swal("Good job!", "Image Uploaded SuccessFully!", "success");
 };
-let resumeUploadAlert = () => {
-    swal("Good job!", "Resume Uploaded SuccessFully!", "success");
-};
-
-document.addEventListener("DOMContentLoaded", function () {
-    var gstSelect = document.getElementById("gst");
-    var gstNumberField = document.getElementById("gst_number_field");
-
-    gstSelect.addEventListener("change", function () {
-        gstNumberField.style.display = this.value === "1" ? "block" : "none";
-    });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    var msmeSelect = document.getElementById("msme");
-    var msmeNumberField = document.getElementById("msme_number_field");
-
-    msmeSelect.addEventListener("change", function () {
-        msmeNumberField.style.display = this.value === "1" ? "block" : "none";
-    });
-});
 
 const dropArea = document.getElementById("drop-area");
 const inputFile = document.getElementById("profile_image");
@@ -55,12 +26,6 @@ function uploadImage() {
     if (file) {
         // Create an object URL for the file
         let imgLink = URL.createObjectURL(file);
-
-        // Set background image using background-image property
-        //   imageView.style.backgroundImage = `url(${imgLink})`;
-        //   imageView.style.backgroundRepeat = 'no-repeat';
-
-        // Clear text content (not necessary when using background image)
         imageView.textContent = "";
 
         // Create an img element for src attribute
@@ -69,12 +34,10 @@ function uploadImage() {
         imageView.style.border = 0;
         imgElement.alt = "Uploaded Image";
         imageUploadButton.style.display = "block";
-        //   imageUploadButton.style.textAlign="center";
-
-        // Append the img element to the image view
         imageView.appendChild(imgElement);
     }
 }
+
 dropArea.addEventListener("dragover", function (e) {
     e.preventDefault();
 });
@@ -98,6 +61,45 @@ dropArea.addEventListener("drop", function (e) {
     $("#imageModel").modal("show");
 });
 
+// Toggle input field for gst number
+document.addEventListener("DOMContentLoaded", function () {
+    var gstSelect = document.getElementById("gst");
+    var gstNumberField = document.getElementById("gst_number_field");
+
+    gstSelect.addEventListener("change", function () {
+        gstNumberField.style.display = this.value === "1" ? "block" : "none";
+    });
+});
+
+// Toggle input field for msme number
+document.addEventListener("DOMContentLoaded", function () {
+    var msmeSelect = document.getElementById("msme");
+    var msmeNumberField = document.getElementById("msme_number_field");
+
+    msmeSelect.addEventListener("change", function () {
+        msmeNumberField.style.display = this.value === "1" ? "block" : "none";
+    });
+});
+
+// Toggle input field for other domain
+document.addEventListener("DOMContentLoaded", function () {
+    var domainSelect = document.getElementById("domain");
+    var otherDomainField = document.getElementById("other_domain_field");
+
+    function toggleOtherDomainField() {
+        var selectedValue = domainSelect.value;
+        var showOtherDomain =
+            selectedValue &&
+            !["Insurance", "Loan", "Sales", "Marketing", "Telecom"].includes(
+                selectedValue
+            );
+        otherDomainField.style.display = showOtherDomain ? "block" : "none";
+    }
+
+    domainSelect.addEventListener("change", toggleOtherDomainField);
+    toggleOtherDomainField();
+});
+
 $(document).ready(function () {
     //crop image
     $image_crop = $("#image_demo").croppie({
@@ -113,6 +115,7 @@ $(document).ready(function () {
         },
     });
 
+    // show model to crop
     $("#profile_image").on("change", function () {
         var reader = new FileReader();
         reader.onload = function (event) {
@@ -128,6 +131,7 @@ $(document).ready(function () {
         $("#imageModel").modal("show");
     });
 
+    // update image
     $(".crop_image").click(function (e) {
         var csrfToken = $('meta[name="csrf-token"]').attr("content");
 
@@ -187,177 +191,39 @@ $(document).ready(function () {
                 });
             });
     });
-});
 
-$(document).ready(function (e) {
-    //cv update method
-    $("#profile_cv_update-1_button").click(function () {
-        var formData = new FormData($("#profile_update_cv_form")[0]);
-        var user_id = $("#user_id").val().trim();
-        user_id = parseInt(user_id);
-
-        // Get base URL from meta tag
-        var baseUrl = $('meta[name="base-url"]').attr("content");
-
-        $.ajax({
-            url: baseUrl + `/user-documents-update/${user_id}`,
-            type: "POST",
-            data: formData,
-            contentType: false,
-            processData: false,
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            success: function (response) {
-                // console.log(response);
-                if (response.status == true) {
-                    $(".error-message").remove();
-                    $("#profile_cv_update-1_button").attr("disabled", true);
-                    resumeUploadAlert();
-
-                    // Optional: You can add a delay before reloading the page
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 1000); // 2000 milliseconds (2 seconds) delay, adjust as needed
-
-                    return false;
-                }
-            },
-            error: function (response) {
-                // console.log(response);
-                if (response.status === 422) {
-                    var errors = response.responseJSON.message;
-                    // console.log(errors);
-                    $(".error-message").remove();
-
-                    // Display new errors
-                    $.each(errors, function (field, messages) {
-                        var input = $('[name="' + field + '"]');
-                        input.after(
-                            '<div class="error-message invalid-feedback d-block">' +
-                                messages.join(", ") +
-                                "</div>"
-                        );
-                    });
-                }
-            },
-        });
-    });
-});
-
-$(document).ready(function () {
-    $("#profile_cv_update_button").click(function () {
-        var formData = new FormData($("#profile_cv_form")[0]);
-        var url = window.location.origin + `/user-documents`;
-        // Get base URL from meta tag
-        var baseUrl = $('meta[name="base-url"]').attr("content");
-
-        // e.preventDefault();
-        $.ajax({
-            url: baseUrl + "/user-documents",
-            type: "POST",
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                // console.log(response);
-                if (response.status == true) {
-                    $(".error-message").remove();
-                    $("#profile_cv_update_button").attr("disabled", true);
-                    resumeUploadAlert();
-
-                    // Optional: You can add a delay before reloading the page
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 1000); // 2000 milliseconds (2 seconds) delay, adjust as needed
-
-                    return false;
-                }
-            },
-            error: function (response) {
-                // console.log(response);
-                if (response.status === 422) {
-                    var errors = response.responseJSON.errors;
-                    // console.log(errors);
-                    $(".error-message").remove();
-
-                    // Display new errors
-                    $.each(errors, function (field, messages) {
-                        var input = $('[name="' + field + '"]');
-                        input.after(
-                            '<div class="error-message invalid-feedback d-block">' +
-                                messages.join(", ") +
-                                "</div>"
-                        );
-                    });
-                }
-            },
-        });
-    });
-});
-
-$(document).ready(function (e) {
-    $("#profile_cv_update_button").click(function () {
-        var formData = new FormData($("#profile_cv_form")[0]);
-        var url = window.location.origin + `/user-documents`;
-        // Get base URL from meta tag
-        var baseUrl = $('meta[name="base-url"]').attr("content");
-
-        e.preventDefault();
-        $.ajax({
-            url: baseUrl + "/user-documents",
-            type: "POST",
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                // console.log(response);
-                if (response.status == true) {
-                    $(".error-message").remove();
-                    $("#profile_cv_update_button").attr("disabled", true);
-                    resumeUploadAlert();
-
-                    // Optional: You can add a delay before reloading the page
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 1000); // 2000 milliseconds (2 seconds) delay, adjust as needed
-
-                    return false;
-                }
-            },
-            error: function (response) {
-                // console.log(response);
-                if (response.status === 422) {
-                    var errors = response.responseJSON.errors;
-                    // console.log(errors);
-                    $(".error-message").remove();
-
-                    // Display new errors
-                    $.each(errors, function (field, messages) {
-                        var input = $('[name="' + field + '"]');
-                        input.after(
-                            '<div class="error-message invalid-feedback d-block">' +
-                                messages.join(", ") +
-                                "</div>"
-                        );
-                    });
-                }
-            },
-        });
-    });
-});
-
-$(document).ready(function () {
-    // Profile info Update function
-    $("#profile_info_update_button").click(function (event) {
+    // Basic details update function
+    $("#basic_details_update_button").click(function (e) {
+        var user_id = $("#user_id").val();
         var name = $("#name").val();
         var email = $("#email").val();
         var phone = $("#phone").val();
-        var user_id = $("#user_id").val();
+        var father_name = $("#father_name").val();
+        var date_of_birth = $("#date_of_birth").val();
+        var pan = $("#pan").val();
+        var alt_phone = $("#alt_phone").val();
+        var address = $("#address").val();
+        var pincode = $("#pincode").val();
+        var state = $("#state").val();
+        var city = $("#city").val();
+        var gst = $("#gst").val();
+        var gst_number = $("#gst_number").val();
+        var msme = $("#msme").val();
+        var msme_number = $("#msme_number").val();
 
         $("#name_error").html("");
-        $("#phone_error").html("");
         $("#email_error").html("");
+        $("#phone_error").html("");
+        $("#father_name_error").html("");
+        $("#date_of_birth_error").html("");
+        $("#alt_phone_error").html("");
+        $("#pan_error").html("");
+        $("#address_error").html("");
+        $("#pincode_error").html("");
+        $("#state_error").html("");
+        $("#city_error").html("");
+        $("#msme_number_error").html("");
+        $("#gst_number_error").html("");
 
         $("#profile_info_status").html("");
 
@@ -371,32 +237,6 @@ $(document).ready(function () {
                 '<div class=" invalid-feedback d-block">Full Name is required.</div>'
             );
             $("#name").focus();
-            return false;
-        }
-
-        if (
-            phone == "" ||
-            phone == null ||
-            phone == "undefined" ||
-            phone == undefined
-        ) {
-            $("#phone_error").html(
-                '<div class=" invalid-feedback d-block">Mobile number is required.</div>'
-            );
-            $("#phone").focus();
-            return false;
-        }
-
-        function validatePhoneNumber(phone) {
-            var phonePattern = /^[6-9]\d{9}$/;
-            return phonePattern.test(phone);
-        }
-
-        if (!validatePhoneNumber(phone)) {
-            $("#phone_error").html(
-                '<div class=" invalid-feedback d-block">Mobile number is invalid.</div>'
-            );
-            $("#phone").focus();
             return false;
         }
 
@@ -427,89 +267,44 @@ $(document).ready(function () {
             return false;
         }
 
-        var data = {
-            name: name,
-            phone: phone,
-            email: email,
-            user_id: user_id,
-        };
-        function extractAndConvertToInteger(str) {
-            const trimmedStr = str.trim(); // Trim leading and trailing spaces
-            const numericPart = trimmedStr.replace(/\D/g, ""); // Remove non-numeric characters
-            return parseInt(numericPart, 10); // Convert to integer
+        if (
+            phone == "" ||
+            phone == null ||
+            phone == "undefined" ||
+            phone == undefined
+        ) {
+            $("#phone_error").html(
+                '<div class=" invalid-feedback d-block">Mobile number is required.</div>'
+            );
+            $("#phone").focus();
+            return false;
         }
 
-        // Update the user_id value in the data object
-        data.user_id = extractAndConvertToInteger(data.user_id);
-        // console.log(data);
+        function validatePhoneNumber(phone) {
+            var phonePattern = /^[6-9]\d{9}$/;
+            return phonePattern.test(phone);
+        }
 
-        event.preventDefault();
+        if (!validatePhoneNumber(phone)) {
+            $("#phone_error").html(
+                '<div class=" invalid-feedback d-block">Mobile number is invalid.</div>'
+            );
+            $("#phone").focus();
+            return false;
+        }
 
-        var url = window.location.origin + `/candidate/${user_id.trim()}`;
-        // console.log(url);
-
-        $.ajax({
-            type: "PATCH",
-            url: url,
-            data: data,
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            success: function (response) {
-                // console.log(response);
-                if (response.status == true) {
-                    $(".error-message").remove();
-                    $("#profile_info_update_button").attr("disabled", true);
-                    profileUpdateAlert();
-
-                    // Optional: You can add a delay before reloading the page
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 1000); // 2000 milliseconds (2 seconds) delay, adjust as needed
-
-                    return false;
-                }
-            },
-            error: function (response) {
-                // console.log(response);
-                if (response.status === 422) {
-                    var errors = response.responseJSON.errors;
-                    // console.log(errors);
-                    $(".error-message").remove();
-
-                    // Display new errors
-                    $.each(errors, function (field, messages) {
-                        var input = $('[name="' + field + '"]');
-                        input.after(
-                            '<div class="error-message invalid-feedback d-block">' +
-                                messages.join(", ") +
-                                "</div>"
-                        );
-                    });
-                }
-            },
-        });
-    });
-});
-
-$(document).ready(function () {
-    ///    Profile Details Update Function
-    $("#profile_details_update_button").click(function (event) {
-        var date_of_birth = $("#date_of_birth").val();
-        var gender = $("#gender").val();
-        var age = $("#age").val();
-        var preffered_line = $("#preffered_line").val();
-        var other_preffered_line = $("#other_preffered_line").val();
-        var spoc = $("#spoc").val();
-        var user_id = $("#user_id").val();
-
-        $("#date_of_birth_error").html("");
-        $("#gender_error").html("");
-        $("#age_error").html("");
-        $("#preffered_line_error").html("");
-        $("#spoc_error").html("");
-        // console.log(other_preffered_line)
-        $("#profile_details_status").html("");
+        if (
+            father_name == "" ||
+            father_name == null ||
+            father_name == "undefined" ||
+            father_name == undefined
+        ) {
+            $("#father_name_error").html(
+                '<div class=" invalid-feedback d-block">Father Name is required.</div>'
+            );
+            $("#father_name").focus();
+            return false;
+        }
 
         if (
             date_of_birth == "" ||
@@ -523,134 +318,58 @@ $(document).ready(function () {
             $("#date_of_birth").focus();
             return false;
         }
-        if (preffered_line == "other") {
-            preffered_line = other_preffered_line;
+
+        if (
+            alt_phone != "" ||
+            alt_phone != null ||
+            alt_phone != "undefined" ||
+            alt_phone != undefined
+        ) {
+            if (!validatePhoneNumber(alt_phone)) {
+                $("#alt_phone_error").html(
+                    '<div class=" invalid-feedback d-block">Alternate Mobile number is invalid.</div>'
+                );
+                $("#alt_phone").focus();
+                return false;
+            }
         }
 
         if (
-            gender == "" ||
-            gender == null ||
-            gender == "undefined" ||
-            gender == undefined
+            pan == "" ||
+            pan == null ||
+            pan == "undefined" ||
+            pan == undefined
         ) {
-            $("#gender_error").html(
-                '<div class=" invalid-feedback d-block">Gender is required.</div>'
+            $("#pan_error").html(
+                '<div class=" invalid-feedback d-block">Pan number is required.</div>'
             );
-            $("#gender").focus();
+            $("#pan").focus();
+            return false;
+        }
+
+        function validatePanNumber(pan) {
+            var panPattern = /[A-Z]{5}[0-9]{4}[A-Z]{1}/;
+            return panPattern.test(pan);
+        }
+
+        if (!validatePanNumber(pan)) {
+            $("#pan_error").html(
+                '<div class=" invalid-feedback d-block">Pan number is invalid.</div>'
+            );
+            $("#pan").focus();
             return false;
         }
 
         if (
-            age == "" ||
-            age == null ||
-            age == "undefined" ||
-            age == undefined
+            address == "" ||
+            address == null ||
+            address == "undefined" ||
+            address == undefined
         ) {
-            $("#age_error").html(
-                '<div class=" invalid-feedback d-block">Age is required.</div>'
+            $("#address_error").html(
+                '<div class=" invalid-feedback d-block">Address is required.</div>'
             );
-            $("#age").focus();
-            return false;
-        }
-
-        var data = {
-            date_of_birth: date_of_birth,
-            gender: gender,
-            age: age,
-            preffered_line: preffered_line,
-            spoc: spoc,
-            user_id: user_id,
-        };
-        function extractAndConvertToInteger(str) {
-            const trimmedStr = str.trim(); // Trim leading and trailing spaces
-            const numericPart = trimmedStr.replace(/\D/g, ""); // Remove non-numeric characters
-            return parseInt(numericPart, 10); // Convert to integer
-        }
-
-        // Update the user_id value in the data object
-        data.user_id = extractAndConvertToInteger(data.user_id);
-        // console.log(data);
-
-        event.preventDefault();
-
-        var url = window.location.origin + `/user-profile/${user_id.trim()}`;
-        // console.log(url);
-
-        $.ajax({
-            type: "PATCH",
-            url: url,
-            data: data,
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            success: function (response) {
-                // console.log(response);
-                if (response.status == true) {
-                    $(".error-message").remove();
-                    $("#profile_details_update_button").attr("disabled", true);
-                    profileUpdateAlert();
-
-                    // Optional: You can add a delay before reloading the page
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 1000); // 2000 milliseconds (2 seconds) delay, adjust as needed
-
-                    return false;
-                }
-            },
-            error: function (response) {
-                if (response.status === 422) {
-                    var errors = response.responseJSON.errors;
-
-                    $(".error-message").remove();
-
-                    // Display new errors
-                    $.each(errors, function (field, messages) {
-                        var input = $('[name="' + field + '"]');
-                        input.after(
-                            '<div class="error-message invalid-feedback d-block">' +
-                                messages.join(", ") +
-                                "</div>"
-                        );
-                    });
-                }
-            },
-        });
-    });
-});
-
-$(document).ready(function () {
-    ///    Profile Address Update Function
-    $("#profile_address_update_button").click(function (event) {
-        var city = $("#city").val();
-        var pincode = $("#pincode").val();
-        var state = $("#state").val();
-        var country = $("#country").val();
-        var line1 = $("#line1").val();
-        var line2 = $("#line2").val();
-        var line3 = $("#line3").val();
-        var user_id = $("#user_id").val();
-
-        $("#city_error").html("");
-        $("#pincode_error").html("");
-        $("#state_error").html("");
-        $("#country_error").html("");
-        $("#line1_error").html("");
-        $("#line2_error").html("");
-        $("#line3_error").html("");
-
-        $("#profile_status").html("");
-
-        if (
-            city == "" ||
-            city == null ||
-            city == "undefined" ||
-            city == undefined
-        ) {
-            $("#city_error").html(
-                '<div class=" invalid-feedback d-block">City is required.</div>'
-            );
-            $("#city").focus();
+            $("#address").focus();
             return false;
         }
 
@@ -681,77 +400,75 @@ $(document).ready(function () {
         }
 
         if (
-            country == "" ||
-            country == null ||
-            country == "undefined" ||
-            country == undefined
+            city == "" ||
+            city == null ||
+            city == "undefined" ||
+            city == undefined
         ) {
-            $("#country_error").html(
-                '<div class=" invalid-feedback d-block">Country is required.</div>'
+            $("#city_error").html(
+                '<div class=" invalid-feedback d-block">City is required.</div>'
             );
-            $("#country").focus();
+            $("#city").focus();
             return false;
         }
-        // if (
-        //     line1 == "" ||
-        //     line1 == null ||
-        //     line1 == "undefined" ||
-        //     line1 == undefined
-        // ) {
-        //     $("#line1_error").html(
-        //         '<div class=" invalid-feedback d-block">Address Line 1 is required.</div>'
-        //     );
-        //     $("#line1").focus();
-        //     return false;
-        // }
-        // if (
-        //     line2 == "" ||
-        //     line2 == null ||
-        //     line2 == "undefined" ||
-        //     line2 == undefined
-        // ) {
-        //     $("#line2_error").html(
-        //         '<div class=" invalid-feedback d-block">Address Line 2 is required.</div>'
-        //     );
-        //     $("#line2").focus();
-        //     return false;
-        // }
 
-        // if (
-        //     line3 == "" ||
-        //     line3 == null ||
-        //     line3 == "undefined" ||
-        //     line3 == undefined
-        // ) {
-        //     $("#line3_error").html(
-        //         '<div class=" invalid-feedback d-block">Address Line 3 is required.</div>'
-        //     );
-        //     $("#line3").focus();
-        //     return false;
-        // }
-
-        var data = {
-            city: city,
-            pincode: pincode,
-            state: state,
-            country: country,
-            line1: line1,
-            line2: line2,
-            line3: line3,
-        };
-        function extractAndConvertToInteger(str) {
-            const trimmedStr = str.trim(); // Trim leading and trailing spaces
-            const numericPart = trimmedStr.replace(/\D/g, ""); // Remove non-numeric characters
-            return parseInt(numericPart, 10); // Convert to integer
+        if (gst == "1") {
+            if (
+                gst_number == "" ||
+                gst_number == null ||
+                gst_number == "undefined" ||
+                gst_number == undefined
+            ) {
+                $("#gst_number_error").html(
+                    '<div class=" invalid-feedback d-block">Gst Number is required.</div>'
+                );
+                $("#gst_number").focus();
+                return false;
+            }
         }
 
-        // Update the user_id value in the data object
-        // console.log(data);
+        if (msme == "1") {
+            if (
+                msme_number == "" ||
+                msme_number == null ||
+                msme_number == "undefined" ||
+                msme_number == undefined
+            ) {
+                $("#msme_number_error").html(
+                    '<div class=" invalid-feedback d-block">Msme Number is required.</div>'
+                );
+                $("#msme_number").focus();
+                return false;
+            }
+        }
 
-        event.preventDefault();
+        var data = {
+            user_id: user_id,
+            name: name,
+            phone: phone,
+            email: email,
+            father_name: father_name,
+            date_of_birth: date_of_birth,
+            alt_phone: alt_phone,
+            pan: pan,
+            address: address,
+            pincode: pincode,
+            state: state,
+            city: city,
+            gst: gst,
+            msme: msme,
+        };
 
-        var url = window.location.origin + `/user-address/${user_id.trim()}`;
-        // console.log(url);
+        if (gst == "1") {
+            data["gst_number"] = gst_number;
+        }
+        if (msme == "1") {
+            data["msme_number"] = msme_number;
+        }
+
+        e.preventDefault();
+
+        var url = window.location.origin + `/basic-details-update`;
 
         $.ajax({
             type: "PATCH",
@@ -764,14 +481,12 @@ $(document).ready(function () {
                 // console.log(response);
                 if (response.status == true) {
                     $(".error-message").remove();
-                    $("#profile_address_update_button").attr("disabled", true);
-                    addressUpdateAlert();
+                    $("#basic_details_update_button").attr("disabled", true);
+                    profileUpdateAlert();
 
-                    // Optional: You can add a delay before reloading the page
                     setTimeout(function () {
                         window.location.reload();
-                    }, 1000); // 2000 milliseconds (2 seconds) delay, adjust as needed
-
+                    }, 1000);
                     return false;
                 }
             },
@@ -780,198 +495,6 @@ $(document).ready(function () {
                 if (response.status === 422) {
                     var errors = response.responseJSON.errors;
                     // console.log(errors);
-
-                    $(".error-message").remove();
-
-                    // Display new errors
-                    $.each(errors, function (field, messages) {
-                        // console.log(messages); // messages is an array
-
-                        var input = $('[name="' + field + '"]');
-                        input.after(
-                            '<div class="error-message invalid-feedback d-block">' +
-                                messages[0] +
-                                "</div>"
-                        );
-                    });
-                }
-            },
-        });
-    });
-});
-
-$(document).ready(function () {
-    // Profile Experience Update function
-    $("#profile_experience_update_button").click(function (event) {
-        var is_current_company = $("#is_current_company").val();
-        var organization = $("#organization").val();
-        var designation = $("#designation").val();
-        var ctc = $("#ctc").val();
-        var job_profile_description = $("#job_profile_description").val();
-        var state = $("#job_state").val();
-        var experience_year = $("#experience_year").val();
-        // var joining_date = $("#joining_date").val();
-        // var relieving_date = $("#relieving_date").val();
-        var user_id = $("#user_id").val();
-
-        $("#is_current_company_error").html("");
-        $("#organization_error").html("");
-        $("#designation_error").html("");
-        $("#ctc_error").html("");
-        $("#job_profile_description_error").html("");
-        $("#job_state_error").html("");
-        $("#experience_year_error").html("");
-        // $("#joining_date_error").html("");
-        // $("#relieving_date_error").html("");
-
-        $("#profile_experience_status").html("");
-
-        if (
-            is_current_company == "" ||
-            is_current_company == null ||
-            is_current_company == "undefined" ||
-            is_current_company == undefined
-        ) {
-            $("#is_current_company_error").html(
-                '<div class=" invalid-feedback d-block">Current Company  is required.</div>'
-            );
-            $("#is_current_company").focus();
-            return false;
-        }
-
-        if (
-            organization == "" ||
-            organization == null ||
-            organization == "undefined" ||
-            organization == undefined
-        ) {
-            $("#organization_error").html(
-                '<div class=" invalid-feedback d-block">Organization is required.</div>'
-            );
-            $("#organization").focus();
-            return false;
-        }
-
-        if (
-            designation == "" ||
-            designation == null ||
-            designation == "undefined" ||
-            designation == undefined
-        ) {
-            $("#designation_error").html(
-                '<div class=" invalid-feedback d-block">Designation  is required.</div>'
-            );
-            $("#designation").focus();
-            return false;
-        }
-
-        if (
-            ctc == "" ||
-            ctc == null ||
-            ctc == "undefined" ||
-            ctc == undefined
-        ) {
-            $("#ctc_error").html(
-                '<div class=" invalid-feedback d-block">CTC  is required.</div>'
-            );
-            $("#ctc").focus();
-            return false;
-        }
-
-        if (
-            job_profile_description == "" ||
-            job_profile_description == null ||
-            job_profile_description == "undefined" ||
-            job_profile_description == undefined
-        ) {
-            $("#job_profile_description_error").html(
-                '<div class=" invalid-feedback d-block">Job description  is required.</div>'
-            );
-            $("#job_profile_description").focus();
-            return false;
-        }
-
-        if (
-            state == "" ||
-            state == null ||
-            state == "undefined" ||
-            state == undefined
-        ) {
-            $("#job_state_error").html(
-                '<div class=" invalid-feedback d-block">Job state  is required.</div>'
-            );
-            $("#job_state").focus();
-            return false;
-        }
-
-        if (
-            experience_year == "" ||
-            experience_year == null ||
-            experience_year == "undefined" ||
-            experience_year == undefined
-        ) {
-            $("#experience_year_error").html(
-                '<div class=" invalid-feedback d-block">Experience is required.</div>'
-            );
-            $("#experience_year").focus();
-            return false;
-        }
-
-        var data = {
-            is_current_company: is_current_company,
-            organization: organization,
-            designation: designation,
-            ctc: ctc,
-            state: state,
-            job_profile_description: job_profile_description,
-            experience_year: experience_year,
-            // joining_date: joining_date,
-            // relieving_date: relieving_date,
-        };
-        // function extractAndConvertToInteger(str) {
-        //     const trimmedStr = str.trim(); // Trim leading and trailing spaces
-        //     const numericPart = trimmedStr.replace(/\D/g, ''); // Remove non-numeric characters
-        //     return parseInt(numericPart, 10); // Convert to integer
-        // }
-
-        // Update the user_id value in the data object
-        // data.user_id = extractAndConvertToInteger(data.user_id);
-        // console.log(data);
-
-        event.preventDefault();
-
-        var url = window.location.origin + `/user-experience/${user_id.trim()}`;
-        // console.log(url);
-
-        $.ajax({
-            type: "PATCH",
-            url: url,
-            data: data,
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            success: function (response) {
-                // console.log(response);
-                if (response.status == true) {
-                    $(".error-message").remove();
-                    $("#profile_experience_update_button").attr(
-                        "disabled",
-                        true
-                    );
-                    experienceUpdateAlert();
-
-                    // Optional: You can add a delay before reloading the page
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 1000); // 2000 milliseconds (2 seconds) delay, adjust as needed
-
-                    return false;
-                }
-            },
-            error: function (response) {
-                if (response.status === 422) {
-                    var errors = response.responseJSON.errors;
-
                     $(".error-message").remove();
 
                     // Display new errors
@@ -987,156 +510,409 @@ $(document).ready(function () {
             },
         });
     });
-});
 
-$(document).ready(function () {
-    // Profile Experience Add function
-    $("#profile_experience_add_button").click(function (event) {
-        var is_current_company = $("#is_current_company").val();
-        var organization = $("#organization").val();
-        var designation = $("#designation").val();
-        var ctc = $("#ctc").val();
-        var job_profile_description = $("#job_profile_description").val();
-        var state = $("#job_state").val();
-        var experience_year = $("#experience_year").val();
-        // var joining_date = $("#joining_date").val();
-        // var relieving_date = $("#relieving_date").val();
+    // Bank details update function
+    $("#bank_details_update_button").click(function (e) {
         var user_id = $("#user_id").val();
+        var bank_name = $("#bank_name").val();
+        var acc_holder_name = $("#acc_holder_name").val();
+        var ifsc_code = $("#ifsc_code").val();
+        var acc_number = $("#acc_number").val();
 
-        $("#is_current_company_error").html("");
-        $("#organization_error").html("");
-        $("#designation_error").html("");
-        $("#ctc_error").html("");
-        $("#job_profile_description_error").html("");
-        $("#job_state_error").html("");
-        $("#experience_year_error").html("");
-        // $("#joining_date_error").html("");
-        // $("#relieving_date_error").html("");
+        var facebook = $("#facebook").val();
+        var instagram = $("#instagram").val();
+        var linkedin = $("#linkedin").val();
+        var twitter = $("#twitter").val();
+        var telegram = $("#telegram").val();
 
-        $("#profile_experience_status").html("");
+        $("#bank_name_error").html("");
+        $("#acc_holder_name_error").html("");
+        $("#ifsc_code_error").html("");
+        $("#acc_number_error").html("");
+
+        $("#facebook_error").html("");
+        $("#instagram_error").html("");
+        $("#linkedin_error").html("");
+        $("#twitter_error").html("");
+        $("#telegram_error").html("");
+
+        $("#bank_details_status").html("");
 
         if (
-            is_current_company == "" ||
-            is_current_company == null ||
-            is_current_company == "undefined" ||
-            is_current_company == undefined
+            bank_name == "" ||
+            bank_name == null ||
+            bank_name == "undefined" ||
+            bank_name == undefined
         ) {
-            $("#is_current_company_error").html(
-                '<div class=" invalid-feedback d-block">Current Company  is required.</div>'
+            $("#bank_name_error").html(
+                '<div class=" invalid-feedback d-block">Bank Name is required.</div>'
             );
-            $("#is_current_company").focus();
+            $("#bank_name").focus();
             return false;
         }
 
         if (
-            organization == "" ||
-            organization == null ||
-            organization == "undefined" ||
-            organization == undefined
+            acc_holder_name == "" ||
+            acc_holder_name == null ||
+            acc_holder_name == "undefined" ||
+            acc_holder_name == undefined
         ) {
-            $("#organization_error").html(
-                '<div class=" invalid-feedback d-block">Organization is required.</div>'
+            $("#acc_holder_name_error").html(
+                '<div class=" invalid-feedback d-block">Account Holder Name is required.</div>'
             );
-            $("#organization").focus();
+            $("#acc_holder_name").focus();
             return false;
         }
 
         if (
-            designation == "" ||
-            designation == null ||
-            designation == "undefined" ||
-            designation == undefined
+            acc_number == "" ||
+            acc_number == null ||
+            acc_number == "undefined" ||
+            acc_number == undefined
         ) {
-            $("#designation_error").html(
-                '<div class=" invalid-feedback d-block">Designation  is required.</div>'
+            $("#acc_number_error").html(
+                '<div class=" invalid-feedback d-block">Account number is required.</div>'
             );
-            $("#designation").focus();
+            $("#acc_number").focus();
             return false;
         }
 
         if (
-            ctc == "" ||
-            ctc == null ||
-            ctc == "undefined" ||
-            ctc == undefined
+            ifsc_code == "" ||
+            ifsc_code == null ||
+            ifsc_code == "undefined" ||
+            ifsc_code == undefined
         ) {
-            $("#ctc_error").html(
-                '<div class=" invalid-feedback d-block">CTC  is required.</div>'
+            $("#ifsc_code_error").html(
+                '<div class=" invalid-feedback d-block">IFSC Code is required.</div>'
             );
-            $("#ctc").focus();
-            return false;
-        }
-
-        if (
-            job_profile_description == "" ||
-            job_profile_description == null ||
-            job_profile_description == "undefined" ||
-            job_profile_description == undefined
-        ) {
-            $("#job_profile_description_error").html(
-                '<div class=" invalid-feedback d-block">Job description  is required.</div>'
-            );
-            $("#job_profile_description").focus();
-            return false;
-        }
-
-        if (
-            state == "" ||
-            state == null ||
-            state == "undefined" ||
-            state == undefined
-        ) {
-            $("#job_state_error").html(
-                '<div class=" invalid-feedback d-block">Job state  is required.</div>'
-            );
-            $("#job_state").focus();
-            return false;
-        }
-
-        if (
-            experience_year == "" ||
-            experience_year == null ||
-            experience_year == "undefined" ||
-            experience_year == undefined
-        ) {
-            $("#experience_year_error").html(
-                '<div class=" invalid-feedback d-block">Joining date   is required.</div>'
-            );
-            $("#experience_year").focus();
-            return false;
+            $("#ifsc_code").focus();
         }
 
         var data = {
-            is_current_company: is_current_company,
-            organization: organization,
-            designation: designation,
-            ctc: ctc,
-            state: state,
-            job_profile_description: job_profile_description,
-            experience_year: experience_year,
-            // joining_date: joining_date,
-            // relieving_date: relieving_date,
             user_id: user_id,
+            bank_name: bank_name,
+            acc_holder_name: acc_holder_name,
+            acc_number: acc_number,
+            ifsc_code: ifsc_code,
         };
 
-        event.preventDefault();
+        if (facebook) {
+            data.facebook = facebook;
+        }
+        if (instagram) {
+            data.instagram = instagram;
+        }
+        if (linkedin) {
+            data.linkedin = linkedin;
+        }
+        if (twitter) {
+            data.twitter = twitter;
+        }
+        if (telegram) {
+            data.telegram = telegram;
+        }
 
-        var url = window.location.origin + `/user-experience`;
-        // console.log(url);
+        e.preventDefault();
+
+        var url = window.location.origin + `/bank-details-update`;
 
         $.ajax({
-            type: "POST",
+            type: "PATCH",
             url: url,
             data: data,
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
             success: function (response) {
-                // console.log(response);
                 if (response.status == true) {
                     $(".error-message").remove();
-                    $("#profile_experience_add_button").attr("disabled", true);
-                    experienceAddAlert();
+                    $("#bank_details_update_button").attr("disabled", true);
+                    profileUpdateAlert();
+
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1000);
+                    return false;
+                }
+            },
+            error: function (response) {
+                if (response.status === 422) {
+                    var errors = response.responseJSON.errors;
+
+                    $(".error-message").remove();
+
+                    $.each(errors, function (field, messages) {
+                        var input = $('[name="' + field + '"]');
+                        input.after(
+                            '<div class="error-message invalid-feedback d-block">' +
+                                messages.join(", ") +
+                                "</div>"
+                        );
+                    });
+                }
+            },
+        });
+    });
+
+    // Professional details update function
+    $("#professional_details_update_button").click(function (e) {
+        var user_id = $("#user_id").val();
+        var profession = $("#profession").val();
+        var monthly_income = $("#monthly_income").val();
+        var company_name = $("#company_name").val();
+        var domain = $("#domain").val();
+        var other_domain = $("#other_domain").val();
+
+        $("#profession_error").html("");
+        $("#monthly_income_error").html("");
+        $("#company_name_error").html("");
+        $("#domain_error").html("");
+        $("#other_domain_error").html("");
+
+        $("#professional_details_status").html("");
+
+        if (
+            profession == "" ||
+            profession == null ||
+            profession == "undefined" ||
+            profession == undefined
+        ) {
+            $("#profession_error").html(
+                '<div class=" invalid-feedback d-block">Please select profession.</div>'
+            );
+            $("#profession").focus();
+            return false;
+        }
+
+        if (
+            monthly_income == "" ||
+            monthly_income == null ||
+            monthly_income == "undefined" ||
+            monthly_income == undefined
+        ) {
+            $("#monthly_income_error").html(
+                '<div class=" invalid-feedback d-block">Please select monthly income.</div>'
+            );
+            $("#monthly_income").focus();
+            return false;
+        }
+
+        if (
+            domain == "" ||
+            domain == null ||
+            domain == "undefined" ||
+            domain == undefined
+        ) {
+            $("#domain_error").html(
+                '<div class=" invalid-feedback d-block">Please select domain.</div>'
+            );
+            $("#domain").focus();
+            return false;
+        }
+
+        if (domain == "Other") {
+            if (
+                other_domain == "" ||
+                other_domain == null ||
+                other_domain == "undefined" ||
+                other_domain == undefined
+            ) {
+                $("#other_domain_error").html(
+                    '<div class=" invalid-feedback d-block">Domain name is required.</div>'
+                );
+                $("#other_domain").focus();
+                return false;
+            }
+        }
+
+        var data = {
+            user_id: user_id,
+            profession: profession,
+            monthly_income: monthly_income,
+            domain: domain,
+        };
+
+        if (company_name) {
+            data.company_name = company_name;
+        }
+        if (domain == "Other") {
+            data.other_domain = other_domain;
+        }
+
+        e.preventDefault();
+
+        var url = window.location.origin + `/professional-details-update`;
+
+        $.ajax({
+            type: "PATCH",
+            url: url,
+            data: data,
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (response) {
+                if (response.status == true) {
+                    $(".error-message").remove();
+                    $("#professional_details_update_button").attr(
+                        "disabled",
+                        true
+                    );
+                    profileUpdateAlert();
+
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1000);
+                    return false;
+                }
+            },
+            error: function (response) {
+                if (response.status === 422) {
+                    var errors = response.responseJSON.errors;
+
+                    $(".error-message").remove();
+
+                    $.each(errors, function (field, messages) {
+                        var input = $('[name="' + field + '"]');
+                        input.after(
+                            '<div class="error-message invalid-feedback d-block">' +
+                                messages.join(", ") +
+                                "</div>"
+                        );
+                    });
+                }
+            },
+        });
+    });
+
+    // kyc details add function
+    $("#kyc_details_add_button").click(function (e) {
+        e.preventDefault();
+
+        var user_id = $("#id").val();
+        var panCardFile = $("#pan_card")[0].files[0];
+        var cancelChequeFile = $("#cancel_cheque")[0].files[0];
+        var addressProofName = $("#address_proof_name").val();
+        var documentNumber = $("#document_number").val();
+        var addressProofFile = $("#address_proof")[0].files[0];
+        var partnerPhotoFile = $("#partner_photo")[0].files[0];
+
+        $("#pan_card_error").html("");
+        $("#cancel_cheque_error").html("");
+        $("#document_number_error").html("");
+        $("#address_proof_error").html("");
+        $("#partner_photo_error").html("");
+        $("#document_number_error").html("");
+
+        $("#kyc_details_status").html("");
+
+        if (!panCardFile) {
+            $("#pan_card_error").html(
+                '<div class="invalid-feedback d-block">PAN card file must be required.</div>'
+            );
+            return false;
+        }
+
+        if (panCardFile && panCardFile.size > 2 * 1024 * 1024) {
+            $("#pan_card_error").html(
+                '<div class="invalid-feedback d-block">PAN card file must be less than 2MB.</div>'
+            );
+            return false;
+        }
+
+        if (!cancelChequeFile) {
+            $("#cancel_cheque_error").html(
+                '<div class="invalid-feedback d-block">Cancel Cheque file must be required.</div>'
+            );
+            return false;
+        }
+
+        if (cancelChequeFile && cancelChequeFile.size > 2 * 1024 * 1024) {
+            $("#cancel_cheque_error").html(
+                '<div class="invalid-feedback d-block">Cancel Cheque file must be less than 2MB.</div>'
+            );
+            return false;
+        }
+
+        if (
+            addressProofName == "" ||
+            addressProofName == null ||
+            addressProofName == "undefined" ||
+            addressProofName == undefined
+        ) {
+            $("#address_proof_name_error").html(
+                '<div class=" invalid-feedback d-block">Please select address proof document.</div>'
+            );
+            $("#address_proof_name").focus();
+            return false;
+        }
+
+        if (
+            documentNumber == "" ||
+            documentNumber == null ||
+            documentNumber == "undefined" ||
+            documentNumber == undefined
+        ) {
+            $("#document_number_error").html(
+                '<div class=" invalid-feedback d-block">Please enter document number.</div>'
+            );
+            $("#document_number").focus();
+            return false;
+        }
+
+        if (!addressProofFile) {
+            $("#address_proof_error").html(
+                '<div class="invalid-feedback d-block">Address proof file must be required.</div>'
+            );
+            return false;
+        }
+
+        if (addressProofFile && addressProofFile.size > 2 * 1024 * 1024) {
+            $("#address_proof_error").html(
+                '<div class="invalid-feedback d-block">Address proof file must be less than 2MB.</div>'
+            );
+            return false;
+        }
+
+        if (!partnerPhotoFile) {
+            $("#partner_photo_error").html(
+                '<div class="invalid-feedback d-block">Partner photo must be required.</div>'
+            );
+            return false;
+        }
+
+        if (partnerPhotoFile && partnerPhotoFile.size > 2 * 1024 * 1024) {
+            $("#partner_photo_error").html(
+                '<div class="invalid-feedback d-block">Partner photo must be less than 2MB.</div>'
+            );
+            return false;
+        }
+
+        var formData = new FormData();
+        formData.append("user_id", user_id);
+        formData.append("pan_card", panCardFile);
+        formData.append("cancel_cheque", cancelChequeFile);
+        formData.append("address_proof_name", addressProofName);
+        formData.append("document_number", documentNumber);
+        formData.append("address_proof", addressProofFile);
+        formData.append("partner_photo", partnerPhotoFile);
+
+        var baseUrl = $('meta[name="base-url"]').attr("content");
+
+        $.ajax({
+            url: baseUrl + "/kyc-details-add",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (response) {
+                if (response.status == true) {
+                    $(".error-message").remove();
+                    $("#kyc_details_update_button").attr("disabled", true);
+                    resumeUploadAlert();
 
                     setTimeout(function () {
                         window.location.reload();
@@ -1148,10 +924,139 @@ $(document).ready(function () {
             error: function (response) {
                 if (response.status === 422) {
                     var errors = response.responseJSON.errors;
-
                     $(".error-message").remove();
 
-                    // Display new errors
+                    $.each(errors, function (field, messages) {
+                        var input = $('[name="' + field + '"]');
+                        input.after(
+                            '<div class="error-message invalid-feedback d-block">' +
+                                messages.join(", ") +
+                                "</div>"
+                        );
+                    });
+                }
+            },
+        });
+    });
+
+    // update document
+    $(".update-button").click(function (e) {
+        e.preventDefault();
+        var documentType = $(this).data("document-type");
+        var formGroup = $(this).closest(".form-group");
+        var fileInput = formGroup.find('input[type="file"]');
+        var addressProofName = $("#address_proof_name").val();
+        var documentNumber = $("#document_number").val();
+
+        // Remove any existing error containers
+        formGroup.find(".document-error").remove();
+
+        // Check if file input has a value
+        if (!fileInput.val()) {
+            var errorContainer = $(
+                '<div class="document-error invalid-feedback d-block">File must be required.</div>'
+            );
+            fileInput.after(errorContainer);
+            return false;
+        }
+
+        // Get the selected file
+        var file = fileInput[0].files[0];
+
+        var acceptableTypes;
+        if (documentType === "partner_photo") {
+            acceptableTypes = ["image/jpeg", "image/png", "image/jpg"];
+        } else {
+            acceptableTypes = [
+                "image/jpeg",
+                "image/png",
+                "image/jpg",
+                "application/pdf",
+            ];
+        }
+
+        // Check if the file type is acceptable
+        if (!acceptableTypes.includes(file.type)) {
+            if (documentType === "partner_photo") {
+                var errorContainer = $(
+                    '<div class="document-error invalid-feedback d-block">Please select a valid file format jpg,jpeg or png.</div>'
+                );
+            } else {
+                var errorContainer = $(
+                    '<div class="document-error invalid-feedback d-block">Please select a valid file format jpg,jpeg,png or pdf.</div>'
+                );
+            }
+            fileInput.after(errorContainer);
+            return false;
+        }
+
+        if (documentType === "address_proof") {
+            if (
+                addressProofName == "" ||
+                addressProofName == null ||
+                addressProofName == "undefined" ||
+                addressProofName == undefined
+            ) {
+                $("#address_proof_name_error").html(
+                    '<div class=" invalid-feedback d-block">Please select address proof document.</div>'
+                );
+                $("#address_proof_name").focus();
+                return false;
+            }
+
+            if (
+                documentNumber == "" ||
+                documentNumber == null ||
+                documentNumber == "undefined" ||
+                documentNumber == undefined
+            ) {
+                $("#document_number_error").html(
+                    '<div class=" invalid-feedback d-block">Please enter document number.</div>'
+                );
+                $("#document_number").focus();
+                return false;
+            }
+        }
+
+        var formData = new FormData();
+        formData.append("document_type", documentType);
+        formData.append("file", fileInput[0].files[0]);
+
+        if (documentType === "address_proof") {
+            formData.append("document_number", documentNumber);
+            formData.append("address_proof_name", addressProofName);
+        }
+
+        // return false;
+        var baseUrl = $('meta[name="base-url"]').attr("content");
+
+        $.ajax({
+            url: baseUrl + "/kyc-details-update",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (response) {
+                if (response.status == true) {
+                    $(".error-message").remove();
+                    $("#kyc_details_update_button").attr("disabled", true);
+                    resumeUploadAlert();
+
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1000);
+
+                    return false;
+                }
+            },
+            error: function (response) {
+                if (response.status === 422) {
+                    var errors = response.responseJSON.errors;
+                    $(".error-message").remove();
+
                     $.each(errors, function (field, messages) {
                         var input = $('[name="' + field + '"]');
                         input.after(

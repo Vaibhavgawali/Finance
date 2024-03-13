@@ -19,6 +19,6 @@ class UserDocuments extends Model
 
     public function address_proof() 
     {
-        return $this->hasMany(SocialLinks::class,'user_document_id','id');
+        return $this->hasMany(AddressProofDocuments::class,'user_document_id','id');
     }
 }

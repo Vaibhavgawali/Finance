@@ -60,12 +60,18 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/getRetailerTableData', [RetailerController::class, 'getRetailerTableData'])->name('getRetailerTableData');
 
     Route::resource('/users', UserController::class);
+
     Route::post('/image-upload', [ProfileController::class, 'profileImageUpload']);
+    Route::patch('/basic-details-update', [ProfileController::class, 'BasicDetailsStoreOrUpdate']);
+    Route::patch('/bank-details-update', [ProfileController::class, 'BankDetailsStoreOrUpdate']);
+    Route::patch('/professional-details-update', [ProfileController::class, 'ProfessionalDetailsStoreOrUpdate']);
+    Route::post('/kyc-details-add', [ProfileController::class, 'KycDetailsStore']);
+    Route::post('/kyc-details-update', [ProfileController::class, 'KycDetailsUpdate']);
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard']);
-    Route::get('/home', [App\Http\Controllers\DashboardController::class, 'dashboard']); //redirect to dashboard if logged in
+    Route::get('/home', [App\Http\Controllers\DashboardController::class, 'dashboard']); //redirect to dashboard if already logged in
 
     Route::resource('user-profile', UserProfileController::class);
     Route::resource('user-address', UserAddressController::class);

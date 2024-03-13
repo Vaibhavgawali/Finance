@@ -116,7 +116,6 @@ class UserDocumentsController extends Controller
                 // Save the image to the storage
                 $document = $request->file("document_url");
                 $documentName = $document->hashName();
-                // $documentpath = Storage::disk('local')->put('public/documents', $document);
                 $document->move(public_path('storage/documents'), $documentName);
                 $documentpath = public_path($documentName);
 

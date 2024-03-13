@@ -100,12 +100,12 @@
 
         @if(auth()->user()->id == $data->id)
         <div class="text-end">
-          <button class="btn btn-gradient-primary btn-sm " id="profile_info_edit_button"><i class="mdi mdi-table-edit"></i></button>
+          <button class="btn btn-gradient-primary btn-sm " id="basic_details_edit_button"><i class="mdi mdi-table-edit"></i></button>
         </div>
         @endif
 
-        <form class="forms-sample" id="profile_info_update_form">
-          <div id="profile_info_status"></div>
+        <form class="forms-sample" id="basic_details_update_form">
+          <div id="basic_details_status"></div>
           @csrf
 
           <input type="hidden" class="form-control" id="user_id" placeholder="user_id" value=" {{$data->id}}">
@@ -130,25 +130,25 @@
 
           <div class="form-group">
             <label for="father_name">Father's Name</label>
-            <input type="text" class="form-control" id="father_name" name="father_name" placeholder="Father's Name" disabled value="{{ $data->profile->father_name}}">
+            <input type="text" class="form-control" id="father_name" name="father_name" placeholder="Father's Name" disabled value='{{ isset($data->profile) ? $data->profile->father_name : "" }}'>
             <div id="father_name_error"></div>
           </div>
 
           <div class="form-group">
             <label for="date_of_birth">Date of birth</label>
-            <input type="date" class="form-control p-4" name="date_of_birth" id="date_of_birth" placeholder="Date Of Birth" disabled value='{{ $data->profile->date_of_birth}}'>
+            <input type="date" class="form-control p-4" name="date_of_birth" id="date_of_birth" placeholder="Date Of Birth" disabled value='{{ isset($data->profile) ? $data->profile->date_of_birth : "" }}'>
             <div id="date_of_birth_error"></div>
           </div>
 
           <div class="form-group">
             <label for="alt_phone">Alternate Contact Number</label>
-            <input type="text" class="form-control" id="alt_phone" name="alt_phone" placeholder="Alternate Contact Number" disabled value="{{$data->profile->alt_phone}}">
+            <input type="text" class="form-control" id="alt_phone" name="alt_phone" placeholder="Alternate Contact Number" disabled value='{{ isset($data->profile) ? $data->profile->alt_phone : "" }}'>
             <div id="alt_phone_error"></div>
           </div>
 
           <div class="form-group">
             <label for="pan">Pan Number</label>
-            <input type="text" class="form-control" id="pan" name="pan" placeholder="Pan Number" disabled value="{{$data->profile->pan}}">
+            <input type="text" class="form-control" id="pan" name="pan" placeholder="Pan Number" disabled value='{{ isset($data->profile) ? $data->profile->pan : "" }}'>
             <div id="pan_error"></div>
           </div>
 
@@ -160,56 +160,57 @@
 
           <div class="form-group">
             <label for="pincode">Pincode</label>
-            <input type="text" class="form-control" name="pincode" id="pincode" placeholder="Pincode" disabled value='{{ $data->address->pincode ?? "NA" }}'>
+            <input type="text" class="form-control" name="pincode" id="pincode" placeholder="Pincode" disabled value='{{ isset($data->address) ? $data->address->pincode : "" }}'>
             <div id="pincode_error"></div>
           </div>
 
           <div class="form-group">
             <label for="state">State</label>
-            <input type="text" class="form-control" name="state" id="state" placeholder="State" disabled value='{{ $data->address->state ?? "NA" }}'>
+            <input type="text" class="form-control" name="state" id="state" placeholder="State" disabled value='{{ isset($data->address) ? $data->address->state : "" }}'>
             <div id="state_error"></div>
           </div>
 
           <div class="form-group">
             <label for="city">City</label>
-            <input type="text" class="form-control" name="city" id="city" placeholder="City" disabled value='{{ $data->address->city ?? "NA" }}'>
+            <input type="text" class="form-control" name="city" id="city" placeholder="City" disabled value='{{ isset($data->address) ? $data->address->city : "" }}'>
             <div id="city_error"></div>
           </div>
 
           <div class="form-group">
               <label for="gst">GST Number</label>
               <select class="form-control" name="gst" id="gst" disabled>
-                  <option value="1" {{ $data->profile->gst ? 'selected' : '' }}>Yes</option>
-                  <option value="0" {{ !$data->profile->gst ? 'selected' : '' }}>No</option>
+                <option value="1" {{ $data->profile ? ($data->profile->gst ? 'selected' : '') : '' }}>Yes</option>
+                <option value="0" {{ $data->profile ? (!$data->profile->gst ? 'selected' : '') : '' }}>No</option>
               </select>
               <div id="gst_error"></div>
           </div>
 
-          <div class="form-group" id="gst_number_field" style="display: {{ $data->profile->gst ? 'block' : 'none' }}">
+          <div class="form-group" id="gst_number_field" style="display: {{ $data->profile ? ($data->profile->gst ? 'block' : 'none') : 'none' }}">
             <label for="gst_number">GST Number</label>
-            <input type="text" class="form-control" name="gst_number" id="gst_number" placeholder="GST Number" value='{{ $data->profile->gst_number  }}'>
+            <input type="text" class="form-control" name="gst_number" id="gst_number" placeholder="GST Number" value='{{ $data->business->where("document_title", "gst")->first()->document_number ?? ""   }}'>
             <div id="gst_number_error"></div>
           </div>
 
           <div class="form-group">
               <label for="msme">MSME Number</label>
               <select class="form-control" name="msme" id="msme" disabled>
-                  <option value="1" {{ $data->profile->msme ? 'selected' : '' }}>Yes</option>
-                  <option value="0" {{ !$data->profile->msme ? 'selected' : '' }}>No</option>
+                  <option value="1" {{ $data->profile ? ($data->profile->msme ? 'selected' : '') : '' }}>Yes</option>
+                  <option value="0" {{ $data->profile ? (!$data->profile->msme ? 'selected' : '') : '' }}>No</option>
               </select>
               <div id="msme_error"></div>
           </div>
 
-          <div class="form-group" id="msme_number_field" style="display: {{ $data->profile->msme ? 'block' : 'none' }}">
+          <div class="form-group" id="msme_number_field" style="display: {{  $data->profile ? ($data->profile->msme ? 'block' : 'none') : 'none' }} }}">
               <label for="msme_number">MSME Number</label>
-              <input type="text" class="form-control" name="msme_number" id="msme_number" placeholder="MSME Number" value='{{ $data->profile->msme_number }}'>
+              <!-- <input type="text" class="form-control" name="msme_number" id="msme_number" placeholder="MSME Number" value='{{ $data->business->where("document_title", "msme")->first()->document_number ?? ""  }}'> -->
+              <input type="text" class="form-control" name="msme_number" id="msme_number" placeholder="MSME Number" value='{{ isset($data->business) && $data->business->where("document_title", "msme")->first() ? $data->business->where("document_title", "msme")->first()->document_number : "" }}'>
               <div id="msme_number_error"></div>
           </div>
 
           @if(auth()->user()->id == $data->id)
-          <div id="profile_info_update_button_div">
-            <button type="submit" class="btn btn-gradient-primary me-2" id="profile_info_update_button">Update</button>
-            <button class="btn btn-light" id="profile_info_cancel_button">Cancel</button>
+          <div id="basic_details_update_button_div">
+            <button type="submit" class="btn btn-gradient-primary me-2" id="basic_details_update_button">Update</button>
+            <button class="btn btn-light" id="basic_details_cancel_button">Cancel</button>
           </div>
           @endif
         </form>
@@ -241,15 +242,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.js"></script>
   <script>
-    let Profile_Info_Toggle = () => {
-      let editProfileButton = document.getElementById("profile_info_edit_button");
+    let Basic_Details_Toggle = () => {
+      let editProfileButton = document.getElementById("basic_details_edit_button");
       let profileUpdateButtonDiv = document.getElementById(
-        "profile_info_update_button_div"
+        "basic_details_update_button_div"
       );
       let profileCancelButton = document.getElementById(
-        "profile_info_cancel_button"
+        "basic_details_cancel_button"
       );
-      let profileUpdateButton = document.getElementById("profile_info_update_button");
+      let profileUpdateButton = document.getElementById("basic_details_update_button");
 
       let nameInput = document.getElementById("name");
       let emailInput = document.getElementById("email");
@@ -321,6 +322,6 @@
       });
     };
 
-    Profile_Info_Toggle();
+    Basic_Details_Toggle();
   </script>
 </div>

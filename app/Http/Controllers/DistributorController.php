@@ -100,64 +100,7 @@ class DistributorController extends Controller
      */
     public function store(Request $request): Response
     {
-        // dd($request->all());
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users,email',
-            'phone' => 'required|numeric|digits:10|regex:/^[6-9]\d{9}$/'
-        ]);
-
-        if ($validator->fails()) {
-            return Response(['status' => false, 'errors' => $validator->errors()], 422);
-        }
-
-        // $uniqueReferralId = RegisterHelper::generateReferralId(5,5);
-        // $uniqueUserId = RegisterHelper::generateUserId("DT",5);
-
-        $user_type=$request->user_type;
-        switch ($user_type) {
-            case 'admin':
-                $uniqueReferralId = RegisterHelper::generateReferralId(5, 5);
-                $uniqueUserId = RegisterHelper::generateUserId("AD", 5);
-                $role = "Admin";
-                break;
-            case 'distributor':
-                $uniqueReferralId = RegisterHelper::generateReferralId(5, 5);
-                $uniqueUserId = RegisterHelper::generateUserId("DT", 5);
-                $role = "Distributor";
-                break;
-            case 'retailer':
-                $uniqueReferralId = RegisterHelper::generateReferralId(5, 5);
-                $uniqueUserId = RegisterHelper::generateUserId("RT", 5);
-                $role = "Retailor";
-                break;
-            case 'client':
-                $uniqueReferralId = RegisterHelper::generateReferralId(5, 5);
-                $uniqueUserId = RegisterHelper::generateUserId("CL",5);
-                $role = "Client";
-                break;
-        }
-        // dd($uniqueReferralId);
-
-        $referredById = auth()->user()->referral_id;
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'password' => "Password",
-            'category' => "Distributor",
-            'user_id' => $uniqueUserId,
-            'referral_id' => $uniqueReferralId,
-            'referred_by' => $referredById,
-        ]);
-
-        if ($user) {     
-            /** assign role to user **/
-            $user->assignRole($role);
-            return Response(['status' => true, 'message' => "User added successfully !"], 200);
-        }
-        return Response(['status' => false, 'message' => "Something went wrong"], 500);
+        //
     }
 
     /**

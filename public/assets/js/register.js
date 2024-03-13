@@ -235,10 +235,7 @@ $(document).ready(function () {
             );
             $("#preffered_line").focus();
             return false;
-        }
-        else if (
-            preffered_line.length>60
-        ) {
+        } else if (preffered_line.length > 60) {
             $("#preffered_line_error").html(
                 '<div class=" invalid-feedback d-block">Preffered line must not be greater than 60 characters</div>'
             );
@@ -483,10 +480,7 @@ $(document).ready(function () {
             );
             $("#preffered_line").focus();
             return false;
-        }
-       else if (
-            preffered_line.length>60
-        ) {
+        } else if (preffered_line.length > 60) {
             $("#preffered_line_error").html(
                 '<div class=" invalid-feedback d-block">Preffered line must not be greater than 60 characters</div>'
             );
@@ -765,6 +759,6 @@ $(document).ready(function () {
                     });
                 }
             },
-        });
-    });
+        });
+    });
 });
