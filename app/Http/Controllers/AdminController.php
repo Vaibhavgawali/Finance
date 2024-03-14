@@ -58,7 +58,6 @@ class AdminController extends Controller
                             $q->where('name', 'like', '%' . $search . '%');
                             $q->orWhere('referral_id', 'like', '%' . $search . '%');
                             $q->orWhere('user_id', 'like', '%' . $search . '%');
-                            $q->orWhere('referred_by', Auth::user()->referral_id);
                         });
                     })
                     ->orderBy('id', 'desc')

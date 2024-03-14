@@ -98,38 +98,7 @@ class RetailerController extends Controller
      */
     public function store(Request $request): Response
     {
-        // dd($request->all());
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users,email',
-            'phone' => 'required|numeric|digits:10|regex:/^[6-9]\d{9}$/'
-        ]);
-
-        if ($validator->fails()) {
-            return Response(['status' => false, 'errors' => $validator->errors()], 422);
-        }
-
-        $uniqueReferralId = RegisterHelper::generateReferralId(5,5);
-        $uniqueUserId = RegisterHelper::generateUserId("RT",5);
-        $referredById = auth()->user()->referral_id;
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'password' => "Password",
-            'category' => "Retailor",
-            'user_id' => $uniqueUserId,
-            'referral_id' => $uniqueReferralId,
-            'referred_by' => $referredById,
-        ]);
-
-        if ($user) {     
-            /** assign role to user **/
-            $user->assignRole('Retailor');
-            return Response(['status' => true, 'message' => "Retailor added successfully !"], 200);
-        }
-        return Response(['status' => false, 'message' => "Something went wrong"], 500);
+       //
     }
 
     /**
@@ -154,33 +123,7 @@ class RetailerController extends Controller
      */
     public function update(Request $request, string $id)
     {    
-        $userId = Auth::user()->user_id;
-        if ($userId == $id) {
-            $formMethod = $request->method();
-            if ($formMethod == "PATCH") {
-                $validator = Validator::make($request->all(), [
-                    'name' => 'required|string',
-                    'email' => 'required|email|unique:users,email,'.$userId .',user_id',
-                    'phone' => 'required|numeric|digits:10|regex:/^[6-9]\d{9}$/'
-                ]);
-
-                if ($validator->fails()) {
-                    return Response(['status'=>false,'errors' => $validator->errors()], 422);
-                }
-
-                $user = User::where('user_id', $id);
-                if ($user) {
-                    $isUpdated = $user->update($request->all());
-                    if ($isUpdated) {
-                        return Response(['status'=>true,'message' => "User updated successfully"], 200);
-                    }
-                    return Response(['status'=>false,'message' => "Something went wrong"], 500);
-                }
-                return Response(['status'=>false,'message' => "User not found"], 404);
-            }
-            return Response(['status'=>false,'message' => "Invalid form method "], 405);
-        }
-        return Response(['status'=>false,'message' => 'Unauthorized'], 401);
+      //
     }
 
 }

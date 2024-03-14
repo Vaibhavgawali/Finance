@@ -253,7 +253,7 @@
       let profileUpdateButton = document.getElementById("basic_details_update_button");
 
       let nameInput = document.getElementById("name");
-      let emailInput = document.getElementById("email");
+      //let emailInput = document.getElementById("email");
       let phoneInput = document.getElementById("phone");
       let fatherNameInput = document.getElementById("father_name");
       let DobInput = document.getElementById("date_of_birth");
@@ -273,8 +273,8 @@
         if (toggle) {
           profileUpdateButtonDiv.style.display = "block";
           nameInput.removeAttribute("disabled");
-          emailInput.removeAttribute("disabled");
-          phoneInput.removeAttribute("disabled");
+         // emailInput.removeAttribute("disabled");
+        //  phoneInput.removeAttribute("disabled");
           fatherNameInput.removeAttribute("disabled");
           DobInput.removeAttribute("disabled");
           panInput.removeAttribute("disabled");
@@ -288,8 +288,8 @@
         } else {
           profileUpdateButtonDiv.style.display = "none";
           nameInput.setAttribute("disabled", true);
-          emailInput.setAttribute("disabled", true);
-          phoneInput.setAttribute("disabled", true);
+        //  emailInput.setAttribute("disabled", true);
+        //  phoneInput.setAttribute("disabled", true);
           fatherNameInput.setAttribute("disabled", true);
           DobInput.setAttribute("disabled", true);
           panInput.setAttribute("disabled", true);
