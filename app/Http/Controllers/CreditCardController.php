@@ -35,9 +35,9 @@ class CreditCardController extends Controller
             return Response(['status' => false, 'errors' => $validator->errors()], 422);
         }
 
-        'pan_file' => $request->file('pan_file')->store('uploads'),
-        'adhar_front_file' => $request->file('adhar_front_file')->store('uploads'),
-        'adhar_back_file' => $request->file('adhar_back_file')->store('uploads'),
+        // 'pan_file' => $request->file('pan_file')->store('uploads'),
+        // 'adhar_front_file' => $request->file('adhar_front_file')->store('uploads'),
+        // 'adhar_back_file' => $request->file('adhar_back_file')->store('uploads'),
 
         $document = $request->file($documentField);
         $documentName = $document->hashName();
