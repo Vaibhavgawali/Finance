@@ -1,147 +1,168 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Insurancecareer.in</title>
-	<meta name="description" content="Insurancecareer.in - Insurance Company">
-	<meta name="keywords" content="	accounting, advising, advisory, business, company, consulting, corporate, finance, financial, investments, law, multi-purpose, services, tax help, visual composer">
-	<meta name="author" content="Zynovvatech">
-	<link rel="shortcut icon" href="/admin-assets/assets/images/logomini.png" type="image/x-icon">
-	<meta name="base-url" content="{{ url('/') }}">
-	<!-- Mobile Specific Meta -->
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="zxx">
+  <head>
+    <meta charset="utf-8" />
+    <title>Blarkafin - Finance & Insurance Company</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="Blarkafin - Insurance and Finance Company" name="description" />
+    <meta content="" name="keywords" />
+    <meta content="" name="author" />
 
-	<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('assets/css/fontawesome-all.css') }}">
-	<link rel="stylesheet" href="{{ asset('assets/css/flaticon.css') }}">
-	<link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
-	<link rel="stylesheet" href="{{ asset('assets/css/video.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('assets/css/slick-theme.css') }}">
-	<link rel="stylesheet" href="{{ asset('assets/css/slick.css') }}">
-	<link rel="stylesheet" href="{{ asset('assets/css/nice-select.css') }}">
-	<link rel="stylesheet" href="{{ asset('assets/css/rs6.css') }}">
-	<link rel="stylesheet" href="{{ asset('assets/css/roundslider.css') }}">
-	<link rel="stylesheet" href="{{ asset('assets/css/global.css') }}">
-	<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-</head>
-<body class="insurin-main">
-	<div id="preloader"></div>
-	<div class="up">
-		<a href="#" class="scrollup text-center"><i class="fas fa-chevron-up"></i></a>
-	</div>
-	
-<!-- Start of header section
-	============================================= -->
-	<header id="in-header" class="in-header-section header-style-six">
-		
-		<div class="in-header-top-content ">
-			<div class="brand-logo d-flex p-2 align-items-center">
-				<a href="/"><img src="{{asset('assets/img/logo/logo1.png')}}" alt=""></a>
-				<marquee class="top-text-scroll" style="margin-left:40px;" direction="right" scrollamount="3">Empower Your Future: Navigate the Insurance Career Landscape with us  </marquee> 
-			</div>
-			
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
 
-		</div>
-		
-		<div class="ins-header-main-navigation-area d-flex align-items-center justify-content-between">
-			<div class="ins-header-sidenav-cta d-flex align-items-center">
-				<div class="in-sidebar-btn navSidebar-button">
-					<span></span>
-					<span></span>
-					<span></span>
-					<span></span>
-				</div>
-				<div class="ins-nav-cta d-flex align-items-center">
-					<span><img src="{{asset('assets/img/logo/fire.svg')}}" alt=""></span> Hot Line: + <a href="tel:011-44748705">011-44748705</a>
-				</div>
-			</div>
-			<div class="main-navigation-menu">
-				<nav class="in-main-navigation-area clearfix ul-li">
-					<ul id="main-nav" class="nav navbar-nav clearfix">
-						<li class="dropdown in-megamenu">
-							<a href="/">Home</a>
-						</li>
-						<li><a target="" href="/about">About Us</a></li>
-						<li class="dropdown">
-						<a href="javascript:void(0)">Insights</a>
-							<ul class="dropdown-menu clearfix">
-								<li><a  href="/industry">About Industry</a></li>
-							</ul>
-						</li>
-						<li class="dropdown">
-							<a class="btn  custom-btn p-2" href="javascript:void(0)">Register</a>
-							<ul class="dropdown-menu clearfix">
-								<li><a   href="/candidate-register">Candidate</a></li>
-								<li><a  href="/insurer-register">Insurer</a></li>
-								<li><a  href="/institute-register">Institute</a></li>
-							</ul>
-						</li>
-						<li class="dropdown">
-							<a class="btn custom-btn p-2" href="javascript:void(0)">Login</a>
-							<ul class="dropdown-menu clearfix">
-								<li><a   href="/login?role=candidate">Candidate</a></li>
-								<li><a  href="/login?role=insurer">Insurer</a></li>
-								<li><a  href="/login?role=institute">Institute</a></li>
-							</ul>
-						</li>
-					</ul>
-				</nav>
-			</div>
-		</div>
-		<div class="mobile_menu position-relative">
-			<div class="mobile_menu_button open_mobile_menu">
-				<i class="fal fa-bars"></i>
-			</div>
-			<div class="mobile_menu_wrap">
-				<div class="mobile_menu_overlay open_mobile_menu"></div>
-				<div class="mobile_menu_content">
-					<div class="mobile_menu_close open_mobile_menu">
-						<i class="fal fa-times"></i>
-					</div>
-					<div class="m-brand-logo">
-						<a  href="/"><img src="assets/img/logo/logo-1.png" alt=""></a>
-					</div>
-					<nav class="mobile-main-navigation  clearfix ul-li">
-						<ul id="m-main-nav" class="nav navbar-nav clearfix">
-							<li class=" in-megamenu">
-								<a href="/">Home</a>
-							</li>
-							
-							<li><a  href="/about">About Us</a></li>
-							<li class="dropdown">
-							<a href="javascript:void(0)">Insights</a>
-								<ul class="dropdown-menu clearfix">
-									<li><a  href="/industry">About Industry</a></li>
-									<li><a  href="/module">Module</a></li>
-								</ul>
-							</li>
-							<li class="dropdown">
-							<a class="btn custom-btn p-2" href="javascript:void(0)">Register</a>
-							<ul class="dropdown-menu clearfix">
-								<li><a   href="/candidate-register">Candidate</a></li>
-								<li><a  href="/insurer-register">Insurer</a></li>
-								<li><a  href="/institute-register">Institute</a></li>
-							</ul>
-						</li>
-						<li class="dropdown">
-							<a class="btn custom-btn p-2" href="javascript:void(0)">Login</a>
-							<ul class="dropdown-menu clearfix">
-								<li><a   href="/login">Candidate</a></li>
-								<li><a  href="/login">Insurer</a></li>
-								<li><a  href="/login">Institute</a></li>
-							</ul>
-						</li>
-						</ul>
-					</nav>
-				</div>
-			</div>
-			<!-- /Mobile-Menu -->
-		</div>
-	</header>
-	<!-- Sidebar sidebar Item -->
-	
-<!-- Start of header section
-	============================================= -->
+    <!-- CSS Files
+    ================================================== -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link href="{{ asset('assets/css/jpreloader.css')}}" rel="stylesheet" type="text/css" />
+    <link
+      id="bootstrap"
+      href="{{ asset('assets/css/bootstrap.min.css') }}"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      id="bootstrap-grid"
+      href="{{ asset('assets/css/bootstrap-grid.min.css') }}"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      id="bootstrap-reboot"
+      href="{{ asset('assets/css/bootstrap-reboot.min.css') }}"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link href="{{asset('assets/css/animate.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/css/owl.carousel.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/css/owl.theme.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/css/owl.transitions.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/css/magnific-popup.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/css/jquery.countdown.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/css/style.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="icon" href="{{asset('assets/images/fevicon.png')}}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{asset('assets/images/fevicon.png')}}" type="image/x-icon" />
+    <script
+      src="https://kit.fontawesome.com/26ba1f541e.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- color scheme -->
+    <link
+      id="colors"
+      href="{{asset('assets/css/colors/scheme-05.css')}}"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link href="{{asset('assets/css/coloring.css')}}" rel="stylesheet" type="text/css" />
+    <style>
+        .swiper {
+      width: 90%;
+      height: 100%;
+      margin: auto !important;
+    }
+
+    .swiper-slide {
+        /* margin: auto !important; */
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* border: solid red 1px; */
+      border-radius: 5px;
+    }
+
+    .swiper-
+     img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    </style>
+  </head>
+
+  <body>
+    <div id="wrapper">
+      <!-- header begin -->
+      <div id="topbar" class="text-light">
+        <div class="container">
+          <div class="topbar-left sm-hide">
+            <span class="topbar-widget tb-social">
+              <a href="https://facebook.com/BlarkaFin" target="_blank"><i class="fa fa-facebook"></i></a>
+              <a href="https://www.instagram.com/blarkafin/" target="_blank"><i class="fa fa-instagram"></i></a>
+            </span>
+          </div>
+      
+          <div class="topbar-right">
+            <div class="topbar-right">
+              <span class="topbar-widget"><a href="login.html">Login</a></span>
+              <span class="topbar-widget"><a href="register.html">Register</a></span>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+               <header class="transparent">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="de-flex sm-pt10">
+                  <div class="de-flex-col">
+                    <!-- logo begin -->
+                    <div id="logo">
+                      <a href="index.html">
+                        <img alt="" class="logo" src="{{asset('assets/images/logo-light.png')}}" />
+                        <img alt="" class="logo-2" src="{{asset('assets/images/logo.png')}}" />
+                      </a>
+                    </div>
+                    <!-- logo close -->
+                  </div>
+                  <div class="de-flex-col header-col-mid">
+                    <!-- mainmenu begin -->
+                    <ul id="mainmenu">
+                      <li>
+                        <a href="index.html">Home<span></span></a>
+                      </li>
+                     
+                      <li>
+                        <a href="/credit">Credit cards<span></span></a>
+                      </li>
+                      <li>
+                        <a href="#">Insurance<span></span></a>
+                        <ul>
+                          <li>
+                            <a href="lifeinsurance.html">Life Insurance</a>
+                          </li>
+                          <li>
+                              <a href="generalinsurance.html">General Insurance</a>
+                            </li>
+                          <li>
+                            <a href="healthinsurance.html"
+                              >Health Insurance</a
+                            >
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <a href="loan.html">Loan<span></span></a>
+                      </li>
+                     
+                      <li>
+                        <a href="demat.html">Demat Account<span></span></a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="de-flex-col">
+                    <!-- <div class="h-phone "><span>Need&nbsp;Help?</span><i class="fa fa-phone id-color-secondary"></i> <a href="tel:+91 8341683476">+91-8341683476</a></div> -->
+                    <span id="menu-btn"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>

@@ -35,7 +35,13 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 |
 */
 
+Route::get('/', [WelcomeController::class, 'index']);
+Route::get('/credit', [WelcomeController::class, 'credit']);
+
+Route::get('/creditcard', [WelcomeController::class, 'credit_card']);
+
 Route::get('/candidate-register', [WelcomeController::class, 'candidate_register']);
+
 
 Route::middleware(['web'])->group(function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
