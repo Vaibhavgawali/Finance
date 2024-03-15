@@ -43,8 +43,18 @@ Route::middleware(['web'])->group(function () {
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
 
+Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+
 Route::get('/reset-password', [PasswordController::class,'resetPasswordForm']);
 Route::post('/reset-password', [PasswordController::class, 'resetPassword']);
+
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::get('/dashboard', [DashboardController::class, 'dashboard']);
+    Route::get('/home', [App\Http\Controllers\DashboardController::class, 'dashboard']); //redirect to dashboard if already logged in
+});
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
@@ -69,16 +79,5 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/kyc-details-update', [ProfileController::class, 'KycDetailsUpdate']);
 });
 
-Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::get('/dashboard', [DashboardController::class, 'dashboard']);
-    Route::get('/home', [App\Http\Controllers\DashboardController::class, 'dashboard']); //redirect to dashboard if already logged in
+Route::post('/credit-card', [CreditCardController::class, 'creditCard']);
 
-    Route::resource('user-profile', UserProfileController::class);
-    Route::resource('user-address', UserAddressController::class);
-    Route::resource('user-documents', UserDocumentsController::class);
-});
-
-Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
