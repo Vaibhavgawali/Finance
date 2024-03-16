@@ -1,9 +1,9 @@
-<!-- @extends('frontend/layouts.main')
-@section('main-section') -->
+@extends('frontend/layouts.main')
+@section('main-section')
        <!-- Info Section Start -->
 
        <div  class="info-register pb-5">
-          <div class="container w-100 mt-50 ">
+          <div class="container w-100 mt-200 ">
               <div class="row">
                 
                     <div class="col-12 col-md-12 col-lg-4 shadow rounded  p-2   d-none   d-xl-block bg-white">
@@ -58,4 +58,4 @@
         
        </script>
        <!-- Info Section End -->
-<!-- @endsection -->
+ @endsection

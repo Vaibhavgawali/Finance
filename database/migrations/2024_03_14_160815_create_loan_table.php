@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('loan', function (Blueprint $table) {
             $table->id();
+            $table->string('referred_by');
             $table->enum('loan_type', ['Home', 'Business', 'Personal', 'Vehicle']);
             $table->string('mobile');
             $table->string('name');

@@ -26,4 +26,12 @@ class WelcomeController extends Controller
     {
         return view('frontend.creditcard');
     }
+    function loan()
+    {
+        return view('frontend.loan');
+    }
+    function loanForm()
+    {
+        return view('frontend.loanForm');
+    }
 }

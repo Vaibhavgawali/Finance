@@ -7,6 +7,8 @@
     <meta content="Blarkafin - Insurance and Finance Company" name="description" />
     <meta content="" name="keywords" />
     <meta content="" name="author" />
+    <meta name="base-url" content="{{ url('/') }}">
+	  <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
