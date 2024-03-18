@@ -13,7 +13,7 @@
             <div class="container">
               <div class="row">
                 <div class="col-md-12 text-center">
-                  <h1>User Login</h1>
+                  <h1>User Registration</h1>
                 </div>
                 <div class="clearfix"></div>
               </div>
@@ -33,39 +33,54 @@
                   method="post"
                   action="blank.php"
                 >
-                  <h3>Login to your account</h3>
+                  <h3>User Registration</h3>
 
                   <div class="field-set">
-                    <label>Mobile Number</label>
+                    <label>Name</label>
                     <input
                       type="text"
                       name="name"
                       id="name"
                       class="form-control"
-                      placeholder="Enter mobile number"
+                      placeholder="Enter name"
+                    />
+                  </div>
+ 
+                  <div class="field-set">
+                    <label>Mobile Number</label>
+                    <input
+                      type="text"
+                      name="phone"
+                      id="phone"
+                      class="form-control"
+                      placeholder="Enter Mobile Number"
+                    />
+                  </div>
+                  <div class="field-set">
+                    <label>Email</label>
+                    <input
+                      type="text"
+                      name="email"
+                      id="email"
+                      class="form-control"
+                      placeholder="Enter email"
                     />
                   </div>
 
                   <div id="submit">
-                    <input
-                      type="submit"
-                      id="send_message"
-                      value="Login"
-                      class="btn btn-custom color-2"
-                    />
+                    <button type="submit"  class="btn btn-custom color-2">Register</button>
+                  </div>
                     <div class="clearfix"></div>
                     <div class="spacer-single"></div>
+
                     <!-- social icons -->
                     <ul class="list s3">
-                      <li>Don't have an account ?</li>
-                      <li>
-                        <a class="mx-1" href="/register">Register</a>|
-                      </li>
-                      <li><a class="mx-1" href="#">Forgot Password ?</a> |</li>
+                      <li>Allready have an account ?</li>
+                      <li><a class="mx-1" href="/login">Login</a>|</li>
                       <li><a href="/">Home</a></li>
                     </ul>
                     <!-- social icons close -->
-                  </div>
+                  
                 </form>
               </div>
             </div>
@@ -73,6 +88,5 @@
         </section>
       </div>
       <!-- content close -->
-
       <a href="#" id="back-to-top"></a>
 @endsection

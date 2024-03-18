@@ -13,9 +13,9 @@
                         <div class="widget">
                             <h5>Quick Link</h5>
                             <ul>
-                               <li><a href="index.html">Home</a></li>
-                               <li><a href="register.html">Registration</a></li>
-                               <li><a href="contact.html">Contact us</a></li>
+                               <li><a href="/">Home</a></li>
+                               <li><a href="/register">Registration</a></li>
+                               <!-- <li><a href="/contact">Contact us</a></li> -->
                             </ul>
                         </div>
                     </div>
@@ -90,6 +90,11 @@
     <script src="{{asset('assets/js/typed.js')}}"></script>
     <script src="{{asset('assets/js/designesia.js')}}"></script>
 	<script src="{{asset('assets/js/custom/creditcard.js')}}"></script>
+	<script src="{{asset('assets/js/custom/loan.js')}}"></script>
+	<script src="{{asset('assets/js/custom/loan-service.js')}}"></script>
+
+
+
 
     <script>
     $(function () {

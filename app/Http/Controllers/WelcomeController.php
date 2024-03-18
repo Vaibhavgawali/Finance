@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 
 class WelcomeController extends Controller
 {
-    function candidate_register()
+    function register()
     {
-        return view('frontend.candidate-register');
+        return view('frontend.register');
     }
     function login()
     {
@@ -22,8 +22,32 @@ class WelcomeController extends Controller
     {
         return view('frontend.credit');
     }
+    function demat()
+    {
+        return view('frontend.demat');
+    }
     function credit_card()
     {
         return view('frontend.creditcard');
+    }
+    function general_insurance()
+    {
+        return view('frontend.generalinsurance');
+    }
+    function health_insurance()
+    {
+        return view('frontend.healthinsurance');
+    }
+    function life_insurance()
+    {
+        return view('frontend.lifeinsurance');
+    }
+    function loan()
+    {
+        return view('frontend.loan');
+    }
+    function loan_service()
+    {
+        return view('frontend.loanservice');
     }
 }

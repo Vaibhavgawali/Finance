@@ -14,25 +14,26 @@
 
     <!-- CSS Files
     ================================================== -->
+    <link href="{{asset('assets/css/loan.css')}}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link href="{{ asset('assets/css/jpreloader.css')}}" rel="stylesheet" type="text/css" />
     <link
-      id="bootstrap"
-      href="{{ asset('assets/css/bootstrap.min.css') }}"
-      rel="stylesheet"
-      type="text/css"
+    id="bootstrap"
+    href="{{ asset('assets/css/bootstrap.min.css') }}"
+    rel="stylesheet"
+    type="text/css"
     />
     <link
-      id="bootstrap-grid"
-      href="{{ asset('assets/css/bootstrap-grid.min.css') }}"
-      rel="stylesheet"
-      type="text/css"
+    id="bootstrap-grid"
+    href="{{ asset('assets/css/bootstrap-grid.min.css') }}"
+    rel="stylesheet"
+    type="text/css"
     />
     <link
-      id="bootstrap-reboot"
-      href="{{ asset('assets/css/bootstrap-reboot.min.css') }}"
-      rel="stylesheet"
-      type="text/css"
+    id="bootstrap-reboot"
+    href="{{ asset('assets/css/bootstrap-reboot.min.css') }}"
+    rel="stylesheet"
+    type="text/css"
     />
     <link href="{{asset('assets/css/animate.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/css/owl.carousel.css')}}" rel="stylesheet" type="text/css" />
@@ -40,6 +41,7 @@
     <link href="{{asset('assets/css/owl.transitions.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/css/magnific-popup.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/css/jquery.countdown.css')}}" rel="stylesheet" type="text/css" />
+    
     <link href="{{asset('assets/css/style.css')}}" rel="stylesheet" type="text/css" />
     <link rel="icon" href="{{asset('assets/images/fevicon.png')}}" type="image/x-icon" />
     <link rel="shortcut icon" href="{{asset('assets/images/fevicon.png')}}" type="image/x-icon" />
@@ -100,8 +102,8 @@
       
           <div class="topbar-right">
             <div class="topbar-right">
-              <span class="topbar-widget"><a href="login.html">Login</a></span>
-              <span class="topbar-widget"><a href="register.html">Register</a></span>
+              <span class="topbar-widget"><a href="/login">Login</a></span>
+              <span class="topbar-widget"><a href="/register">Register</a></span>
             </div>
           </div>
           <div class="clearfix"></div>
@@ -126,7 +128,7 @@
                     <!-- mainmenu begin -->
                     <ul id="mainmenu">
                       <li>
-                        <a href="index.html">Home<span></span></a>
+                        <a href="/">Home<span></span></a>
                       </li>
                      
                       <li>
@@ -136,24 +138,24 @@
                         <a href="#">Insurance<span></span></a>
                         <ul>
                           <li>
-                            <a href="lifeinsurance.html">Life Insurance</a>
+                            <a href="/life-insurance">Life Insurance</a>
                           </li>
                           <li>
-                              <a href="generalinsurance.html">General Insurance</a>
+                              <a href="/general-insurance">General Insurance</a>
                             </li>
                           <li>
-                            <a href="healthinsurance.html"
+                            <a href="/health-insurance"
                               >Health Insurance</a
                             >
                           </li>
                         </ul>
                       </li>
                       <li>
-                        <a href="loan.html">Loan<span></span></a>
+                        <a href="/loan">Loan<span></span></a>
                       </li>
                      
                       <li>
-                        <a href="demat.html">Demat Account<span></span></a>
+                        <a href="/demat">Demat Account<span></span></a>
                       </li>
                     </ul>
                   </div>

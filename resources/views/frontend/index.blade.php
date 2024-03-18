@@ -247,7 +247,7 @@
                     <div class="container">
                         <div class="row align-items-center">
                             <div class="col-lg-6 d-none d-lg-block d-xl-block text-center">
-                                <img class="relative img-fluid" src="images/misc/3.jpg" alt="" />
+                                <img class="relative img-fluid" src="{{asset('assets/images/misc/3.jpg')}}" alt="" />
                             </div>
 
                             <div class="col-lg-5 offset-md-1 ">

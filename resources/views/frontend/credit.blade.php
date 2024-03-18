@@ -16,7 +16,7 @@
                 <div class="col-lg-4 col-md-6 mb30">
                     <a href="/creditcard?creditcard=HDFC Credit Card">
                         <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
-                            <i class="bg-color text-center "><img src="assets/images/services-logos/1.jpg" alt=""></i>
+                            <i class="bg-color text-center "><img style="" src="assets/images/services-logos/1.jpg" alt=""></i>
                             <div class="fb-text">
                                 <h4>HDFC Credit Card</h4>
                                 <p>Apply for Credit Card Online at HDFC Bank &amp; enjoy Exclusive Benefits.</p>
