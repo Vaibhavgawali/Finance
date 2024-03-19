@@ -38,10 +38,16 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 */
 
 Route::get('/', [WelcomeController::class, 'index']);
+Route::get('/login',[WelcomeController::class, 'login']);
+Route::get('/register',[WelcomeController::class, 'register']);
 Route::get('/credit', [WelcomeController::class, 'credit']);
 Route::get('/creditcard', [WelcomeController::class, 'credit_card']);
+Route::get('/general-insurance', [WelcomeController::class, 'general_insurance']);
+Route::get('/life-insurance', [WelcomeController::class, 'life_insurance']);
+Route::get('/health-insurance', [WelcomeController::class, 'health_insurance']);
 Route::get('/loan', [WelcomeController::class, 'loan']);
-Route::get('/loan-service', [WelcomeController::class, 'loanService']);
+Route::get('/demat', [WelcomeController::class, 'demat']);
+Route::get('/loan-service', [WelcomeController::class, 'loan_service']);
 
 Route::get('/candidate-register', [WelcomeController::class, 'candidate_register']);
 

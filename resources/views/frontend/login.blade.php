@@ -5,53 +5,63 @@
        <div  class="info-register pb-5">
           <div class="container w-100 mt-200 ">
               <div class="row">
-                
-                    <div class="col-12 col-md-12 col-lg-4 shadow rounded  p-2   d-none   d-xl-block bg-white">
-                        <div>
-                           <img src="{{asset('assets/img/3D-images/register.png')}}" alt="">
-                        </div>
-                        <div>
-                        <div class="ins-main-about-list-area ul-li-block">
-                          <ul class="">
-                            <li class="fs-6 fst-italic" id="title_1">Build your profile .</li>
-                              <li class="fs-6 fst-italic" id="title_2">Learn & stay updated.</li>
-                            <li class="fs-6 fst-italic" id="title_3">Find a job .</li>
-                          </ul> 
-                        </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-12 col-lg-1 "></div>
-                     <div style="margin: auto;" class="col-11 col-md-12 col-lg-7 shadow  rounded p-4 bg-white">
-                       <div>
-                           <h4 class="text-start">Enter your details</h4>
-                       </div>
-                       <div>
-                        <div id="register_status"></div>
-                        <form id="login_form">
-                           @csrf
-                            <div class="mb-3">
-                              <label for="exampleInputEmail1" class="form-label">Email ID</label>
-                              <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Tell us your Email ID">
-                              <div id="email_error"></div>
-                            </div>
-                            
-                            <div class="mb-3">
-                              <label for="password" class="form-label" >Password</label>
-                              <input type="password" class="form-control" id="password" placeholder="Enter Your Password">
-                              <div id="password_error"></div>
-                            </div>
-                              <div>
-								<div>
-									<button type="submit" id="login_btn" class="btn btn-primary  my-2">Login</button>
-								</div>
-								Dont have an account ? <a href="/register" class="btn btn-secondary text-white mx-2">Register</a> 
-                <a href="/password/reset" class="btn btn-secondary text-white mx-2">Forgot Password</a>
-							  </div>
-                          </form>
-                       </div>
-                     </div>
-            
+                <div class="col-md-12 text-center">
+                  <h1>User Login</h1>
+                </div>
+                <div class="clearfix"></div>
               </div>
+            </div>
+          </div>
+        </section>
+        <!-- section close -->
+
+        <section aria-label="section">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6 offset-md-3">
+                <form
+                  name="contactForm"
+                  id="contact_form"
+                  class="form-border"
+                  method="post"
+                  action="blank.php"
+                >
+                  <h3>Login to your account</h3>
+
+                  <div class="field-set">
+                    <label>Mobile Number</label>
+                    <input
+                      type="text"
+                      name="name"
+                      id="name"
+                      class="form-control"
+                      placeholder="Enter mobile number"
+                    />
+                  </div>
+
+                  <div id="submit">
+                    <input
+                      type="submit"
+                      id="send_message"
+                      value="Login"
+                      class="btn btn-custom color-2"
+                    />
+                    <div class="clearfix"></div>
+                    <div class="spacer-single"></div>
+                    <!-- social icons -->
+                    <ul class="list s3">
+                      <li>Don't have an account ?</li>
+                      <li>
+                        <a class="mx-1" href="/register">Register</a>|
+                      </li>
+                      <li><a class="mx-1" href="#">Forgot Password ?</a> |</li>
+                      <li><a href="/">Home</a></li>
+                    </ul>
+                    <!-- social icons close -->
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
        </div>
        <script>
