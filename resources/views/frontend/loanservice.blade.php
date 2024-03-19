@@ -1,7 +1,6 @@
 @extends('frontend/layouts.main')
 @section('main-section')
 <div class="no-bottom no-top" id="content">
-        
         <div id="top"></div>
         <!-- MultiStep Form -->
         <!-- section begin -->
@@ -18,13 +17,15 @@
             <div class="row bg-white p-3 rounded-3 g-0">
               <div class="col-md-12 col-12 border border-2 p-3 rounded-3">
                 <h3 class="text-center">Loan Application</h3>
-                <form id="creditForm" action="" class="bg-white">
+                <form id="loanForm"  enctype="multipart/form-data" class="bg-white">
                   <!-- One "tab" for each step in the form: -->
                   <div class="tab">
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group pb-3">
-                          <select name="loan" id="loan" class="form-control">
+                          <input type="hidden" id="formUrl" value="/loan-submit">
+
+                          <select name="loan_type" id="loan_type" class="form-control">
                             <option value="null" selected disabled>
                               --Select Loan Type--
                             </option>
@@ -33,7 +34,7 @@
                             <option value="Personal Loan">Personal Loan</option>
                             <option value="Vehicle Loan">Vehicle Loan</option>
                           </select>
-                          <div id="loan_error" class="text-danger mx-2"></div>
+                          <div id="loan_type_error" class="text-danger mx-2"></div>
                         </div>
 
                         <div class="form-group pb-3">
@@ -64,13 +65,13 @@
                           <div class="form-group pb-3">
                             <input
                               type="text"
-                              name="phone"
-                              id="phone"
+                              name="mobile"
+                              id="mobile"
                               class="form-control"
                               placeholder="Mobile Number"
                             />
                             <div
-                              id="phone_error"
+                              id="mobile_error"
                               class="text-danger mx-2"
                             ></div>
                           </div>
@@ -131,11 +132,11 @@
                             onfocus="(this.type='date')"
                             onblur="(this.type='text')"
                             class="form-control"
-                            name="date_of_birth"
-                            id="date_of_birth"
+                            name="dob"
+                            id="dob"
                           />
                           <div
-                            id="date_of_birth_error"
+                            id="dob_error"
                             class="text-danger mx-2"
                           ></div>
                         </div>
@@ -143,23 +144,23 @@
                           <input
                             type="text"
                             class="form-control"
-                            name="pancard"
-                            id="pancard"
+                            name="pan_num"
+                            id="pan_num"
                             placeholder="Pancard"
                           />
                           <div
-                            id="pancard_error"
+                            id="pan_num_error"
                             class="text-danger mx-2"
                           ></div>
                         </div>
                         <div class="form-group pb-3">
-                          <select name="martial_status" id="martial_status" class="form-control">
+                          <select name="marital_status" id="marital_status" class="form-control">
                             <option value="null" selected disabled>Martial Status</option>
                             <option value="married">Married</option>
                             <option value="unmarried">Un Married</option>
                           </select>
                           <div
-                            id="martial_status_error"
+                            id="marital_status_error"
                             class="text-danger mx-2"
                           ></div>
                         </div>
@@ -169,12 +170,12 @@
                           <input
                             type="text"
                             class="form-control"
-                            name="adharcard"
-                            id="adharcard"
+                            name="adhar_num"
+                            id="adhar_num"
                             placeholder="Adhar Card Number"
                           />
                           <div
-                            id="adharcard_error"
+                            id="adhar_num_error"
                             class="text-danger mx-2"
                           ></div>
                         </div>
@@ -221,319 +222,12 @@
                       </div>
                     </div>
                   </div>
-<!-- 
-                  <div class="tab">
-                   <div class="row">
-                    <div class="col-md-6 col-lg-3">
-                      <div class="form-group pb-3">
-                        <select name="gender" id="gender" class="form-control">
-                          <option value="null" selected disabled>--Select Gender--</option>
-                          <option value="male">Male</option>
-                          <option value="female">Female</option>
-                          <option value="other">Other</option>
-                        </select>
-                        <div id="gender_error" class="text-danger mx-2"></div>
-                      </div>
-                      
-
-                    </div>
-
-
-                    <div class="col-md-6 col-lg-3">
-                      
-                      <div class="form-group pb-3">
-                        <input
-                          class="form-control"
-                          type="text"
-                          placeholder="Name of Father / Husband"
-                        />
-                        <div id="gender_error" class="text-danger mx-2"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                      <div class="form-group pb-3">
-                        <input
-                          class="form-control"
-                          type="text"
-                          placeholder="Mother's Maiden Name"
-                        />
-                        <div id="gender_error" class="text-danger mx-2"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                      <div class="form-group pb-3">
-                        <select name="" id="" class="form-control">
-                          <option value="null" selected disabled>Marital Status</option>
-                          <option value="male">Married</option>
-                          <option value="female">Unmarried</option>
-                        </select>
-                        <div id="gender_error" class="text-danger mx-2"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                      <div class="form-group pb-3">
-                        <select name="" id="" class="form-control">
-                          <option value="null" selected disabled>Religion</option>
-                          <option value="">Hindu</option>
-                          <option value="">Muslim</option>
-                          <option value="">Christain</option>
-                          <option value="">Sikh</option>
-                          <option value="">Buddhist</option>
-                          <option value="">Jain</option>
-                          <option value="">Other</option>
-                        </select>
-                        <div id="gender_error" class="text-danger mx-2"></div>
-                      </div>
-                    </div>
-                    <div class="col-12 mb-1">
-                      <label for="" class="text-left text-[#2A2C5D] font-bold text-1xl">Educational & Professional Details</label>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                      <div class="form-group pb-3">
-                        <select name="" id="" class="form-control">
-                          <option value="null" selected disabled>
-                            Educational Qualification
-                          </option>
-                          <option value="">Post-Graguate</option>
-                          <option value="">Diploma-Holder</option>
-                          <option value="">Graguate</option>
-                          <option value="">Under-Graguate</option>
-                        </select>
-                        <div id="" class="text-danger mx-2"></div>
-                      </div>
-                      <div class="form-group pb-3">
-                        <select name="" id="" class="form-control">
-                          <option value="null" selected disabled>Trade Nature</option>
-                          <option value="">Automobile</option>
-                          <option value="">Airlines</option>
-                          <option value="">Banks/NBFC</option>
-                        </select>
-                        <div id="" class="text-danger mx-2"></div>
-                      </div>
-                      <div class="form-group pb-3">
-                        <input
-                          class="form-control"
-                          type=""
-                          placeholder="Annual Turn over For Second year"
-                        />
-                        <div id="" class="text-danger mx-2"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                      <div class="form-group pb-3">
-                        <select name="" id="" class="form-control">
-                          <option value="null" selected disabled>Company Type</option>
-                          <option value="">Publick Limited</option>
-                          <option value="">Pvt.limited</option>
-                          <option value="">LLP</option>
-                          <option value="">MNC</option>
-                          <option value="">PSU</option>
-                          <option value="">GOVT</option>
-                        </select>
-                        <div id="" class="text-danger mx-2"></div>
-                      </div>
-                      <div class="form-group pb-3">
-                        <input class="form-control" type="" placeholder="Company Pan Card No" />
-                        <div id="" class="text-danger mx-2"></div>
-                      </div>
-                      <div class="form-group pb-3">
-                        <input
-                          class="form-control"
-                          type=""
-                          placeholder="Annual Turn over For Third year"
-                        />
-                        <div id="" class="text-danger mx-2"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                      <div class="form-group pb-3">
-                        <input
-                          class="form-control"
-                          type="date"
-                          placeholder="Date of incorporation"
-                        />
-                        <div id="" class="text-danger mx-2"></div>
-                      </div>
-                      <div class="form-group pb-3">
-                        <input class="form-control" type="" placeholder="MSME" />
-                        <div id="" class="text-danger mx-2"></div>
-                      </div>
-                      <div class="form-group pb-3">
-                        <select name="" id="" class="form-control">
-                          <option value="null" selected disabled>Bank Account</option>
-                          <option value="">Allahabad Bank</option>
-                          <option value="">Andhra Bank</option>
-                          <option value="">Bank of Baroda</option>
-                        </select>
-                        <div id="" class="text-danger mx-2"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                      <div class="form-group pb-3">
-                        <input
-                          class="form-control"
-                          type=""
-                          placeholder="Number of Years in Current Organization"
-                        />
-                        <div id="" class="text-danger mx-2"></div>
-                      </div>
-                      <div class="form-group pb-3">
-                        <input
-                          class="form-control"
-                          type=""
-                          placeholder="Annual Turn over For First year"
-                        />
-                        <div id="" class="text-danger mx-2"></div>
-                      </div>
-                    </div>
-
-                    <div class="col-12 mb-1">
-                      <label for="" class="text-left text-[#2A2C5D] font-bold text-1xl">Bank Account Details</label>
-                    </div>
-                    <div class="col-md-4 col-lg-4">
-                      <div class="form-group pb-3">
-                        <input type="text" class="form-control" placeholder="Bank Name">
-                      <div id="" class="text-danger mx-2"></div>
-                    </div>
-                    </div>
-                    <div class="col-md-4 col-lg-4">
-                      <div class="form-group pb-3">
-                        <input class="form-control" type="" placeholder="Bank Branch" />
-                        <div id="" class="text-danger mx-2"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-4 col-lg-4">
-                      <div class="form-group pb-3">
-                        <select name="" id="" class="form-control">
-                          <option value="null" selected disabled>Account Type</option>
-                          <option value="">Seving</option>
-                          <option value="">Current</option>
-                        </select>
-                        <div id="" class="text-danger mx-2"></div>
-                      </div>
-                    </div>
-                    <div class="col-12 mb-1">
-                      <label for="" class="text-left text-[#2A2C5D] font-bold text-1xl">Loan Details</label>
-                    </div>
-                    <div class="col-md-4 col-lg-4">
-                      <div class="form-group pb-3">
-                        <input class="form-control" type="" placeholder="Household Members" />
-                        <div id="" class="text-danger mx-2"></div>
-                      </div>
-                      
-                    </div>
-                    <div class="col-md-4 col-lg-4">
-                      <div class="form-group pb-3">
-                        <select name="" id="" class="form-control">
-                          <option value="null" selected disabled>EMI toward Other Loan</option>
-                          <option value="">Yes</option>
-                          <option value="">No</option>
-                        </select>
-                        <div id="" class="text-danger mx-2">
-                          
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-4 col-lg-4">
-                      <div class="form-group pb-3">
-                        <select name="" id="" class="form-control">
-                          <option value="null" selected disabled>Loan Tenure(Months)</option>
-                          <option value="">12</option>
-                          <option value="">24</option>
-                          <option value="">36</option>
-                          <option value="">24</option>
-                          <option value="">48</option>
-                          <option value="">60</option>
-                          <option value="">72</option>
-                          <option value="">84</option>
-                          <option value="">96</option>
-                          <option value="">108</option>
-                          <option value="">120</option>
-                          <option value="">132</option>
-                          <option value="">144</option>
-                          <option value="">156</option>
-                          <option value="">168</option>
-
-                        </select>
-                        <div id="" class="text-danger mx-2"></div>
-                      </div>
-                    </div>
-                   </div>
-                  
-                  </div> -->
 
                   <div class="tab">
                  <div class="row">
-                  <!-- <div class="col-md-6 col-lg-3">
-                    <div class="form-group pb-3">
-                      <select
-                        name="gender"
-                        id="gender"
-                        class="form-control"
-                      >
-                        <option value="null" selected disabled>
-                          Residential Status
-                        </option>
-                        <option value="">Resident</option>
-                        <option value="">NRI</option>
-              
-                      </select>
-                      <div id="" class="text-danger mx-2"></div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-3">
-                    <div class="form-group pb-3">
-                      <select
-                        name="gender"
-                        id="gender"
-                        class="form-control"
-                      >
-                        <option value="null" selected disabled>
-                          No.of year at Residence
-                        </option>
-                        <option value="">1 to 5 year</option>
-                        <option value="">6 to 10 year</option>
-                        <option value="">11 to 15 year</option>
-                        <option value="">16 to 25 year</option>
-                        <option value="">More than 25 Years</option>
-                        
-              
-                      </select>
-                      <div id="" class="text-danger mx-2"></div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-3">
-                    <div class="form-group pb-3">
-                      <select name="" id="" class="form-control">
-                        <option value="null" selected disabled>--Select Residential Type--</option>
-                        <option value="">Self Owned</option>
-                        <option value="">Rented /Company Provided</option>
-                        <option value="">PG</option>
-                        <option value="">With parents</option>
-                        <option value="">With relatives</option>
-                        <option value="">Lease</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-3">
-                    <div class="form-group pb-3">
-                      <input type="text" class="form-control" placeholder="Monthly Rent">
-                    </div>
-                  </div> -->
                   <div class="col-12 mb-1">
                     <label for="" class="text-left text-[#2A2C5D] font-bold text-1xl">Present Address</label>
                   </div>
-                 
-                  <!-- <div class="col-12 mb-1">
-                    <label for="" class="text-left text-[#2A2C5D] font-bold text-1xl">Permanent Address</label>
-                    <div class="form-check 
-                    ">
-                      <input class="form-check-input " type="checkbox" name="Permanent" id="flexRadioDefault1">
-                      <label class="form-check-label " for="flexRadioDefault1">
-                         Same as present address
-                      </label>
-                    </div>
-                  </div> -->
                   <div id="show_permanent_address" class="row"></div>
                   <div class="row">
                     <div class="col-12 mb-1">
@@ -598,7 +292,7 @@
                         >
                           <div class="topdiv flex justify-between items-center w-full">
                             <p class="text-[0.9rem] font-semibold text-slate-400">
-                              <select name="documents_name" id="documents_name">
+                              <select name="document_type" id="document_type">
                                 <option value="" selected disabled>--Select Documents--</option>
                                 <option value="">Pancard</option>
                                 <option value="adhar_card_doc">Adhar Card Front</option>
@@ -637,7 +331,7 @@
                                 </span></span
                               >
                             </div>
-                            <input type="file" class="file hidden" name="file" multiple />
+                            <input type="file" class="file hidden" name="upload_document" multiple />
                           </div>
                           <div class="progress-container">
                             <!-- <div class="progress-bar"  value="50" max="100"></div> -->
@@ -658,12 +352,6 @@
                           <div
                             class="containerDiv w-full flex justify-start items-start flex-wrap h-auto max-h-[300px] overflow-y-auto mt-5"
                           >
-                          <!-- <div class="imageDiv h-[85px] w-[85px] rounded-[5px] shadow-sm overflow-hidden relative mb-2 mr-2 ">
-                            <img src="${URL.createObjectURL(
-                              e.file
-                            )}" alt="" class="h-full w-full ">
-                            <span class="  absolute top-[-4px] right-[5px] cursor-pointer text-sm text-white hover:opacity-[0.8]" onclick="deleteImage(${i})">X</span>
-                        </div> -->
                         </div>
                         </div>
                       </div>
@@ -705,13 +393,6 @@
                   </div>
                 </form>
               </div>
-              <!-- <div class="col-12 col-md-5" >
-                        <img
-                          class="w-100"
-                          src="images/credit card/2.png"
-                          alt=""
-                        />
-                      </div> -->
             </div>
           </div>
         </section>
@@ -828,4 +509,5 @@
         <!-- content close -->
   
         <a href="#" id="back-to-top"></a>
+
 @endsection

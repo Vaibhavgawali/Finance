@@ -1,7 +1,8 @@
 @extends('frontend/layouts.main')
 @section('main-section')
-       <!-- Info Section Start -->
-
+      
+        <!-- section close -->
+        <section>
        <div  class="info-register pb-5">
           <div class="container w-100 mt-200 ">
               <div class="row">

@@ -66,7 +66,6 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: $('meta[name="base-url"]').attr("content") + "/login",
-
             data: data,
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),

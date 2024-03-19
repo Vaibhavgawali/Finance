@@ -27,11 +27,11 @@ class CreditCardController extends Controller
             'annual_income' => 'required|string|max:255',
             'residence_address' => 'required|string|max:255',
             'office_address' => 'required|string|max:255',
-            'pan_file' => 'required|file|mimes:pdf|max:2048',
-            'adhar_front_file' => 'required|file|mimes:jpeg,png,jpg|max:2048',
-            'adhar_back_file' => 'required|file|mimes:jpeg,png,jpg|max:2048',
-            'itr_file' => 'required|file|mimes:pdf|max:2048',
-            'bank_statement_file' => 'required|file|mimes:pdf|max:2048',
+            'pan_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
+            'adhar_front_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
+            'adhar_back_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
+            'itr_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
+            'bank_statement_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
         ];
         
         $validator = Validator::make($request->all(), $rules);
