@@ -30,8 +30,8 @@ class WelcomeController extends Controller
     {
         return view('frontend.loan');
     }
-    function loanForm()
+    function loanService()
     {
-        return view('frontend.loanForm');
+        return view('frontend.loanService');
     }
 }

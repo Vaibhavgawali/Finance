@@ -19,6 +19,8 @@
               <div class="col-md-7 col-12 border border-2 p-3 rounded-3">
                 <h3 class="text-center">Personal Details</h3>
                 <form id="creditForm" enctype="multipart/form-data" class="bg-white">
+                  <input type="hidden" id="formUrl" value="/credit-card">
+
                   <!-- One "tab" for each step in the form: -->
                   <div class="tab">
                     <div class="form-group pb-3">

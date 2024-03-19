@@ -28,8 +28,6 @@ return new class extends Migration
             $table->integer('credit_score');
             $table->enum('marital_status', ['married', 'unmarried']);
             $table->string('mother_name');
-            $table->text('present_address');
-            $table->text('office_address');
             $table->enum('document_type', [
                 'pancard',
                 'adhar_front_file',

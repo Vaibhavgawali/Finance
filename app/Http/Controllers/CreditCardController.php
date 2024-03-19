@@ -41,7 +41,7 @@ class CreditCardController extends Controller
         }
    
         $referral_id="";
-        if (Auth::user()->referral_id) {
+        if (Auth::user()) {
             $referral_id = Auth::user()->referral_id;
         } else {
             $referral_id = "ertyfg12345";
@@ -81,5 +81,37 @@ class CreditCardController extends Controller
         }
 
         return Response(['status' => false, 'message' => "Something went wrong"], 500);
+    }
+
+    public function loanSubmit(Request $request): Response
+    {
+        // dd($request->all());
+        $rules = [
+            'loan_type' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'mobile' => 'required|string|max:10',
+            'income_source' => 'required|string|max:255',
+            'monthly_income' => 'required|numeric',
+            'pincode' => 'required|string|max:6',
+            'dob' => 'required|date',
+            'pan_num' => 'required|string|max:10',
+            'marital_status' => 'required|string|max:255',
+            'adhar_num' => 'required|string|max:12',
+            'loan_amount' => 'required|numeric',
+            'credit_score' => 'required|numeric',
+            'mother_name' => 'required|string|max:255',
+            'document_type' => 'required|string|max:255',
+            'upload_document' => 'required|file|mimes:pdf|max:2048', 
+        ];
+        
+        // Validate the request data
+        $validator = Validator::make($request->all(), $rules);
+        
+        // Check if validation fails
+        if ($validator->fails()) {
+            return Response(['status' => false, 'errors' => $validator->errors()], 422);
+        }
+        dd("ok");
     }
 }

@@ -44,15 +44,8 @@ $(document).ready(function () {
         currentTab += n;
 
         if (currentTab >= x.length) {
-            // All form data is collected here
-            // var formData = {};
-            // x.find("input, textarea").each(function () {
-            //     formData[$(this).attr("name")] = $(this).val();
-            // });
-            // console.log(formData);
-
             var formData = new FormData();
-            x.find("input, textarea").each(function () {
+            x.find("input, textarea, select").each(function () {
                 if ($(this).attr("type") === "file") {
                     formData.append($(this).attr("name"), $(this)[0].files[0]);
                 } else {
@@ -60,12 +53,13 @@ $(document).ready(function () {
                 }
             });
             console.log(formData);
-
+            var formUrl = $("#formUrl").val();
+            console.log(formUrl);
             // Send form data to server using AJAX for validation
             $.ajax({
                 type: "POST",
-                url:
-                    $('meta[name="base-url"]').attr("content") + "/credit-card",
+                // url: $('meta[name="base-url"]').attr("content") + "/credit-card",
+                url: $('meta[name="base-url"]').attr("content") + formUrl,
                 data: formData,
                 processData: false,
                 contentType: false,
@@ -208,6 +202,10 @@ $(document).ready(function () {
     }
 
     $("#creditForm").on("submit", function (event) {
+        event.preventDefault();
+    });
+
+    $("#loanForm").on("submit", function (event) {
         event.preventDefault();
     });
 

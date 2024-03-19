@@ -41,7 +41,7 @@ Route::get('/', [WelcomeController::class, 'index']);
 Route::get('/credit', [WelcomeController::class, 'credit']);
 Route::get('/creditcard', [WelcomeController::class, 'credit_card']);
 Route::get('/loan', [WelcomeController::class, 'loan']);
-Route::get('/loan-form', [WelcomeController::class, '/loanForm']);
+Route::get('/loan-service', [WelcomeController::class, 'loanService']);
 
 Route::get('/candidate-register', [WelcomeController::class, 'candidate_register']);
 
