@@ -14,4 +14,16 @@ class WelcomeController extends Controller
     {
         return view('frontend.login');
     }
+    function index()
+    {
+        return view('frontend.index');
+    }
+    function credit()
+    {
+        return view('frontend.credit');
+    }
+    function credit_card()
+    {
+        return view('frontend.creditcard');
+    }
 }

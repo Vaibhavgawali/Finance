@@ -10,7 +10,6 @@ use Validator;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
-
 use App\Models\User;
 use App\Models\UserProfile;
 use App\Models\UserAddress;

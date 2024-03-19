@@ -1,5 +1,5 @@
-@extends('frontend/layouts.main')
-@section('main-section')
+<!-- @extends('frontend/layouts.main')
+@section('main-section') -->
        <!-- Info Section Start -->
 
        <div  class="info-register pb-5">
@@ -55,7 +55,7 @@
           </div>
        </div>
        <script>
-
+        
        </script>
        <!-- Info Section End -->
-@endsection
+<!-- @endsection -->
