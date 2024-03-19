@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('credit_card', function (Blueprint $table) {
             $table->id();
+            
             $table->string('referred_by');
-            $table->string('bank_name');
+            $table->string('card');
             $table->string('name');
             $table->string('pan_num');
             $table->string('adhar_num');

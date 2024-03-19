@@ -90,7 +90,8 @@
     <script src="{{asset('assets/js/typed.js')}}"></script>
     <script src="{{asset('assets/js/designesia.js')}}"></script>
 	<script src="{{asset('assets/js/custom/creditcard.js')}}"></script>
-
+    <script src="{{asset('assets/js/login.js')}}"></script>
+    <script src="{{asset('assets/js/custom/loan-service.js')}}"></script>
     <script>
     $(function () {
         // jquery typed plugin

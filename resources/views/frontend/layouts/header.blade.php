@@ -7,10 +7,8 @@
     <meta content="Blarkafin - Insurance and Finance Company" name="description" />
     <meta content="" name="keywords" />
     <meta content="" name="author" />
-
-    <!--[if lt IE 9]>
-      <script src="js/html5shiv.js"></script>
-    <![endif]-->
+    <meta name="base-url" content="{{ url('/') }}">
+	  <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- CSS Files
     ================================================== -->
@@ -100,8 +98,8 @@
       
           <div class="topbar-right">
             <div class="topbar-right">
-              <span class="topbar-widget"><a href="login.html">Login</a></span>
-              <span class="topbar-widget"><a href="register.html">Register</a></span>
+              <span class="topbar-widget"><a href="/login">Login</a></span>
+              <span class="topbar-widget"><a href="/register">Register</a></span>
             </div>
           </div>
           <div class="clearfix"></div>
@@ -115,7 +113,7 @@
                   <div class="de-flex-col">
                     <!-- logo begin -->
                     <div id="logo">
-                      <a href="index.html">
+                      <a href="/">
                         <img alt="" class="logo" src="{{asset('assets/images/logo-light.png')}}" />
                         <img alt="" class="logo-2" src="{{asset('assets/images/logo.png')}}" />
                       </a>
@@ -126,7 +124,7 @@
                     <!-- mainmenu begin -->
                     <ul id="mainmenu">
                       <li>
-                        <a href="index.html">Home<span></span></a>
+                        <a href="/">Home<span></span></a>
                       </li>
                      
                       <li>
@@ -149,7 +147,7 @@
                         </ul>
                       </li>
                       <li>
-                        <a href="loan.html">Loan<span></span></a>
+                        <a href="/loan">Loan<span></span></a>
                       </li>
                      
                       <li>

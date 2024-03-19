@@ -331,6 +331,7 @@ class ProfileController extends Controller
     // Method to update a specific document
     public function KycDetailsUpdate(Request $request)
     {
+        dd($request->all());
         $AuthUserId = Auth::user()->id;
   
         $user = User::findOrFail($AuthUserId);

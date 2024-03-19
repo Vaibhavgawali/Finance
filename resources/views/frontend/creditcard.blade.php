@@ -18,7 +18,9 @@
             <div class="row bg-white p-3 rounded-3">
               <div class="col-md-7 col-12 border border-2 p-3 rounded-3">
                 <h3 class="text-center">Personal Details</h3>
-                <form id="creditForm" action="" class="bg-white">
+                <form id="creditForm" enctype="multipart/form-data" class="bg-white">
+                  <input type="hidden" id="formUrl" value="/credit-card">
+
                   <!-- One "tab" for each step in the form: -->
                   <div class="tab">
                     <div class="form-group pb-3">
@@ -45,22 +47,22 @@
                     <div class="form-group pb-3">
                       <input
                         type="text"
-                        name="pancard"
-                        id="pancard"
+                        name="pan_num"
+                        id="pan_num"
                         class="form-control"
-                        placeholder="Pancard"
+                        placeholder="Pan Number"
                       />
-                      <div id="pancard_error" class="text-danger mx-2"></div>
+                      <div id="pan_num_error" class="text-danger mx-2"></div>
                     </div>
                     <div class="form-group pb-3">
                       <input
                         type="text"
-                        name="adharcard"
-                        id="adharcard"
+                        name="adhar_num"
+                        id="adhar_num"
                         class="form-control"
-                        placeholder="Adharcard"
+                        placeholder="Adhar Number"
                       />
-                      <div id="adharcard_error" class="text-danger mx-2"></div>
+                      <div id="adhar_num_error" class="text-danger mx-2"></div>
                     </div>
                     <div class="form-group pb-3">
                       <input
@@ -76,125 +78,117 @@
                     <div class="form-group pb-3">
                       <input
                         type="text"
-                        name="phone"
-                        id="phone"
+                        name="mobile"
+                        id="mobile"
                         class="form-control"
                         placeholder="Mobile Number"
                       />
-                      <div id="phone_error" class="text-danger mx-2"></div>
+                      <div id="mobile_error" class="text-danger mx-2"></div>
                     </div>
                     <div class="form-group pb-3">
                       <input
                         type="text"
-                        name="income"
-                        id="income"
+                        name="annual_income"
+                        id="annual_income"
                         class="form-control"
                         placeholder="Net Annual Income"
                       />
-                      <div id="income_error" class="text-danger mx-2"></div>
+                      <div id="annual_income_error" class="text-danger mx-2"></div>
                     </div>
                   </div>
 
                   <div class="tab">
                     <div class="form-group pb-3">
                       <textarea
-                        name="address1"
-                        id="address1"
+                        name="residence_address"
+                        id="residence_address"
                         cols="30"
                         rows="2"
                         class="form-control"
                         placeholder="Residenece Address"
                       ></textarea>
-                      <div id="address1_error" class="text-danger mx-2"></div>
+                      <div id="residence_address_error" class="text-danger mx-2"></div>
                     </div>
                     <div class="form-group pb-3">
                       <textarea
-                        name="address2"
-                        id="address2"
+                        name="office_address"
+                        id="office_address"
                         cols="30"
                         rows="2"
                         class="form-control"
                         placeholder="Office Address"
                       ></textarea>
-                      <div id="address2_error" class="text-danger mx-2"></div>
+                      <div id="office_address_error" class="text-danger mx-2"></div>
                     </div>
-                    <!-- <div class="form-group pb-3">
-                      <input
-                        type="text"
-                        name="officialemail"
-                        id="officialemail"
-                        class="form-control"
-                        placeholder="Email"
-                      />
-                      <div
-                        id="officialemail_error"
-                        class="text-danger mx-2"
-                      ></div>
-                    </div> -->
 
                     <div class="form-group pb-3">
-                      <label for="pancardupload">Upload Pan Card</label>
+                      <label for="pan_file">Upload Pan Card</label>
                       <input
                         type="file"
-                        name="pancardupload"
+                        name="pan_file"
                         class="form-control"
-                        id="pancardupload"
+                        id="pan_file"
+                        accept="application/pdf"
                       />
                       <div
-                        id="pancardupload_error"
+                        id="pan_file_error"
                         class="text-danger mx-2"
                       ></div>
                     </div>
-
+      
                     <div class="form-group pb-3">
-                        <label for="pancardupload">Upload Adhar Front</label>
+                        <label for="adhar_front_file">Upload Adhar Front</label>
                         <input
                           type="file"
-                          name="adharfrontupload"
+                          name="adhar_front_file"
                           class="form-control"
-                          id="adharfrontupload"
+                          id="adhar_front_file"
+                          accept="image/jpeg, image/png,image/jpg"
                         />
                         <div
-                          id="adharfrontupload_error"
+                          id="adhar_front_file_error"
                           class="text-danger mx-2"
                         ></div>
                       </div>
                       <div class="form-group pb-3">
-                        <label for="adharbackupload">Upload Adhar Back</label>
+                        <label for="adhar_back_file">Upload Adhar Back</label>
                         <input
                           type="file"
-                          name="adharbackupload"
+                          name="adhar_back_file"
                           class="form-control"
-                          id="adharbackupload"
+                          id="adhar_back_file"
+                          accept="image/jpeg, image/png,image/jpg"
                         />
                         <div
-                          id="adharbackupload_error"
+                          id="adhar_back_file_error"
                           class="text-danger mx-2"
                         ></div>
                       </div>
                       <div class="form-group pb-3">
-                        <label for="itrupload">Upload ITR(1,2 year)</label>
+                        <label for="itr_file">Upload ITR(1,2 year)</label>
                         <input
                           type="file"
-                          name="itrupload"
+                          name="itr_file"
                           class="form-control"
-                          id="itrupload"
+                          id="itr_file"
+                         
                         />
                         <div
-                          id="itrupload_error"
+                          id="itr_file_error"
                           class="text-danger mx-2"
                         ></div>
                       </div>
                       <div class="form-group pb-3">
-                        <label for="statementupload">Upload Bank statement last 6 months</label>
+                        <label for="bank_statement_file">Upload Bank statement last 6 months</label>
                         <input
                           type="file"
-                          name="statementupload"
+                          name="bank_statement_file"
                           class="form-control"
-                          id="statementupload"
+                          id="bank_statement_file"
+                          accept="application/pdf"
                         />
                         <div
-                          id="statementupload_error"
+                          id="bank_statement_file_error"
                           class="text-danger mx-2"
                         ></div>
                       </div>

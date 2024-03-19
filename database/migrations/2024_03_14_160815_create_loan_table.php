@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('loan', function (Blueprint $table) {
             $table->id();
+            $table->string('referred_by');
             $table->enum('loan_type', ['Home', 'Business', 'Personal', 'Vehicle']);
             $table->string('mobile');
             $table->string('name');
@@ -27,8 +28,6 @@ return new class extends Migration
             $table->integer('credit_score');
             $table->enum('marital_status', ['married', 'unmarried']);
             $table->string('mother_name');
-            $table->text('present_address');
-            $table->text('office_address');
             $table->enum('document_type', [
                 'pancard',
                 'adhar_front_file',
