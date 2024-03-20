@@ -11,7 +11,6 @@ $(document).ready(function () {
 
     // Get the insurance plan from the URL
     var creditcard = getParameterByName("creditcard");
-    console.log(creditcard);
     $("#card").val(creditcard);
     var currentTab = 0;
     showTab(currentTab);
@@ -187,6 +186,12 @@ $(document).ready(function () {
                         errorDiv.text("Income should contain only digits");
                         valid = false;
                     }
+                } else if (selector == "office_phone") {
+                    if (!input.val().match(/^\d{10}$/)) {
+                        input.addClass("invalid");
+                        errorDiv.text("Phone number is not valid");
+                        valid = false;
+                    }
                 }
             }
         });
@@ -207,6 +212,7 @@ $(document).ready(function () {
 
     $("#loanForm").on("submit", function (event) {
         event.preventDefault();
+        // alert("ok");
     });
 
     $("#nextBtn").on("click", function () {

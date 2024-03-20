@@ -9,7 +9,7 @@
     <meta content="" name="author" />
     <meta name="base-url" content="{{ url('/') }}">
 	  <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <link rel="canonical" href="https://blarkafin.com/" />
     <!-- CSS Files
     ================================================== -->
     <link href="{{asset('assets/css/loan.css')}}" rel="stylesheet" type="text/css" />

@@ -1,200 +1,250 @@
-// $(document).ready(function () {
-//     var currentTab = 0;
-//     showTab(currentTab);
+$(document).ready(function () {
+    let files = [];
+    let progressBar = $("#progress-bar");
+    let button = $(".fileButton");
+    let form = $("#loanForm");
+    let container = $(".containerDiv");
+    let text = $(".innerDiv");
+    let imageDiv = $(".imageDiv");
+    let toggleText = $(".toggleText");
+    let browse = $(".selectDiv");
+    let input = $(".file");
+    let dragoverDiv = $(".dragover");
+    let count = $("#count");
 
-//     function showTab(n) {
-//         $(".tab").hide();
-//         $(".tab").eq(n).show();
+    // Initially disable file input
+    input.prop("disabled", true);
 
-//         if (n == 0) {
-//             $("#prevBtn").hide();
-//         } else {
-//             $("#prevBtn").show();
-//         }
+    window.toggleBrowse = () => {
+        $(".file").click();
+    };
 
-//         if (n == $(".tab").length - 1) {
-//             $("#nextBtn").html("Submit");
-//         } else {
-//             $("#nextBtn").html("Next");
-//         }
+    const updateToggleText = () => {
+        let documents_name = $("#documents_name").val();
+        if (documents_name == null || documents_name === "") {
+            toggleText.html("Please Select Documents");
+            // Disable file input if document option is not selected
+            input.prop("disabled", true);
+        } else {
+            toggleText.html(
+                '<span class="innerDiv">Drag & drop image here or <span class="selectDiv text-[#5256ad] ml-[7px] cursor-pointer " onclick="toggleBrowse()">Browse </span></span>'
+            );
+            // Enable file input if document option is selected
+            input.prop("disabled", false);
+        }
+    };
 
-//         fixStepIndicator(n);
-//     }
+    // Call updateToggleText initially
+    updateToggleText();
 
-//     function nextPrev(n) {
-//         var x = $(".tab");
+    // Event listener for select element change
+    $("#documents_name").on("change", updateToggleText);
 
-//         if (n == 1 && !validateForm()) return false;
+    // Input change Event
+    input.on("change", function (event) {
+        let fileInput = event.target;
+        let fileList = fileInput.files;
+        let selectedOption = $("#documents_name").val();
 
-//         x.eq(currentTab).hide();
-//         currentTab += n;
+        if (selectedOption == null || selectedOption === "") {
+            swal({
+                title: "Oops!",
+                text: "Please select a document option first!",
+                icon: "warning",
+                button: "OK",
+            });
+            return;
+        }
 
-//         if (currentTab >= x.length) {
-//             var formData = new FormData();
-//             x.find("input, textarea").each(function () {
-//                 if ($(this).attr("type") === "file") {
-//                     formData.append($(this).attr("name"), $(this)[0].files[0]);
-//                 } else {
-//                     formData.append($(this).attr("name"), $(this).val());
-//                 }
-//             });
-//             console.log(formData);
-//             var formUrl = $("#formUrl").val();
+        handleFiles(fileList, selectedOption);
 
-//             // Send form data to server using AJAX for validation
-//             $.ajax({
-//                 type: "POST",
-//                 url: $('meta[name="base-url"]').attr("content") + "/" + formUrl,
-//                 data: formData,
-//                 processData: false,
-//                 contentType: false,
-//                 headers: {
-//                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-//                         "content"
-//                     ),
-//                     Accept: "application/json",
-//                 },
-//                 success: function (response) {
-//                     if (response.valid) {
-//                         // Proceed to the next tab only if the response is valid
-//                         showTab(currentTab);
-//                     } else {
-//                         // Display validation errors
-//                         $(".error-message").text(response.message);
-//                     }
-//                 },
-//                 error: function (xhr, status, error) {
-//                     if (response.status === 422) {
-//                         var errors = response.responseJSON.errors;
-//                         $(".error-message").remove();
+        form.trigger("reset");
+        showImages();
+    });
 
-//                         // Display new errors
-//                         $.each(errors, function (field, messages) {
-//                             var input = $('[name="' + field + '"]');
-//                             input.after(
-//                                 '<div class="error-message invalid-feedback d-block">' +
-//                                     messages.join(", ") +
-//                                     "</div>"
-//                             );
-//                         });
-//                     }
+    // Drag events for the dragover div
+    dragoverDiv.on("dragenter", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        dragoverDiv.addClass("dragging");
+    });
 
-//                     console.error(xhr.responseText);
-//                     // Display an error message or handle accordingly
-//                     $(".error-message").text(
-//                         "An error occurred. Please try again later."
-//                     );
-//                 },
-//             });
+    dragoverDiv.on("dragover", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    });
 
-//             return false;
-//         }
+    dragoverDiv.on("dragleave", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        dragoverDiv.removeClass("dragging");
+    });
 
-//         showTab(currentTab);
-//     }
+    dragoverDiv.on("drop", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        dragoverDiv.removeClass("dragging");
 
-//     function validateForm() {
-//         var x,
-//             y,
-//             valid = true;
-//         x = $(".tab");
-//         y = x.eq(currentTab).find("input, textarea");
+        let fileList = event.originalEvent.dataTransfer.files;
+        let selectedOption = $("#documents_name").val();
 
-//         y.each(function () {
-//             var input = $(this);
-//             var errorDiv = $("#" + input.attr("id") + "_error");
-//             var selector = input.attr("id");
+        if (selectedOption == null || selectedOption === "") {
+            swal({
+                title: "Oops!",
+                text: "Please select a document option first!",
+                icon: "warning",
+                button: "OK",
+            });
+            return;
+        }
 
-//             if (input.val() == "" && input.is('input[type="text"]')) {
-//                 input.addClass("invalid");
-//                 errorDiv.text(selector + " is required");
-//                 valid = false;
-//             } else if (input.is('input[type="file"]')) {
-//                 var allowedFormats = ["jpg", "jpeg", "png", "pdf"];
-//                 var fileExtension = input.val().split(".").pop().toLowerCase();
-//                 if ($.inArray(fileExtension, allowedFormats) == -1) {
-//                     input.addClass("invalid");
-//                     errorDiv.text(
-//                         "File type not allowed. Please upload jpg, jpeg, png, or pdf files."
-//                     );
-//                     valid = false;
-//                 } else {
-//                     input.removeClass("invalid");
-//                     errorDiv.text(""); // Clear the error message if input is valid
-//                 }
-//             } else if (input.is("textarea")) {
-//                 if (input.val().trim() === "") {
-//                     input.addClass("invalid");
-//                     errorDiv.text("Address is required");
-//                     valid = false;
-//                 } else {
-//                     input.removeClass("invalid");
-//                     errorDiv.text(""); // Clear the error message if input is valid
-//                 }
-//             } else {
-//                 input.removeClass("invalid");
-//                 errorDiv.text(""); // Clear the error message if input is valid
+        handleFiles(fileList, selectedOption);
 
-//                 // Other validations (PAN, email, phone, Aadhar, income, etc.) can be added here
-//                 if (selector == "pan_num") {
-//                     if (!input.val().match(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/)) {
-//                         input.addClass("invalid");
-//                         errorDiv.text("PAN is not valid");
-//                         valid = false;
-//                     }
-//                 } else if (selector == "email") {
-//                     if (
-//                         !input
-//                             .val()
-//                             .match(
-//                                 /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-//                             )
-//                     ) {
-//                         input.addClass("invalid");
-//                         errorDiv.text("Email is not valid");
-//                         valid = false;
-//                     }
-//                 } else if (selector == "mobile") {
-//                     if (!input.val().match(/^\d{10}$/)) {
-//                         input.addClass("invalid");
-//                         errorDiv.text("Phone number is not valid");
-//                         valid = false;
-//                     }
-//                 } else if (selector == "adhar_num") {
-//                     if (!input.val().match(/^\d{12}$/)) {
-//                         input.addClass("invalid");
-//                         errorDiv.text("Adhar number is not valid");
-//                         valid = false;
-//                     }
-//                 } else if (selector == "annual_income") {
-//                     if (!input.val().match(/^\d+(\.\d{1,2})?$/)) {
-//                         input.addClass("invalid");
-//                         errorDiv.text("Income should contain only digits");
-//                         valid = false;
-//                     }
-//                 }
-//             }
-//         });
+        form.trigger("reset");
+        showImages();
+    });
 
-//         return valid;
-//     }
+    const handleFiles = (fileList, selectedOption) => {
+        for (let i = 0; i < fileList.length; i++) {
+            let file = fileList[i];
+            let fileSizeKB = file.size / 1024; // Calculate file size in KB
+            let fileType = file.type.split("/")[1]; // Get the file type
 
-//     function fixStepIndicator(n) {
-//         var x = $(".step");
+            // Check file size
+            if (fileSizeKB > 100) {
+                swal({
+                    title: "Oops!",
+                    text: "File size should be less than 100 KB!",
+                    icon: "warning",
+                    button: "OK",
+                });
+                continue; // Skip this file
+            }
 
-//         x.removeClass("active");
-//         x.eq(n).addClass("active");
-//     }
+            // Check file type
+            if (!["png", "jpg", "jpeg", "pdf"].includes(fileType)) {
+                swal({
+                    title: "Oops!",
+                    text: "Only PNG, JPG, JPEG, and PDF files are allowed!",
+                    icon: "warning",
+                    button: "OK",
+                });
+                continue; // Skip this file
+            }
 
-//     $("#loanForm").on("submit", function (event) {
-//         event.preventDefault();
-//     });
+            let duplicateFile = false;
+            let duplicateOption = false;
 
-//     $("#nextBtn").on("click", function () {
-//         nextPrev(1);
-//     });
+            for (let j = 0; j < files.length; j++) {
+                if (files[j].file.name === file.name) {
+                    duplicateFile = true;
+                    break;
+                }
 
-//     $("#prevBtn").on("click", function () {
-//         nextPrev(-1);
-//     });
-// });
+                if (files[j].option === selectedOption) {
+                    duplicateOption = true;
+                    break;
+                }
+            }
+
+            if (duplicateFile) {
+                swal({
+                    title: "Oops!",
+                    text: "File already exists!",
+                    icon: "warning",
+                    button: "OK",
+                });
+            } else if (duplicateOption) {
+                swal({
+                    title: "Oops!",
+                    text: "Option already in use!",
+                    icon: "warning",
+                    button: "OK",
+                });
+            } else {
+                files.push({
+                    file: file,
+                    option: selectedOption,
+                });
+
+                // Update progress bar
+                updateProgressBar();
+            }
+        }
+    };
+
+    const showImages = () => {
+        let images = "";
+        files.forEach((e, i) => {
+            images += `<div class="imageDiv h-[85px] w-[85px] rounded-[5px] shadow-sm overflow-hidden relative mb-2 mr-2 ">
+                       <img src="${URL.createObjectURL(
+                           e.file
+                       )}" alt="" class="h-full w-full ">
+                       <span class="  absolute top-[-4px] right-[5px] cursor-pointer text-sm text-white hover:opacity-[0.8]" onclick="deleteImage(${i})">X</span>
+                   </div>`;
+        });
+        container.html(images);
+    };
+
+    const updateProgressBar = () => {
+        let progressStep = 100 / 12; // Assuming 2 options
+        let totalSteps = files.length * progressStep;
+        let currentProgress =
+            totalSteps > 0 ? Math.floor((100 * files.length) / 12) : 0; // Initial progress calculation
+
+        // Smoothly update the progress bar width
+        progressBar.animate({ width: currentProgress + "%" }, 2000);
+
+        // Smoothly update the percentage count
+        $({ countNum: count.text().replace("%", "") }).animate(
+            { countNum: currentProgress },
+            {
+                duration: 2000,
+                step: function () {
+                    count.text(Math.floor(this.countNum) + "%");
+                },
+                complete: function () {
+                    count.text(this.countNum + "%");
+                },
+            }
+        );
+        // Change background color based on percentage
+        if (currentProgress < 25) {
+            progressBar.css("background-color", "red");
+        } else if (currentProgress >= 25 && currentProgress < 40) {
+            progressBar.css("background-color", "yellow");
+        } else if (currentProgress >= 40 && currentProgress < 50) {
+            progressBar.css("background-color", "blue");
+        } else if (currentProgress >= 50 && currentProgress < 75) {
+            progressBar.css("background-color", "lightgreen");
+        } else if (currentProgress >= 75 && currentProgress < 90) {
+            progressBar.css("background-color", "green");
+        }
+    };
+
+    // Define deleteImage function in the global scope
+    window.deleteImage = async (i) => {
+        if (i >= 0 && i < files.length) {
+            files.splice(i, 1);
+            showImages(); // Update the displayed images after deletion
+            updateProgressBar(); // Update progress bar after deletion
+        } else {
+            console.error("Index out of bounds or invalid:", i);
+        }
+    };
+
+    $("#imageForm").on("submit", function (e) {
+        if (files.length === 0) {
+            swal({
+                title: "Oops!",
+                text: "Please select files to upload!",
+                icon: "warning",
+                button: "OK",
+            });
+            event.preventDefault(); // Prevent the form from submitting
+        }
+        e.preventDefault();
+        console.log(files);
+        // Your AJAX code here
+    });
+});

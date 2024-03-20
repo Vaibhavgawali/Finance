@@ -22,7 +22,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-4 col-md-6 mb30">
-                            <a href="credit.html">
+                            <a href="/credit">
                                 <div class="f-box f-border f-icon-left f-icon-rounded">
                                     <i class="bg-color-secondary text-light fa-solid fa-credit-card"></i>
                                     <div class="fb-text">
@@ -33,7 +33,7 @@
                             </a>
                         </div>
                         <div class="col-lg-4 col-md-6 mb30">
-                            <a href="loan.html">
+                            <a href="/loan">
                                 <div class="f-box f-border f-icon-left f-icon-rounded">
                                     <i class="bg-color-secondary text-light fa-solid fa-sack-dollar"></i>
                                     <div class="fb-text">
@@ -45,7 +45,7 @@
                         </div>
   
                         <div class="col-lg-4 col-md-6 mb30">
-                            <a href="lifeinsurance.html">
+                            <a href="/life-insurance">
                                 <div class="f-box f-border f-icon-left f-icon-rounded">
                                     <i class="bg-color-secondary text-light fa-solid fa-umbrella-beach"></i>
                                     <div class="fb-text">
@@ -56,7 +56,7 @@
                             </a>
                         </div>
                         <div class="col-lg-4 col-md-6 mb30">
-                           <a href="healthinsurance.html">
+                           <a href="/health-insurance">
                             <div class="f-box f-border f-icon-left f-icon-rounded">
                                 <i class="bg-color-secondary text-light fa-solid fa-heart-pulse"></i>
                                 <div class="fb-text">
@@ -67,7 +67,7 @@
                            </a>
                         </div>
                         <div class="col-lg-4 col-md-6 mb30">
-                            <a href="generalinsurance.html">
+                            <a href="/general-insurance">
                                 <div class="f-box f-border f-icon-left f-icon-rounded">
                                     <i class="bg-color-secondary text-light fa-solid fa-house"></i>
                                     <div class="fb-text">
@@ -79,7 +79,7 @@
                         </div>
                         
                         <div class="col-lg-4 col-md-6 mb-sm-30">
-                            <a href="demat.html">
+                            <a href="/demat">
                                 <div class="f-box f-border f-icon-left f-icon-rounded">
                                     <i class="bg-color-secondary text-light fa-solid fa-building-columns"></i>
                                     <div class="fb-text">

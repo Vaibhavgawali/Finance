@@ -44,7 +44,7 @@
         </li>
         @endif
 
-        @if(Auth::user()->hasRole('Superadmin') || Auth::user()->hasRole('Admin') || Auth::user()->can('view_retailor_list_list'))
+        @if(Auth::user()->hasRole('Superadmin') || Auth::user()->hasRole('Admin') || Auth::user()->can('view_retailer_list'))
         <li class="nav-item">
             <a class="nav-link" href="/retailer">
                 <span class="menu-title">Retailer</span>

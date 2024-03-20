@@ -29,8 +29,8 @@ class RetailerController extends Controller
     public function __construct()
     {
         $this->middleware('auth:sanctum')->except('store');
-        $this->middleware(['role_or_permission:Superadmin|Admin|view_retailor_list'])->only('index','getRetailerTableData');
-        $this->middleware(['role_or_permission:Superadmin|Admin|add_retailor'])->only('create','store');
+        $this->middleware(['role_or_permission:Superadmin|Admin|view_retailer_list'])->only('index','getRetailerTableData');
+        $this->middleware(['role_or_permission:Superadmin|Admin|add_retailer'])->only('create','store');
     }
 
     /**

@@ -16,7 +16,7 @@
 
 
                 <div class="col-lg-4 col-md-6 mb30">
-                    <a href="health.html?plan=Senior Citizen Health Insurance">
+                    <a href="#">
                         <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
                             <i class="bg-color text-center text-light fa-solid fa-motorcycle"></i>
                             <div class="fb-text">
@@ -28,7 +28,7 @@
                     </a>
                 </div>
                 <div class="col-lg-4 col-md-6 mb30">
-                    <a href="health.html?plan=Senior Citizen Health Insurance">
+                    <a href="#">
                         <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
                             <i class="bg-color text-center text-light fa-solid fa-car"></i>
                             <div class="fb-text">
@@ -40,7 +40,7 @@
                     </a>
                 </div>
                 <div class="col-lg-4 col-md-6 mb30">
-                    <a href="health.html?plan=Senior Citizen Health Insurance">
+                    <a href="#">
                         <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
                             <i class="bg-color text-center text-light fa-solid fa-truck"></i>
                             <div class="fb-text">
@@ -51,16 +51,6 @@
                         </div>
                     </a>
                 </div>
-
-
-
-
-
-
-
-
-
-
 
                 <div>
                 </div>
