@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 use App\Models\CreditCard;
+use App\Models\Demat;
 
 class CreditCardController extends Controller
 {
@@ -113,5 +114,47 @@ class CreditCardController extends Controller
             return Response(['status' => false, 'errors' => $validator->errors()], 422);
         }
         dd("ok");
+    }
+
+    public function dematSubmit(Request $request): Response
+    {
+        // dd($request->all());
+
+        $rules = [
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:10',
+            'pan_num' => 'required|string|max:10',
+            'adhar_num' => 'required|string|max:12',
+        ];
+
+        // Validate the request data
+        $validator = Validator::make($request->all(), $rules);
+        
+        // Check if validation fails
+        if ($validator->fails()) {
+            return Response(['status' => false, 'errors' => $validator->errors()], 422);
+        }
+
+        $referral_id="";
+        if (Auth::user()) {
+            $referral_id = Auth::user()->referral_id;
+        } else {
+            $referral_id = "ertyfg12345";
+        }
+
+        $demat = Demat::create([
+            'referred_by'=>$referral_id,
+            'name'=>$request->name,
+            'phone'=>$request->phone,
+            'pan_num' => $request->pan_num,
+            'adhar_num' => $request->adhar_num,
+        ]);
+
+        if ($demat) {     
+            return Response(['status' => true, 'message' => "Demat submitted successfully successfully !"], 200);
+        }
+
+        return Response(['status' => false, 'message' => "Something went wrong"], 500);
+
     }
 }

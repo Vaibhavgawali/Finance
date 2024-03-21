@@ -94,4 +94,5 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
 Route::post('/credit-card', [CreditCardController::class, 'creditCard']);
 Route::post('/loan-submit', [CreditCardController::class, 'loanSubmit']);
+Route::post('/demat-submit', [CreditCardController::class, 'dematSubmit']);
 
