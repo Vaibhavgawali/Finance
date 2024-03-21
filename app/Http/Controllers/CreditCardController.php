@@ -123,8 +123,8 @@ class CreditCardController extends Controller
         $rules = [
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:10',
-            'pan_num' => 'required|string|max:10',
-            'adhar_num' => 'required|string|max:12',
+            'pan_num' => ['required', 'string', 'max:10', 'regex:/^[A-Z]{5}\d{4}[A-Z]$/'],
+            'adhar_num' => ['required', 'string', 'max:12', 'regex:/^\d{12}$/'],
         ];
 
         // Validate the request data

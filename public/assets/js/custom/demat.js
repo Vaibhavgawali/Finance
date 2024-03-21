@@ -10,7 +10,7 @@ $(document).ready(function () {
         $("#name_error").html("");
         $("#phone_error").html("");
         $("#pan_num_error").html("");
-        $("#password_error").html("");
+        $("#adhar_num_error").html("");
 
         if (
             name == "" ||
@@ -64,6 +64,16 @@ $(document).ready(function () {
             return false;
         }
 
+        // PAN format validation (Assuming PAN consists of 10 alphanumeric characters)
+        var panPattern = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
+        if (!panPattern.test(pan_num)) {
+            $("#pan_num_error").html(
+                '<div class="invalid-feedback d-block">Invalid PAN number format.</div>'
+            );
+            $("#pan_num").focus();
+            return false;
+        }
+
         if (
             adhar_num == "" ||
             adhar_num == null ||
@@ -72,6 +82,16 @@ $(document).ready(function () {
         ) {
             $("#adhar_num_error").html(
                 '<div class=" invalid-feedback d-block">Aadhar number is required.</div>'
+            );
+            $("#adhar_num").focus();
+            return false;
+        }
+
+        // Aadhar format validation (Assuming Aadhar consists of 12 digits)
+        var adharPattern = /^\d{12}$/;
+        if (!adharPattern.test(adhar_num)) {
+            $("#adhar_num_error").html(
+                '<div class="invalid-feedback d-block">Invalid Aadhar number format.</div>'
             );
             $("#adhar_num").focus();
             return false;
