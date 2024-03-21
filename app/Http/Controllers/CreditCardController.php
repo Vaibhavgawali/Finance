@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 use App\Models\CreditCard;
+use App\Models\Loan;
 use App\Models\Demat;
 
 class CreditCardController extends Controller
@@ -103,7 +104,7 @@ class CreditCardController extends Controller
             'credit_score' => 'required|numeric',
             'mother_name' => 'required|string|max:255',
             'document_type' => 'required|string|max:255',
-            'upload_document' => 'required|file|mimes:pdf|max:2048', 
+            'upload_document' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048', 
         ];
         
         // Validate the request data
@@ -113,7 +114,39 @@ class CreditCardController extends Controller
         if ($validator->fails()) {
             return Response(['status' => false, 'errors' => $validator->errors()], 422);
         }
-        dd("ok");
+        
+        $referral_id="";
+        if (Auth::user()) {
+            $referral_id = Auth::user()->referral_id;
+        } else {
+            $referral_id = "ertyfg12345";
+        }
+
+        $loan = Loan::create([
+            'referred_by' => $referral_id,
+            'loan_type' => $request->loan_type,
+            'mobile' => $request->mobile,
+            'name' => $request->name,
+            'income_source' => $request->income_source,
+            'email' => $request->email,
+            'monthly_income' => $request->monthly_income,
+            'pincode' => $request->pincode,
+            'adhar_num' => $request->adhar_num,
+            'dob' => $request->dob,
+            'loan_amount' => $request->loan_amount,
+            'pan_num' => $request->pan_num,
+            'credit_score' => $request->credit_score,
+            'marital_status' => $request->marital_status,
+            'mother_name' => $request->mother_name,
+            'document_type' => $request->document_type,
+            // 'upload_document' => $request->file('upload_document')->store('uploads')
+        ]);
+
+        if ($loan) {     
+            return Response(['status' => true, 'message' => "Loan created successfully !"], 200);
+        }
+
+        return Response(['status' => false, 'message' => "Something went wrong"], 500);
     }
 
     public function dematSubmit(Request $request): Response
@@ -151,7 +184,7 @@ class CreditCardController extends Controller
         ]);
 
         if ($demat) {     
-            return Response(['status' => true, 'message' => "Demat submitted successfully successfully !"], 200);
+            return Response(['status' => true, 'message' => "Demat submitted successfully !"], 200);
         }
 
         return Response(['status' => false, 'message' => "Something went wrong"], 500);

@@ -37,7 +37,7 @@ $(document).ready(function () {
     function nextPrev(n) {
         var x = $(".tab");
 
-        if (n == 1 && !validateForm()) return false;
+        // if (n == 1 && !validateForm()) return false;
 
         x.eq(currentTab).hide();
         currentTab += n;
