@@ -37,7 +37,7 @@ $(document).ready(function () {
     function nextPrev(n) {
         var x = $(".tab");
 
-        // if (n == 1 && !validateForm()) return false;
+        if (n == 1 && !validateForm()) return false;
 
         x.eq(currentTab).hide();
         currentTab += n;
@@ -51,13 +51,12 @@ $(document).ready(function () {
                     formData.append($(this).attr("name"), $(this).val());
                 }
             });
-            console.log(formData);
+
             var formUrl = $("#formUrl").val();
-            console.log(formUrl);
+
             // Send form data to server using AJAX for validation
             $.ajax({
                 type: "POST",
-                // url: $('meta[name="base-url"]').attr("content") + "/credit-card",
                 url: $('meta[name="base-url"]').attr("content") + formUrl,
                 data: formData,
                 processData: false,
@@ -77,7 +76,8 @@ $(document).ready(function () {
                         $(".error-message").text(response.message);
                     }
                 },
-                error: function (xhr, status, error) {
+                error: function (response) {
+                    console.log(response);
                     if (response.status === 422) {
                         var errors = response.responseJSON.errors;
                         $(".error-message").remove();
@@ -90,6 +90,8 @@ $(document).ready(function () {
                                     messages.join(", ") +
                                     "</div>"
                             );
+                            input.focus();
+                            return false;
                         });
                     }
 
@@ -119,7 +121,61 @@ $(document).ready(function () {
             var errorDiv = $("#" + input.attr("id") + "_error");
             var selector = input.attr("id");
 
-            if (input.val() == "" && input.is('input[type="text"]')) {
+            var loanType = $("#loan_type").val();
+            $("#loan_type_error").html();
+            var loan_type_error = $("#loan_type_error");
+            if (
+                loanType == "null" ||
+                loanType == null ||
+                loanType == "undefined" ||
+                loanType == undefined
+            ) {
+                input.addClass("invalid");
+                loan_type_error.text("Loan type is required");
+                valid = false;
+            } else {
+                input.removeClass("invalid");
+                loan_type_error.text("");
+            }
+
+            var maritalStatus = $("#marital_status").val();
+            $("#marital_status_error").html();
+            var marital_status_error = $("#marital_status_error");
+            if (
+                maritalStatus == "null" ||
+                maritalStatus == null ||
+                maritalStatus == "undefined" ||
+                maritalStatus == undefined
+            ) {
+                input.addClass("invalid");
+                marital_status_error.text("Marital Status is required");
+                valid = false;
+            } else {
+                input.removeClass("invalid");
+                marital_status_error.text("");
+            }
+
+            var incomeSource = $("#income_source").val();
+            $("#income_source_error").html();
+            var income_source_error = $("#income_source_error");
+            if (
+                incomeSource == "null" ||
+                incomeSource == null ||
+                incomeSource == "undefined" ||
+                incomeSource == undefined
+            ) {
+                input.addClass("invalid");
+                income_source_error.text("Income source is required");
+                valid = false;
+            } else {
+                input.removeClass("invalid");
+                income_source_error.text("");
+            }
+
+            if (
+                (input.val() == "" && input.is('input[type="text"]')) ||
+                input.is("select")
+            ) {
                 input.addClass("invalid");
                 errorDiv.text(selector + " is required");
                 valid = false;

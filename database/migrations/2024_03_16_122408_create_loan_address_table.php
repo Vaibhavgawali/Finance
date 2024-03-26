@@ -22,13 +22,13 @@ return new class extends Migration
             $table->string('present_city');
             $table->string('present_pincode');
             $table->string('present_phone')->nullable();
-            $table->string('office_line1');
+            $table->string('office_line1')->nullable();
             $table->string('office_line2')->nullable();
             $table->string('office_line3')->nullable();
             $table->string('office_landmark')->nullable();
-            $table->string('office_state');
-            $table->string('office_city');
-            $table->string('office_pincode');
+            $table->string('office_state')->nullable();
+            $table->string('office_city')->nullable();
+            $table->string('office_pincode')->nullable();
             $table->string('office_phone')->nullable();
             $table->timestamps();
             $table->foreign('loan_id')->references('id')->on('loan')->onDelete('cascade');

@@ -93,7 +93,8 @@
                                         </div>
                                         <div class="form-group pb-3">
                                             <select name="marital_status" id="marital_status" class="form-control">
-                                                <option value="null" selected disabled>Martial Status</option>
+                                                <option value="null" selected disabled>--Select Martial Status--
+                                                </option>
                                                 <option value="married">Married</option>
                                                 <option value="unmarried">Un Married</option>
                                             </select>
@@ -131,6 +132,55 @@
                                     <div class="col-12 mb-1">
                                         <label for="" class="text-left text-[#2A2C5D] font-bold text-1xl">Present
                                             Address</label>
+                                    </div>
+                                    <div class="col-md-6 col-lg-3">
+                                        <div class="form-group pb-3">
+                                            <textarea name="present_line1" id="present_line1" class="form-control" cols="" rows=""
+                                                placeholder="Address Line 1"></textarea>
+                                            <div id="present_line1_error" class="text-danger mx-2"></div>
+                                        </div>
+                                        <div class="form-group pb-3">
+                                            <textarea name="present_line2" id="present_line2" class="form-control" cols="" rows=""
+                                                placeholder="Address Line 2"></textarea>
+                                            <div id="present_line2_error" class="text-danger mx-2"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-3">
+                                        <div class="form-group pb-3">
+                                            <textarea name="present_line3" id="present_line3" class="form-control" cols="" rows=""
+                                                placeholder="Address Line 3"></textarea>
+                                            <div id="present_line3" class="text-danger mx-2"></div>
+                                        </div>
+                                        <div class="form-group pb-3">
+                                            <input class="form-control" type="text" name="present_landmark"
+                                                id="present_landmark" type="" placeholder="Landmark">
+                                            <div id="present_landmark_error" class="text-danger mx-2"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-3">
+                                        <div class="form-group pb-3">
+                                            <input class="form-control" type="text" name="present_state"
+                                                id="present_state" placeholder="State">
+                                            <div id="present_state_error" class="text-danger mx-2"></div>
+                                        </div>
+                                        <div class="form-group pb-3">
+                                            <input class="form-control" name="present_city" id="present_city"
+                                                type="text" placeholder="City">
+                                            <div id="present_city_error" class="text-danger mx-2"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-lg-3">
+                                        <div class="form-group pb-3">
+                                            <input class="form-control" name="present_pincode" id="present_pincode"
+                                                type="text" placeholder="Pincode">
+                                            <div id="present_pincode_error" class="text-danger mx-2"></div>
+                                        </div>
+                                        <div class="form-group pb-3">
+                                            <input class="form-control" name="present_phone" id="present_phone"
+                                                type="number" placeholder="Phone Number">
+                                            <div id="present_phone_error" class="text-danger mx-2"></div>
+                                        </div>
                                     </div>
                                     <div id="show_permanent_address" class="row"></div>
                                     <div class="row">

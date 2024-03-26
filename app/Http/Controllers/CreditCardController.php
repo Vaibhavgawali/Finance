@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Models\CreditCard;
 use App\Models\Loan;
+use App\Models\LoanAddress;
 use App\Models\Demat;
 
 class CreditCardController extends Controller
@@ -105,6 +106,24 @@ class CreditCardController extends Controller
             'mother_name' => 'required|string|max:255',
             'document_type' => 'required|string|max:255',
             'upload_document' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048', 
+
+            'present_line1' => 'required|string',
+            'present_line2' => 'nullable|string',
+            'present_line3' => 'nullable|string',
+            'present_landmark' => 'nullable|string',
+            'present_state' => 'required|string',
+            'present_city' => 'required|string',
+            'present_pincode' => 'required|string|max:6',
+            'present_phone' => 'nullable|string',
+        
+            'office_line1' => 'nullable|string',
+            'office_line2' => 'nullable|string',
+            'office_line3' => 'nullable|string',
+            'office_landmark' => 'nullable|string',
+            'office_state' => 'nullable|string',
+            'office_city' => 'nullable|string',
+            'office_pincode' => 'nullable|string|max:6',
+            'office_phone' => 'nullable|string',
         ];
         
         // Validate the request data
@@ -114,7 +133,7 @@ class CreditCardController extends Controller
         if ($validator->fails()) {
             return Response(['status' => false, 'errors' => $validator->errors()], 422);
         }
-        
+        // dd("ok");
         $referral_id="";
         if (Auth::user()) {
             $referral_id = Auth::user()->referral_id;
@@ -139,10 +158,27 @@ class CreditCardController extends Controller
             'marital_status' => $request->marital_status,
             'mother_name' => $request->mother_name,
             'document_type' => $request->document_type,
-            // 'upload_document' => $request->file('upload_document')->store('uploads')
         ]);
+        
+        if ($loan) {   
+             
+            $loan->loan_address()->updateOrCreate([], $request->only([
+                'present_line1', 'present_line2', 'present_line3', 'present_landmark',
+                'present_state', 'present_city', 'present_pincode', 'present_phone',
+                'office_line1', 'office_line2', 'office_line3', 'office_landmark',
+                'office_state', 'office_city', 'office_pincode', 'office_phone',
+            ]));
 
-        if ($loan) {     
+            if ($request->hasFile('upload_document')) {
+                $document = $request->file('upload_document');
+                $documentName = $document->hashName();                
+                $document->move(public_path('storage/loan'), $documentName);
+
+                $loan->upload_document = $documentName;
+            }
+            $loan->save();
+
+           
             return Response(['status' => true, 'message' => "Loan created successfully !"], 200);
         }
 

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('loan', function (Blueprint $table) {
             $table->id();
             $table->string('referred_by');
-            $table->enum('loan_type', ['Home', 'Business', 'Personal', 'Vehicle']);
+            $table->enum('loan_type', ['Home Loan', 'Business Loan', 'Personal Loan', 'Vehicle Loan']);
             $table->string('mobile');
             $table->string('name');
             $table->enum('income_source', ['salaried', 'business']);

@@ -12,6 +12,6 @@ class Demat extends Model
     protected $table = 'demat';
 
     protected $fillable = [
-        'referred_by','phone', 'name', 'adhar_num','pan_num'
+        'referred_by','phone', 'name', 'adhar_num','pan_num','status'
     ];
 }
