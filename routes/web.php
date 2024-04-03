@@ -15,6 +15,8 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ProfileController;
 
 use App\Http\Controllers\CreditCardController;
+use App\Http\Controllers\LoanController;
+use App\Http\Controllers\DematController;
 
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\UserProfileController;
@@ -45,8 +47,8 @@ Route::get('/creditcard', [WelcomeController::class, 'credit_card']);
 Route::get('/general-insurance', [WelcomeController::class, 'general_insurance']);
 Route::get('/life-insurance', [WelcomeController::class, 'life_insurance']);
 Route::get('/health-insurance', [WelcomeController::class, 'health_insurance']);
-Route::get('/loan', [WelcomeController::class, 'loan']);
-Route::get('/demat', [WelcomeController::class, 'demat']);
+Route::get('/loanForm', [WelcomeController::class, 'loan']);
+Route::get('/dematForm', [WelcomeController::class, 'demat']);
 Route::get('/loan-service', [WelcomeController::class, 'loan_service']);
 
 
@@ -90,9 +92,16 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::patch('/professional-details-update', [ProfileController::class, 'ProfessionalDetailsStoreOrUpdate']);
     Route::post('/kyc-details-add', [ProfileController::class, 'KycDetailsStore']);
     Route::post('/kyc-details-update', [ProfileController::class, 'KycDetailsUpdate']);
+
+    Route::get('/getCreditCardTableData', [CreditCardController::class, 'getCreditCardTableData'])->name('getCreditCardTableData');
+    Route::get('/getLoanTableData', [LoanController::class, 'getLoanTableData'])->name('getLoanTableData');
+    Route::get('/getDematTableData', [DematController::class, 'getDematTableData'])->name('getDematTableData');
 });
 
-Route::post('/credit-card', [CreditCardController::class, 'creditCard']);
-Route::post('/loan-submit', [CreditCardController::class, 'loanSubmit']);
-Route::post('/demat-submit', [CreditCardController::class, 'dematSubmit']);
+Route::resource('/credit-card', CreditCardController::class);
+Route::resource('/loan', LoanController::class);
+Route::resource('/demat', DematController::class);
+
+// Route::post('/loan-submit', [CreditCardController::class, 'loanSubmit']);
+// Route::post('/demat-submit', [CreditCardController::class, 'dematSubmit']);
 

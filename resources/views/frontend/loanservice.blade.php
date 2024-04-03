@@ -19,7 +19,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group pb-3">
-                                            <input type="hidden" id="formUrl" value="/loan-submit">
+                                            <input type="hidden" id="formUrl" value="/loan">
 
                                             <select name="loan_type" id="loan_type" class="form-control">
                                                 <option value="null" selected disabled>
@@ -58,8 +58,8 @@
                                                     <option value="" selected disabled>
                                                         --Select Income Source--
                                                     </option>
-                                                    <option value="salaried">Salaried</option>
-                                                    <option value="business">Business</option>
+                                                    <option value="Salaried">Salaried</option>
+                                                    <option value="Business">Business</option>
                                                 </select>
                                                 <div id="income_source_error" class="text-danger mx-2"></div>
                                             </div>

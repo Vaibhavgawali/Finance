@@ -16,32 +16,37 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
-use App\Models\CreditCard;
+use App\Models\Loan;
 
-class CreditCardController extends Controller
+class LoanController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         if (Auth::check()) {
-            $users = CreditCard::with('creditCardRefer')->orderBy('id', 'desc')->get();
+            $users = Loan::with('loanRefer')->orderBy('id', 'desc')->get();
             
             if ($users) {
-                return view('dashboard.services.credit-card-list');
+                return view('dashboard.services.loan-list');
             }
         }
         return Response(['data' => 'Unauthorized'], 401);
     }
 
-    public function getCreditCardTableData(Request $request)
+    public function getLoanTableData(Request $request)
     {
         if (Auth::check()) {
-            $data = CreditCard::with('creditCardRefer')
-                    ->when(request()->has('bankFilter'), function ($query) {
-                        $bankFilter = request('bankFilter');
-                        $query->where('card', 'like', '%' . $bankFilter . '%');
+            $data = Loan::with('loanRefer')
+                    ->when(request()->has('incomeSourecFilter'), function ($query) {
+                        $incomeSourecFilter = request('incomeSourecFilter');
+                        $query->where('income_source', 'like', '%' . $incomeSourecFilter . '%');
+                    })
+                    ->when(request()->has('statusFilter'), function ($query) {
+                        $statusFilter = request('statusFilter');
+                        $query->where('status', 'like', '%' . $statusFilter . '%');
                     })
                     ->when(request()->has('search'), function ($query) {
                         $search = request('search');
@@ -49,10 +54,12 @@ class CreditCardController extends Controller
                             $q->where('name', 'like', '%' . $search . '%')
                             ->orWhere('mobile', 'like', '%' . $search . '%')
                             ->orWhere('status', 'like', '%' . $search . '%')
-                            ->orWhere('card', 'like', '%' . $search . '%')
+                            ->orWhere('loan_type', 'like', '%' . $search . '%')
+                            ->orWhere('loan_amount', 'like', '%' . $search . '%')
                             ->orWhere('application_stage', 'like', '%' . $search . '%')
                             ->orWhere('approval_date', 'like', '%' . $search . '%')
-                            ->orWhereHas('creditCardRefer', function ($q) use ($search) {
+                            ->orWhere('remark', 'like', '%' . $search . '%')
+                            ->orWhereHas('loanRefer', function ($q) use ($search) {
                                 $q->where('name', 'like', '%' . $search . '%');
                             });
                         });
@@ -69,24 +76,28 @@ class CreditCardController extends Controller
                             $query->whereBetween('created_at', [$startDate, $endDate]);
                         }
                     })
+                    // ->when(!Auth::user()->hasRole('Admin') && !Auth::user()->hasRole('Superadmin'), function ($query) {
+                    //     $query->where('referred_by', auth()->user()->referral_id);
+                    // })
                     ->when(Auth::user()->hasRole('Distributor') || Auth::user()->hasRole('Retailer'), function ($query) {
                         $logged_user_referral_id = auth()->user()->referral_id;
                         $query->where(function ($q) use ($logged_user_referral_id) {
                             $q->where('referred_by', $logged_user_referral_id)
-                              ->orWhereHas('creditCardRefer', function ($q) use ($logged_user_referral_id) {
+                              ->orWhereHas('loanRefer', function ($q) use ($logged_user_referral_id) {
                                   $q->where('referred_by', $logged_user_referral_id);
                               });
                         });
                     })
                     ->orderBy('id', 'desc')
                     ->get();
-                              
+                        //  dd($data);     
             if ($data) { 
                     return DataTables::of($data)
                         ->addIndexColumn()
                         ->addColumn('actions', function ($row) {
+                            // Check if user has Superadmin or Admin role
                             if (auth()->user()->hasRole('Superadmin') || auth()->user()->hasRole('Admin')) {
-                                $actions = '<a class="btn btn-sm btn-gradient-warning btn-rounded editButton" data-credit-card-id="' . $row->id . '" >Edit</a>';  
+                                $actions = '<a class="btn btn-sm btn-gradient-warning btn-rounded editButton" data-loan-id="' . $row->id . '" >Edit</a>';  
                                 return $actions;
                             } else {
                                 return '';
@@ -111,29 +122,52 @@ class CreditCardController extends Controller
      */
     public function store(Request $request)
     {
-        $rules = [
-            'card' => 'required|string|max:255',
+         // dd($request->all());
+         $rules = [
+            'loan_type' => 'required|string|max:255',
             'name' => 'required|string|max:255',
-            'pan_num' => 'required|string|max:255',
-            'adhar_num' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'mobile' => 'required|string|max:20',
-            'annual_income' => 'required|string|max:255',
-            'residence_address' => 'required|string|max:255',
-            'office_address' => 'required|string|max:255',
-            'pan_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
-            'adhar_front_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
-            'adhar_back_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
-            'itr_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
-            'bank_statement_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
+            'mobile' => 'required|string|max:10',
+            'income_source' => 'required|string|max:255',
+            'monthly_income' => 'required|numeric',
+            'pincode' => 'required|string|max:6',
+            'dob' => 'required|date',
+            'pan_num' => 'required|string|max:10',
+            'marital_status' => 'required|string|max:255',
+            'adhar_num' => 'required|string|max:12',
+            'loan_amount' => 'required|numeric',
+            'credit_score' => 'required|numeric',
+            'mother_name' => 'required|string|max:255',
+            'document_type' => 'required|string|max:255',
+            'upload_document' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048', 
+
+            'present_line1' => 'required|string',
+            'present_line2' => 'nullable|string',
+            'present_line3' => 'nullable|string',
+            'present_landmark' => 'nullable|string',
+            'present_state' => 'required|string',
+            'present_city' => 'required|string',
+            'present_pincode' => 'required|string|max:6',
+            'present_phone' => 'nullable|string',
+        
+            'office_line1' => 'nullable|string',
+            'office_line2' => 'nullable|string',
+            'office_line3' => 'nullable|string',
+            'office_landmark' => 'nullable|string',
+            'office_state' => 'nullable|string',
+            'office_city' => 'nullable|string',
+            'office_pincode' => 'nullable|string|max:6',
+            'office_phone' => 'nullable|string',
         ];
         
+        // Validate the request data
         $validator = Validator::make($request->all(), $rules);
-
+        
+        // Check if validation fails
         if ($validator->fails()) {
             return Response(['status' => false, 'errors' => $validator->errors()], 422);
         }
-   
+
         $referral_id="";
         if (Auth::user()) {
             $referral_id = Auth::user()->referral_id;
@@ -141,38 +175,45 @@ class CreditCardController extends Controller
             $referral_id = "ertyfg12345";
         }
 
-        $creditCard = CreditCard::create([
-            'referred_by'=>$referral_id,
-            'name'=>$request->name,
-            'card' => $request->card,
-            'pan_num' => $request->pan_num,
-            'adhar_num' => $request->adhar_num,
-            'email' => $request->email,
+        $loan = Loan::create([
+            'referred_by' => $referral_id,
+            'loan_type' => $request->loan_type,
             'mobile' => $request->mobile,
-            'annual_income' => $request->annual_income,
-            'residence_address' => $request->residence_address,
-            'office_address' => $request->office_address,
-            'status'=>"Initiated"
+            'name' => $request->name,
+            'income_source' => $request->income_source,
+            'email' => $request->email,
+            'monthly_income' => $request->monthly_income,
+            'pincode' => $request->pincode,
+            'adhar_num' => $request->adhar_num,
+            'dob' => $request->dob,
+            'loan_amount' => $request->loan_amount,
+            'pan_num' => $request->pan_num,
+            'credit_score' => $request->credit_score,
+            'marital_status' => $request->marital_status,
+            'mother_name' => $request->mother_name,
+            'document_type' => $request->document_type,
+            'status' => 'Initiated'
         ]);
+        
+        if ($loan) {   
+             
+            $loan->loan_address()->updateOrCreate([], $request->only([
+                'present_line1', 'present_line2', 'present_line3', 'present_landmark',
+                'present_state', 'present_city', 'present_pincode', 'present_phone',
+                'office_line1', 'office_line2', 'office_line3', 'office_landmark',
+                'office_state', 'office_city', 'office_pincode', 'office_phone',
+            ]));
 
-        if ($creditCard) {
-            $documentFields = ['pan_file', 'adhar_front_file', 'adhar_back_file','itr_file','bank_statement_file'];
+            if ($request->hasFile('upload_document')) {
+                $document = $request->file('upload_document');
+                $documentName = $document->hashName();                
+                $document->move(public_path('storage/loan'), $documentName);
 
-            foreach ($documentFields as $documentField) {
-                
-                if ($request->hasFile($documentField)) {
-                    $document = $request->file($documentField);
-                    $documentName = $document->hashName();                
-                    $document->move(public_path('storage/credit-card'), $documentName);
-                    // Set the document name to the respective column in the CreditCard model
-                    $creditCard->$documentField = $documentName;
-                }
+                $loan->upload_document = $documentName;
             }
-            $creditCard->save();
-        }
+            $loan->save();
 
-        if ($creditCard) {     
-            return Response(['status' => true, 'message' => "Credit card successfully !"], 200);
+            return Response(['status' => true, 'message' => "Loan created successfully !"], 200);
         }
 
         return Response(['status' => false, 'message' => "Something went wrong"], 500);
@@ -181,24 +222,26 @@ class CreditCardController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $creditCardId)
+    public function show(string $id)
     {
         if(Auth::Check()){
-            $creditCard = CreditCard::find($creditCardId);
+            $loan = Loan::find($id);
         
-            if($creditCard) {
-                $status = $creditCard->status;
-                $application_stage = $creditCard->application_stage;
-                $approval_date = $creditCard->approval_date;
+            if($loan) {
+                $status = $loan->status;
+                $application_stage = $loan->application_stage;
+                $approval_date = $loan->approval_date;
+                $remark = $loan->remark;
 
                 return response()->json([
                     'status' => $status,
                     'application_stage' => $application_stage,
                     'approval_date' => $approval_date,
+                    'remark' => $remark,
                 ]);
 
             } else {
-                return response()->json(['error' => 'Credit Card not found'], 404);
+                return response()->json(['error' => 'Loan not found'], 404);
             }
         }
     }
@@ -214,35 +257,28 @@ class CreditCardController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $creditCardId)
+    public function update(Request $request, string $id)
     {
         if(Auth::Check()){
             $formMethod = $request->method();
             if($formMethod == "PATCH"){
                 // Find the credit card record by its ID
-                $creditCard = CreditCard::findOrFail($creditCardId);
-
+                $loan = Loan::findOrFail($id);
+// dd($loan);
                 $validator = Validator::make($request->all(), [
                     'status' => 'required|string',
                     'application_stage' => 'nullable|string',
                     'approval_date' => 'nullable|date',
+                    'remark' => 'nullable|string',
                 ]);
 
                 if($validator->fails()){
                     return Response(['message' => $validator->errors()],401);
                 } 
 
-                // dd("ok");
-            
-                // Update the credit card record with the new data
-                // $creditCard->update([
-                //     'status' => $request->status,
-                //     'application_stage' => $request->application_stage,
-                //     'approval_date' => $request->approval_date,
-                // ]);
-                $isUpdated=$creditCard->update($request->all());
+                $isUpdated=$loan->update($request->all());
                 if($isUpdated){
-                    return Response(['message' => "Credit Card updated successfully"],200);
+                    return Response(['message' => "Loan updated successfully"],200);
                 }
                 return Response(['message' => "Something went wrong"],500);
             }

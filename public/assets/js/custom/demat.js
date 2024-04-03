@@ -104,7 +104,7 @@ $(document).ready(function () {
             adhar_num: adhar_num,
         };
 
-        var url = window.location.origin + "/demat-submit";
+        var url = window.location.origin + "/demat";
         $.ajax({
             type: "POST",
             url: url,

@@ -11,6 +11,7 @@ $(document).ready(function () {
 
     // Get the insurance plan from the URL
     var creditcard = getParameterByName("creditcard");
+    // alert(creditcard);
     $("#card").val(creditcard);
     var currentTab = 0;
     showTab(currentTab);
@@ -121,55 +122,58 @@ $(document).ready(function () {
             var errorDiv = $("#" + input.attr("id") + "_error");
             var selector = input.attr("id");
 
-            var loanType = $("#loan_type").val();
-            $("#loan_type_error").html();
-            var loan_type_error = $("#loan_type_error");
-            if (
-                loanType == "null" ||
-                loanType == null ||
-                loanType == "undefined" ||
-                loanType == undefined
-            ) {
-                input.addClass("invalid");
-                loan_type_error.text("Loan type is required");
-                valid = false;
-            } else {
-                input.removeClass("invalid");
-                loan_type_error.text("");
-            }
+            var formUrl = $("#formUrl").val();
+            if (formUrl == "/loan") {
+                var loanType = $("#loan_type").val();
+                $("#loan_type_error").html();
+                var loan_type_error = $("#loan_type_error");
+                if (
+                    loanType == "null" ||
+                    loanType == null ||
+                    loanType == "undefined" ||
+                    loanType == undefined
+                ) {
+                    input.addClass("invalid");
+                    loan_type_error.text("Loan type is required");
+                    valid = false;
+                } else {
+                    input.removeClass("invalid");
+                    loan_type_error.text("");
+                }
 
-            var maritalStatus = $("#marital_status").val();
-            $("#marital_status_error").html();
-            var marital_status_error = $("#marital_status_error");
-            if (
-                maritalStatus == "null" ||
-                maritalStatus == null ||
-                maritalStatus == "undefined" ||
-                maritalStatus == undefined
-            ) {
-                input.addClass("invalid");
-                marital_status_error.text("Marital Status is required");
-                valid = false;
-            } else {
-                input.removeClass("invalid");
-                marital_status_error.text("");
-            }
+                var maritalStatus = $("#marital_status").val();
+                $("#marital_status_error").html();
+                var marital_status_error = $("#marital_status_error");
+                if (
+                    maritalStatus == "null" ||
+                    maritalStatus == null ||
+                    maritalStatus == "undefined" ||
+                    maritalStatus == undefined
+                ) {
+                    input.addClass("invalid");
+                    marital_status_error.text("Marital Status is required");
+                    valid = false;
+                } else {
+                    input.removeClass("invalid");
+                    marital_status_error.text("");
+                }
 
-            var incomeSource = $("#income_source").val();
-            $("#income_source_error").html();
-            var income_source_error = $("#income_source_error");
-            if (
-                incomeSource == "null" ||
-                incomeSource == null ||
-                incomeSource == "undefined" ||
-                incomeSource == undefined
-            ) {
-                input.addClass("invalid");
-                income_source_error.text("Income source is required");
-                valid = false;
-            } else {
-                input.removeClass("invalid");
-                income_source_error.text("");
+                var incomeSource = $("#income_source").val();
+                $("#income_source_error").html();
+                var income_source_error = $("#income_source_error");
+                if (
+                    incomeSource == "null" ||
+                    incomeSource == null ||
+                    incomeSource == "undefined" ||
+                    incomeSource == undefined
+                ) {
+                    input.addClass("invalid");
+                    income_source_error.text("Income source is required");
+                    valid = false;
+                } else {
+                    input.removeClass("invalid");
+                    income_source_error.text("");
+                }
             }
 
             if (
