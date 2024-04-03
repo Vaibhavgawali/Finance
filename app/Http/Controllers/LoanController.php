@@ -76,9 +76,6 @@ class LoanController extends Controller
                             $query->whereBetween('created_at', [$startDate, $endDate]);
                         }
                     })
-                    // ->when(!Auth::user()->hasRole('Admin') && !Auth::user()->hasRole('Superadmin'), function ($query) {
-                    //     $query->where('referred_by', auth()->user()->referral_id);
-                    // })
                     ->when(Auth::user()->hasRole('Distributor') || Auth::user()->hasRole('Retailer'), function ($query) {
                         $logged_user_referral_id = auth()->user()->referral_id;
                         $query->where(function ($q) use ($logged_user_referral_id) {
@@ -172,7 +169,7 @@ class LoanController extends Controller
         if (Auth::user()) {
             $referral_id = Auth::user()->referral_id;
         } else {
-            $referral_id = "ertyfg12345";
+            $referral_id = "ghijk12345";
         }
 
         $loan = Loan::create([

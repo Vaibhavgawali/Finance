@@ -138,7 +138,7 @@ class CreditCardController extends Controller
         if (Auth::user()) {
             $referral_id = Auth::user()->referral_id;
         } else {
-            $referral_id = "ertyfg12345";
+            $referral_id = "ghijk12345";
         }
 
         $creditCard = CreditCard::create([
