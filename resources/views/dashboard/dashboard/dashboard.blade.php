@@ -29,22 +29,12 @@
                     :totalCount="$loanCount" />
                 <x-dashboard-card :bgClass="'bg-gradient-danger'" :url="'/demat'" :imageUrl="asset('admin-assets/assets/images/dashboard/circle.svg')" :title="'Demat'"
                     :totalCountLabel="'Total Count'" :totalCount="$dematCount" />
-                <x-dashboard-card :bgClass="'bg-gradient-danger'" :url="'/referral'" :imageUrl="asset('admin-assets/assets/images/dashboard/circle.svg')" :title="'Referral'"
-                    :totalCountLabel="'Total Count'" :totalCount="0" />
 
                 <x-dashboard-card :bgClass="'bg-gradient-danger'" :url="'/'" :imageUrl="asset('admin-assets/assets/images/dashboard/circle.svg')" :title="'Health Insurance'"
                     :totalCountLabel="'Total Count'" :totalCount="0" />
                 <x-dashboard-card :bgClass="'bg-gradient-danger'" :url="'/'" :imageUrl="asset('admin-assets/assets/images/dashboard/circle.svg')" :title="'Life Insurance'"
                     :totalCountLabel="'Total Count'" :totalCount="0" />
-                <x-dashboard-card :bgClass="'bg-gradient-danger'" :url="'/'" :imageUrl="asset('admin-assets/assets/images/dashboard/circle.svg')" :title="'Term Insurance'"
-                    :totalCountLabel="'Total Count'" :totalCount="0" />
-                <x-dashboard-card :bgClass="'bg-gradient-danger'" :url="'/'" :imageUrl="asset('admin-assets/assets/images/dashboard/circle.svg')" :title="'Saving Account'"
-                    :totalCountLabel="'Total Count'" :totalCount="0" />
-                <x-dashboard-card :bgClass="'bg-gradient-danger'" :url="'/'" :imageUrl="asset('admin-assets/assets/images/dashboard/circle.svg')" :title="'12% Circle'"
-                    :totalCountLabel="'Total Count'" :totalCount="0" />
-                <x-dashboard-card :bgClass="'bg-gradient-danger'" :url="'/'" :imageUrl="asset('admin-assets/assets/images/dashboard/circle.svg')" :title="'Shop Insurance'"
-                    :totalCountLabel="'Total Count'" :totalCount="0" />
-                <x-dashboard-card :bgClass="'bg-gradient-danger'" :url="'/'" :imageUrl="asset('admin-assets/assets/images/dashboard/circle.svg')" :title="'Leads'"
+                <x-dashboard-card :bgClass="'bg-gradient-danger'" :url="'/'" :imageUrl="asset('admin-assets/assets/images/dashboard/circle.svg')" :title="'Motor Insurance'"
                     :totalCountLabel="'Total Count'" :totalCount="0" />
 
             </div>

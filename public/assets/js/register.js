@@ -104,7 +104,7 @@ $(document).ready(function () {
                     $(".error-message").remove();
 
                     $("#add_user_button").attr("disabled", true);
-                    RegisteredAlert();
+                    // RegisteredAlert();
 
                     $("#add_user_form")[0].reset();
 

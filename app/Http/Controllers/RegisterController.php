@@ -16,8 +16,8 @@ class RegisterController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum');
-        $this->middleware(['role_or_permission:Superadmin|Admin|add_distributor|add_retailer'])->only('store');
+        // $this->middleware('auth:sanctum');
+        // $this->middleware(['role_or_permission:Superadmin|Admin|add_distributor|add_retailer'])->only('store');
     }
 
     public function register(Request $request): Response
@@ -61,8 +61,12 @@ class RegisterController extends Controller
                 break;
         }
         // dd($uniqueReferralId);
-
-        $referredById = auth()->user()->referral_id;
+        $referredById =  "";
+        if(Auth::user()){
+            $referredById = auth()->user()->referral_id;
+        }else{
+            $referredById =  "ghijk12345";
+        }
 
         $user = User::create([
             'name' => $request->name,

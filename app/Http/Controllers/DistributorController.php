@@ -79,9 +79,17 @@ class DistributorController extends Controller
                 return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('actions', function ($row) {
-                        $actions = '<form class="delete-user-form" data-user-id="' . $row->id . '">
-                            <button type="button" class="btn btn-sm btn-gradient-danger btn-rounded delete-user-button">Delete</button>
-                        </form>';
+                        if (auth()->user()->hasRole('Superadmin') || auth()->user()->hasRole('Admin')) {
+                            $actions = '<a class="btn btn-sm btn-gradient-warning btn-rounded editButton" href="users/'. $row->id . '" >View</a>';  
+                            // $actions .= '<a class="btn btn-sm btn-gradient-primary btn-rounded editButton" data-user-id="' . $row->id . '" >Edit</a>';  
+                            $actions .= '<form class="delete-user-form" data-user-id="' . $row->id . '">
+                                            <button type="button" class="btn btn-sm btn-gradient-danger btn-rounded delete-user-button">Delete</button>
+                                        </form>';
+                            return $actions;
+                        } else {
+                            return '';
+                        }
+                      
                         return $actions;
                     })
                     ->rawColumns(['actions'])

@@ -40,7 +40,6 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 */
 
 Route::get('/', [WelcomeController::class, 'index']);
-Route::get('/login',[WelcomeController::class, 'login']);
 Route::get('/register',[WelcomeController::class, 'register']);
 Route::get('/credit', [WelcomeController::class, 'credit']);
 Route::get('/creditcard', [WelcomeController::class, 'credit_card']);
@@ -51,9 +50,8 @@ Route::get('/loanForm', [WelcomeController::class, 'loan']);
 Route::get('/dematForm', [WelcomeController::class, 'demat']);
 Route::get('/loan-service', [WelcomeController::class, 'loan_service']);
 
-
 Route::middleware(['web'])->group(function () {
-    Route::get('/login-test', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [LoginController::class, 'login']);
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
@@ -71,9 +69,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/home', [App\Http\Controllers\DashboardController::class, 'dashboard']); //redirect to dashboard if already logged in
 });
 
-Route::group(['middleware' => 'auth:sanctum'], function () {
+Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
-    Route::post('/register', [RegisterController::class, 'register'])->name('register');
+Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::resource('/admin', AdminController::class);
     Route::get('/getAdminTableData', [AdminController::class, 'getAdminTableData'])->name('getAdminTableData');
@@ -96,6 +94,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/getCreditCardTableData', [CreditCardController::class, 'getCreditCardTableData'])->name('getCreditCardTableData');
     Route::get('/getLoanTableData', [LoanController::class, 'getLoanTableData'])->name('getLoanTableData');
     Route::get('/getDematTableData', [DematController::class, 'getDematTableData'])->name('getDematTableData');
+
+    Route::get('get-role/{id}', [UserController::class, 'getUserRoles']);
+    Route::post('assign-role/{id}', [UserController::class, 'assignRole']);
 });
 
 Route::resource('/credit-card', CreditCardController::class);

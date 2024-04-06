@@ -150,12 +150,18 @@
                                     buttons: [{
                                             extend: 'excelHtml5',
                                             className: 'btn btn-sm mx-3 btn-primary',
-                                            id: "download_to_excel"
+                                            id: "download_to_excel",
+                                            exportOptions: {
+                                                columns: ':not(#actionColumn)'
+                                            }
                                         },
                                         {
                                             extend: 'pdfHtml5',
                                             className: 'btn btn-sm mx-3 btn-primary',
-                                            id: 'download_to_pdf'
+                                            id: 'download_to_pdf',
+                                            exportOptions: {
+                                                columns: ':not(#actionColumn)'
+                                            }
                                         }
                                     ],
                                     processing: true,
