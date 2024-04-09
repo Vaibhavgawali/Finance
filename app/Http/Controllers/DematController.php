@@ -17,10 +17,11 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 use App\Models\CreditCard;
+use App\Models\Loan;
+use App\Models\Demat;
 
-class CreditCardController extends Controller
+class DematController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth:sanctum')->except('create','store');
@@ -33,32 +34,27 @@ class CreditCardController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            $users = CreditCard::with('creditCardRefer')->orderBy('id', 'desc')->get();
+            $users = Demat::with('dematRefer')->orderBy('id', 'desc')->get();
             
             if ($users) {
-                return view('dashboard.services.credit-card-list');
+                return view('dashboard.services.demat-list');
             }
         }
         return Response(['data' => 'Unauthorized'], 401);
     }
 
-    public function getCreditCardTableData(Request $request)
+    public function getDematTableData(Request $request)
     {
-        $data = CreditCard::with('creditCardRefer')
-                ->when(request()->has('bankFilter'), function ($query) {
-                    $bankFilter = request('bankFilter');
-                    $query->where('card', 'like', '%' . $bankFilter . '%');
-                })
+        $data =Demat::with('dematRefer')
                 ->when(request()->has('search'), function ($query) {
                     $search = request('search');
                     $query->where(function ($q) use ($search) {
                         $q->where('name', 'like', '%' . $search . '%')
-                        ->orWhere('mobile', 'like', '%' . $search . '%')
+                        ->orWhere('phone', 'like', '%' . $search . '%')
                         ->orWhere('status', 'like', '%' . $search . '%')
-                        ->orWhere('card', 'like', '%' . $search . '%')
                         ->orWhere('application_stage', 'like', '%' . $search . '%')
                         ->orWhere('approval_date', 'like', '%' . $search . '%')
-                        ->orWhereHas('creditCardRefer', function ($q) use ($search) {
+                        ->orWhereHas('dematRefer', function ($q) use ($search) {
                             $q->where('name', 'like', '%' . $search . '%');
                         });
                     });
@@ -79,22 +75,24 @@ class CreditCardController extends Controller
                     $logged_user_referral_id = auth()->user()->referral_id;
                     $query->where(function ($q) use ($logged_user_referral_id) {
                         $q->where('referred_by', $logged_user_referral_id)
-                            ->orWhereHas('creditCardRefer', function ($q) use ($logged_user_referral_id) {
+                            ->orWhereHas('dematRefer', function ($q) use ($logged_user_referral_id) {
                                 $q->where('referred_by', $logged_user_referral_id);
                             });
                     });
                 })
                 ->orderBy('id', 'desc')
                 ->get();
+
                             
         if ($data) { 
                 return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('actions', function ($row) {
+                        // Check if user has Superadmin or Admin role
                         if (auth()->user()->hasRole('Superadmin') || auth()->user()->hasRole('Admin')) {
-                            $actions = '<a class="btn btn-sm btn-gradient-warning btn-rounded viewButton" data-credit-card-id="' . $row->id . '" >View</a>';  
-                            $actions .= '<a class="btn btn-sm btn-gradient-warning btn-rounded editButton" data-credit-card-id="' . $row->id . '" >Edit</a>';  
-                            $actions .= '<a class="btn btn-sm btn-gradient-warning btn-rounded statusButton" data-credit-card-id="' . $row->id . '" >Status</a>';  
+                            $actions = '<a class="btn btn-sm btn-gradient-warning btn-rounded viewButton" data-demat-id="' . $row->id . '" >View</a>';  
+                            $actions .= '<a class="btn btn-sm btn-gradient-warning btn-rounded editButton" data-demat-id="' . $row->id . '" >Edit</a>';  
+                            $actions .= '<a class="btn btn-sm btn-gradient-warning btn-rounded statusButton" data-demat-id="' . $row->id . '" >Status</a>';  
                             return $actions;
                         } else {
                             return '';
@@ -110,7 +108,7 @@ class CreditCardController extends Controller
      */
     public function create()
     {
-        return view('frontend.creditcard');
+        return view('frontend.demat');
     }
 
     /**
@@ -119,28 +117,20 @@ class CreditCardController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'card' => 'required|string|max:255',
             'name' => 'required|string|max:255',
-            'pan_num' => 'required|string|max:255',
-            'adhar_num' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'mobile' => 'required|string|max:20',
-            'annual_income' => 'required|string|max:255',
-            'residence_address' => 'required|string|max:255',
-            'office_address' => 'required|string|max:255',
-            'pan_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
-            'adhar_front_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
-            'adhar_back_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
-            'itr_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
-            'bank_statement_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
+            'phone' => 'required|string|max:10',
+            'pan_num' => ['required', 'string', 'max:10', 'regex:/^[A-Z]{5}\d{4}[A-Z]$/'],
+            'adhar_num' => ['required', 'string', 'max:12', 'regex:/^\d{12}$/'],
         ];
-        
-        $validator = Validator::make($request->all(), $rules);
 
+        // Validate the request data
+        $validator = Validator::make($request->all(), $rules);
+        
+        // Check if validation fails
         if ($validator->fails()) {
             return Response(['status' => false, 'errors' => $validator->errors()], 422);
         }
-   
+
         $referral_id="";
         if (Auth::user()) {
             $referral_id = Auth::user()->referral_id;
@@ -148,55 +138,36 @@ class CreditCardController extends Controller
             $referral_id = "ghijk12345";
         }
 
-        $creditCard = CreditCard::create([
+        $demat = Demat::create([
             'referred_by'=>$referral_id,
             'name'=>$request->name,
-            'card' => $request->card,
+            'phone'=>$request->phone,
             'pan_num' => $request->pan_num,
             'adhar_num' => $request->adhar_num,
-            'email' => $request->email,
-            'mobile' => $request->mobile,
-            'annual_income' => $request->annual_income,
-            'residence_address' => $request->residence_address,
-            'office_address' => $request->office_address,
-            'status'=>"Initiated"
+            'status'=>'Initiated'
         ]);
 
-        if ($creditCard) {
-            $documentFields = ['pan_file', 'adhar_front_file', 'adhar_back_file','itr_file','bank_statement_file'];
-
-            foreach ($documentFields as $documentField) {
-                
-                if ($request->hasFile($documentField)) {
-                    $document = $request->file($documentField);
-                    $documentName = $document->hashName();                
-                    $document->move(public_path('storage/credit-card'), $documentName);
-                    // Set the document name to the respective column in the CreditCard model
-                    $creditCard->$documentField = $documentName;
-                }
-            }
-            $creditCard->save();
-        }
-
-        if ($creditCard) {     
-            return Response(['status' => true, 'message' => "Credit card successfully !"], 200);
+        if ($demat) {     
+            return Response(['status' => true, 'message' => "Demat submitted successfully !"], 200);
         }
 
         return Response(['status' => false, 'message' => "Something went wrong"], 500);
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $creditCardId)
+    public function show(string $id)
     {
-        $creditCard = CreditCard::find($creditCardId);
+        $demat = Demat::find($id);
     
-        if($creditCard) {
-            return response()->json($creditCard);
-        } 
-        
-        return response()->json(['error' => 'Credit Card not found'], 404);
+        if($demat) {
+            return response()->json($demat);
+
+        } else {
+            return response()->json(['error' => 'Demat not found'], 404);
+        }
     }
 
     /**
@@ -210,39 +181,33 @@ class CreditCardController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $creditCardId)
+    public function update(Request $request, string $id)
     {
         $formMethod = $request->method();
         if($formMethod == "PATCH"){
-            // Find the credit card record by its ID
-            $creditCard = CreditCard::findOrFail($creditCardId);
+            // Find the demat record by its ID
+            $demat = Demat::findOrFail($id);
 
             $validator = Validator::make($request->all(), [
-                'status' => 'required|string',
-                'application_stage' => 'nullable|string',
-                'approval_date' => 'nullable|date',
+                'name' => 'required|string|max:255',
+                'phone' => 'required|string|max:10',
+                'pan_num' => ['required', 'string', 'max:10', 'regex:/^[A-Z]{5}\d{4}[A-Z]$/'],
+                'adhar_num' => ['required', 'string', 'max:12', 'regex:/^\d{12}$/'],
             ]);
 
             if($validator->fails()){
                 return Response(['message' => $validator->errors()],401);
             } 
 
-            // dd("ok");
-        
-            // Update the credit card record with the new data
-            // $creditCard->update([
-            //     'status' => $request->status,
-            //     'application_stage' => $request->application_stage,
-            //     'approval_date' => $request->approval_date,
-            // ]);
-            $isUpdated=$creditCard->update($request->all());
+            $isUpdated=$demat->update($request->all());
+
             if($isUpdated){
-                return Response(['message' => "Credit Card updated successfully"],200);
+                return Response(['message' => "Demat updated successfully"],200);
             }
             return Response(['message' => "Something went wrong"],500);
         }
         return Response(['message'=>"Invalid form method "],405);
-    }
+    }   
 
     /**
      * Remove the specified resource from storage.
@@ -252,12 +217,15 @@ class CreditCardController extends Controller
         //
     }
 
-    public function updateStatus(Request $request, string $creditCardId)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function updateStatus(Request $request, string $id)
     {
         $formMethod = $request->method();
         if($formMethod == "PATCH"){
-            // Find the credit card record by its ID
-            $creditCard = CreditCard::findOrFail($creditCardId);
+            // Find the demat record by its ID
+            $demat = Demat::findOrFail($id);
 
             $validator = Validator::make($request->all(), [
                 'status' => 'required|string',
@@ -269,9 +237,10 @@ class CreditCardController extends Controller
             if($validator->fails()){
                 return Response(['message' => $validator->errors()],401);
             } 
-            $isUpdated=$creditCard->update($request->all());
+
+            $isUpdated=$demat->update($request->all());
             if($isUpdated){
-                return Response(['message' => "Credit Card updated successfully"],200);
+                return Response(['message' => "Demat updated successfully"],200);
             }
             return Response(['message' => "Something went wrong"],500);
         }

@@ -14,11 +14,14 @@ return new class extends Migration
         Schema::create('loan', function (Blueprint $table) {
             $table->id();
             $table->string('referred_by');
-            $table->enum('loan_type', ['Home', 'Business', 'Personal', 'Vehicle']);
+            $table->enum('loan_type', ['Home Loan', 'Business Loan', 'Personal Loan', 'Vehicle Loan']);
             $table->string('mobile');
             $table->string('name');
-            $table->enum('income_source', ['salaried', 'business']);
+            $table->enum('income_source', ['Salaried', 'Business']);
             $table->string('email');
+            $table->string('status')->nullable();
+            $table->string('application_stage')->nullable();
+            $table->date('approval_date')->nullable();
             $table->decimal('monthly_income', 10, 2);
             $table->string('pincode');
             $table->string('adhar_num');
@@ -44,7 +47,9 @@ return new class extends Migration
                 'other'
             ]);
             $table->string('upload_document')->nullable();
+            $table->string('remark')->nullable();
             $table->timestamps();
+            $table->foreign('referred_by')->references('referral_id')->on('users');
         });
     }
 

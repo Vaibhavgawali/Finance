@@ -15,6 +15,8 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ProfileController;
 
 use App\Http\Controllers\CreditCardController;
+use App\Http\Controllers\LoanController;
+use App\Http\Controllers\DematController;
 
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\UserProfileController;
@@ -38,23 +40,26 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 */
 
 Route::get('/', [WelcomeController::class, 'index']);
-Route::get('/login',[WelcomeController::class, 'login']);
-Route::get('/register',[WelcomeController::class, 'register']);
+
 Route::get('/credit', [WelcomeController::class, 'credit']);
 Route::get('/creditcard', [WelcomeController::class, 'credit_card']);
+
+Route::get('/loanForm', [WelcomeController::class, 'loan']);
+Route::get('/dematForm', [WelcomeController::class, 'demat']);
+Route::get('/loan-service', [WelcomeController::class, 'loan_service']);
+
 Route::get('/general-insurance', [WelcomeController::class, 'general_insurance']);
 Route::get('/life-insurance', [WelcomeController::class, 'life_insurance']);
 Route::get('/health-insurance', [WelcomeController::class, 'health_insurance']);
-Route::get('/loan', [WelcomeController::class, 'loan']);
-Route::get('/demat', [WelcomeController::class, 'demat']);
-Route::get('/loan-service', [WelcomeController::class, 'loan_service']);
-
 
 Route::middleware(['web'])->group(function () {
-    Route::get('/login-test', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [LoginController::class, 'login']);
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
+
+Route::get('/register',[WelcomeController::class, 'register']);
+Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
 Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
@@ -69,9 +74,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/home', [App\Http\Controllers\DashboardController::class, 'dashboard']); //redirect to dashboard if already logged in
 });
 
-Route::group(['middleware' => 'auth:sanctum'], function () {
 
-    Route::post('/register', [RegisterController::class, 'register'])->name('register');
+Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::resource('/admin', AdminController::class);
     Route::get('/getAdminTableData', [AdminController::class, 'getAdminTableData'])->name('getAdminTableData');
@@ -90,9 +94,19 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::patch('/professional-details-update', [ProfileController::class, 'ProfessionalDetailsStoreOrUpdate']);
     Route::post('/kyc-details-add', [ProfileController::class, 'KycDetailsStore']);
     Route::post('/kyc-details-update', [ProfileController::class, 'KycDetailsUpdate']);
+
+    Route::get('/getCreditCardTableData', [CreditCardController::class, 'getCreditCardTableData'])->name('getCreditCardTableData');
+    Route::get('/getLoanTableData', [LoanController::class, 'getLoanTableData'])->name('getLoanTableData');
+    Route::get('/getDematTableData', [DematController::class, 'getDematTableData'])->name('getDematTableData');
+
+    Route::get('get-role/{id}', [UserController::class, 'getUserRoles']);
+    Route::post('assign-role/{id}', [UserController::class, 'assignRole']);
+
+    Route::patch('demat-update-status/{id}', [DematController::class, 'updateStatus']);
+    Route::patch('credit-card-update-status/{id}', [CreditCardController::class, 'updateStatus']);
 });
 
-Route::post('/credit-card', [CreditCardController::class, 'creditCard']);
-Route::post('/loan-submit', [CreditCardController::class, 'loanSubmit']);
-Route::post('/demat-submit', [CreditCardController::class, 'dematSubmit']);
+Route::resource('/credit-card', CreditCardController::class);
+Route::resource('/loan', LoanController::class);
+Route::resource('/demat', DematController::class);
 

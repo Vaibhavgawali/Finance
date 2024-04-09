@@ -18,7 +18,11 @@ return new class extends Migration
             $table->string('phone');
             $table->string('adhar_num');
             $table->string('pan_num');
+            $table->string('status')->nullable();
+            $table->string('application_stage')->nullable();
+            $table->date('approval_date')->nullable();
             $table->timestamps();
+            $table->foreign('referred_by')->references('referral_id')->on('users');
         });
     }
 

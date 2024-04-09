@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('credit_card', function (Blueprint $table) {
-            $table->id();
-            
+            $table->id();     
             $table->string('referred_by');
             $table->string('card');
             $table->string('name');
@@ -21,6 +20,9 @@ return new class extends Migration
             $table->string('adhar_num');
             $table->string('email');
             $table->string('mobile');
+            $table->string('status')->nullable();
+            $table->string('application_stage')->nullable();
+            $table->date('approval_date')->nullable();
             $table->decimal('annual_income', 10, 2);
             $table->text('residence_address');
             $table->text('office_address');
@@ -30,6 +32,7 @@ return new class extends Migration
             $table->string('itr_file')->nullable();
             $table->string('bank_statement_file')->nullable();
             $table->timestamps();
+            $table->foreign('referred_by')->references('referral_id')->on('users');
         });
     }
 

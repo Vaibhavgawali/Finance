@@ -57,15 +57,17 @@ class RetailerController extends Controller
     public function getRetailerTableData()
     {
         if (Auth::check()) {
-            $data = User::where('category','Retailer')
+            $data = User::where('category','Retailer')->with('referral')
                     ->when(request()->has('search'), function ($query) {
                         $search = request('search');
                         $query->where(function ($q) use ($search) {
-                            $q->where('name', 'like', '%' . $search . '%');
-                            $q->orWhere('referral_id', 'like', '%' . $search . '%');
-                            $q->orWhere('user_id', 'like', '%' . $search . '%');
-
-                            if (Auth::check() && (Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Distributor'))) {
+                            $q->where('name', 'like', '%' . $search . '%')
+                            ->orWhere('referral_id', 'like', '%' . $search . '%')
+                            ->orWhere('user_id', 'like', '%' . $search . '%')
+                            ->orWhereHas('referral', function ($q) use ($search) {
+                                $q->where('name', 'like', '%' . $search . '%');
+                            });
+                            if (Auth::check() &&  Auth::user()->hasRole('Distributor')) {
                                 $q->orWhere('referred_by', Auth::user()->referral_id);
                             }
                         });
@@ -77,9 +79,18 @@ class RetailerController extends Controller
                 return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('actions', function ($row) {
-                        $actions = '<form class="delete-user-form" data-user-id="' . $row->id . '">
-                            <button type="button" class="btn btn-sm btn-gradient-danger btn-rounded delete-user-button">Delete</button>
-                        </form>';
+
+                        if (auth()->user()->hasRole('Superadmin') || auth()->user()->hasRole('Admin')) {
+                            $actions = '<a class="btn btn-sm btn-gradient-warning btn-rounded" href="users/'. $row->id . '" >View</a>';  
+                            $actions .= '<a class="btn btn-sm btn-gradient-primary btn-rounded editButton" data-user-id="' . $row->id . '" >Edit</a>';  
+                            $actions .= '<form class="delete-user-form" data-user-id="' . $row->id . '">
+                                            <button type="button" class="btn btn-sm btn-gradient-danger btn-rounded delete-user-button">Delete</button>
+                                        </form>';
+                            return $actions;
+                        } else {
+                            return '';
+                        }
+                      
                         return $actions;
                     })
                     ->rawColumns(['actions'])

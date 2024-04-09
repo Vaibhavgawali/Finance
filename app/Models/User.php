@@ -84,6 +84,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(BusinessDetails::class,'user_id','id');
     }
+    public function referral()
+    {
+        return $this->belongsTo(User::class, 'referred_by', 'referral_id');
+    }
     public function hasCategory($category)
     {
         return $this->category === $category;

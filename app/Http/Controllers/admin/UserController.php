@@ -12,9 +12,6 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 use App\Models\User;
-use App\Models\UserProfile;
-use App\Models\UserAddress;
-use App\Models\UserExperience;
 
 class UserController extends Controller
 {
@@ -23,7 +20,7 @@ class UserController extends Controller
         $this->middleware('auth:sanctum')->except('store');
 
         // Spatie middleware here
-        $this->middleware(['role:Superadmin'])->only('index','update','destroy');
+        $this->middleware(['role:Superadmin|Admin']);
     }
 
     /**
@@ -60,6 +57,9 @@ class UserController extends Controller
         if ($user->id == $id) {
             $userData = User::with( 'profile','address','documents.address_proof','bank','profession','business','social_links')->find($user->id);
             return view('dashboard.dashboard.profile', ['userData' => $userData]);
+        } else if (Auth::user()->hasRole('Superadmin') || Auth::user()->hasRole('Admin')) {
+            $userData = User::with( 'profile','address','documents.address_proof','bank','profession','business','social_links')->find($id);
+            return view('dashboard.dashboard.user-profile', ['userData' => $userData]);
         } else {
             return response(['message' => 'Unauthorized'], 401);
         }
@@ -108,30 +108,81 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        if (Auth::check()) {
-            $userId = User::find($id);
-            if ($userId) {
-                $isTrashed = $userId->delete();
-                if ($isTrashed) {
+        if (Auth::user()->hasRole('Superadmin') || Auth::user()->hasRole('Admin')) {
+            $user = User::find($id);
 
-                    if($userId->hasRole('Candidate')){
-                        return redirect()->route('candidate.index')->with('success','User Deleted Successfully');
-                    }
-
-                    if($userId->hasRole('Insurer')){
-                        return redirect()->route('insurer.index')->with('success','User Deleted Successfully');
-                    }
-
-                    if($userId->hasRole('Institute')){
-                        return redirect()->route('institute.index')->with('success','User Deleted Successfully');
-                    }
-                    
-                }
-                return Response(['message' => "Something went wrong"], 500);
+            if (!$user) {
+                return Response(['status' => false, 'message' => "User not found"], 404);
             }
-            return Response(['message' => "User not found "], 404);
+
+            $isDeleted = $user->delete();
+
+            if ($isDeleted) {
+                return Response(['status' => true, 'message' => "User deleted successfully"], 200);
+            }
+
+            return Response(['status' => false, 'message' => "Something went wrong"], 500);
         }
-        return Response(['data' => 'Unauthorized'], 401);
+
+        return Response(['status' => false, 'message' => 'Unauthorized'], 401);
     }
 
+     /**
+     * Get user role
+     */
+    public function getUserRoles($userId)
+    {
+        $user = User::find($userId);
+    
+        if($user) {
+            $current_role = $user->getRoleNames();
+            // $all_roles = Role::pluck('name');
+            $all_roles = Role::whereNotIn('name', ['Superadmin', 'Admin','Client'])->pluck('name');
+
+            // dd($all_roles);
+            return response()->json(['user_id'=>$userId,'current_role' => $current_role,'all_roles' => $all_roles]);
+        } else {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+    }
+
+     /**
+     * Update user role
+     */
+    public function assignRole(Request $request,$user_id) 
+    {
+        $validator=Validator::make($request->all(),['newRole'=>'required']);
+
+        if($validator->fails()){
+            return Response(['status'=>false,'message' => $validator->errors()],422);
+        }
+
+        $new_role=$request->newRole;
+
+        $user=User::find($user_id);
+       
+        if($user){
+            $role = $user->hasRole($new_role); /** check user has this role */ 
+            // dd($role);
+            if(!$role){
+                $roles = $user->getRoleNames(); /** get all roles of user */
+
+                $user->syncRoles([]); /** remove all previous roles */
+
+                /** assign new role to user */
+                $user->assignRole($new_role); 
+
+                $user->category = $new_role;
+                $user->save();
+
+                return Response(['user'=>$user,'message'=>"Role assigned"],200);
+            }
+            
+            return Response(['status'=>true,'user'=>$user,'role'=>$role,'message'=>"Role assigned"],200);
+
+        }
+        else{
+            return Response(['status'=>false,'message'=>"User not found"],404);
+        }
+    }
 }

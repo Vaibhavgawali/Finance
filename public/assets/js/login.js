@@ -3,10 +3,6 @@ let loginAlert = () => {
 };
 
 $(document).ready(function () {
-    $("#title_1").text("Build your profile.");
-    $("#title_2").text("Learn & stay updated.");
-    $("#title_3").text("Find a job.");
-
     $("#login_btn").click(function (event) {
         var email = $("#email").val();
         var password = $("#password").val();
@@ -75,10 +71,10 @@ $(document).ready(function () {
                 if (response.redirect) {
                     $(".error-message").remove();
 
-                    loginAlert();
-                    setTimeout(function () {
-                        window.location.href = response.redirect;
-                    }, 2000);
+                    // loginAlert();
+                    // setTimeout(function () {
+                    window.location.href = response.redirect;
+                    // }, 2000);
                 }
             },
 
