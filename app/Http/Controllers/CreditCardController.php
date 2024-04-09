@@ -20,6 +20,13 @@ use App\Models\CreditCard;
 
 class CreditCardController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except('create','store');
+        $this->middleware(['role:Superadmin|Admin'])->only('show','edit','update','updateStatus');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -37,64 +44,64 @@ class CreditCardController extends Controller
 
     public function getCreditCardTableData(Request $request)
     {
-        if (Auth::check()) {
-            $data = CreditCard::with('creditCardRefer')
-                    ->when(request()->has('bankFilter'), function ($query) {
-                        $bankFilter = request('bankFilter');
-                        $query->where('card', 'like', '%' . $bankFilter . '%');
-                    })
-                    ->when(request()->has('search'), function ($query) {
-                        $search = request('search');
-                        $query->where(function ($q) use ($search) {
-                            $q->where('name', 'like', '%' . $search . '%')
-                            ->orWhere('mobile', 'like', '%' . $search . '%')
-                            ->orWhere('status', 'like', '%' . $search . '%')
-                            ->orWhere('card', 'like', '%' . $search . '%')
-                            ->orWhere('application_stage', 'like', '%' . $search . '%')
-                            ->orWhere('approval_date', 'like', '%' . $search . '%')
-                            ->orWhereHas('creditCardRefer', function ($q) use ($search) {
-                                $q->where('name', 'like', '%' . $search . '%');
-                            });
+        $data = CreditCard::with('creditCardRefer')
+                ->when(request()->has('bankFilter'), function ($query) {
+                    $bankFilter = request('bankFilter');
+                    $query->where('card', 'like', '%' . $bankFilter . '%');
+                })
+                ->when(request()->has('search'), function ($query) {
+                    $search = request('search');
+                    $query->where(function ($q) use ($search) {
+                        $q->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('mobile', 'like', '%' . $search . '%')
+                        ->orWhere('status', 'like', '%' . $search . '%')
+                        ->orWhere('card', 'like', '%' . $search . '%')
+                        ->orWhere('application_stage', 'like', '%' . $search . '%')
+                        ->orWhere('approval_date', 'like', '%' . $search . '%')
+                        ->orWhereHas('creditCardRefer', function ($q) use ($search) {
+                            $q->where('name', 'like', '%' . $search . '%');
                         });
-                    })
-                    ->when(request()->filled('startDate') || request()->filled('endDate'), function ($query) {
-                        $startDate = request()->filled('startDate') ? Carbon::parse(request('startDate'))->startOfDay() : null;
-                        $endDate = request()->filled('endDate') ? Carbon::parse(request('endDate'))->endOfDay() : Carbon::now()->endOfDay();
-                        
-                        if ($startDate === null && $endDate !== null) {
-                            $query->where('created_at', '<=', $endDate);
-                        } else if ($startDate !== null && $endDate === null) {
-                            $query->where('created_at', '>=', $startDate);
+                    });
+                })
+                ->when(request()->filled('startDate') || request()->filled('endDate'), function ($query) {
+                    $startDate = request()->filled('startDate') ? Carbon::parse(request('startDate'))->startOfDay() : null;
+                    $endDate = request()->filled('endDate') ? Carbon::parse(request('endDate'))->endOfDay() : Carbon::now()->endOfDay();
+                    
+                    if ($startDate === null && $endDate !== null) {
+                        $query->where('created_at', '<=', $endDate);
+                    } else if ($startDate !== null && $endDate === null) {
+                        $query->where('created_at', '>=', $startDate);
+                    } else {
+                        $query->whereBetween('created_at', [$startDate, $endDate]);
+                    }
+                })
+                ->when(Auth::user()->hasRole('Distributor') || Auth::user()->hasRole('Retailer'), function ($query) {
+                    $logged_user_referral_id = auth()->user()->referral_id;
+                    $query->where(function ($q) use ($logged_user_referral_id) {
+                        $q->where('referred_by', $logged_user_referral_id)
+                            ->orWhereHas('creditCardRefer', function ($q) use ($logged_user_referral_id) {
+                                $q->where('referred_by', $logged_user_referral_id);
+                            });
+                    });
+                })
+                ->orderBy('id', 'desc')
+                ->get();
+                            
+        if ($data) { 
+                return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('actions', function ($row) {
+                        if (auth()->user()->hasRole('Superadmin') || auth()->user()->hasRole('Admin')) {
+                            $actions = '<a class="btn btn-sm btn-gradient-warning btn-rounded viewButton" data-credit-card-id="' . $row->id . '" >View</a>';  
+                            $actions .= '<a class="btn btn-sm btn-gradient-warning btn-rounded editButton" data-credit-card-id="' . $row->id . '" >Edit</a>';  
+                            $actions .= '<a class="btn btn-sm btn-gradient-warning btn-rounded statusButton" data-credit-card-id="' . $row->id . '" >Status</a>';  
+                            return $actions;
                         } else {
-                            $query->whereBetween('created_at', [$startDate, $endDate]);
+                            return '';
                         }
                     })
-                    ->when(Auth::user()->hasRole('Distributor') || Auth::user()->hasRole('Retailer'), function ($query) {
-                        $logged_user_referral_id = auth()->user()->referral_id;
-                        $query->where(function ($q) use ($logged_user_referral_id) {
-                            $q->where('referred_by', $logged_user_referral_id)
-                              ->orWhereHas('creditCardRefer', function ($q) use ($logged_user_referral_id) {
-                                  $q->where('referred_by', $logged_user_referral_id);
-                              });
-                        });
-                    })
-                    ->orderBy('id', 'desc')
-                    ->get();
-                              
-            if ($data) { 
-                    return DataTables::of($data)
-                        ->addIndexColumn()
-                        ->addColumn('actions', function ($row) {
-                            if (auth()->user()->hasRole('Superadmin') || auth()->user()->hasRole('Admin')) {
-                                $actions = '<a class="btn btn-sm btn-gradient-warning btn-rounded editButton" data-credit-card-id="' . $row->id . '" >Edit</a>';  
-                                return $actions;
-                            } else {
-                                return '';
-                            }
-                        })
-                        ->rawColumns(['actions'])
-                        ->make(true);                                                                                                                                                                                                                                                 
-            }
+                    ->rawColumns(['actions'])
+                    ->make(true);                                                                                                                                                                                                                                                 
         }
     }
 
@@ -103,7 +110,7 @@ class CreditCardController extends Controller
      */
     public function create()
     {
-        //
+        return view('frontend.creditcard');
     }
 
     /**
@@ -183,24 +190,13 @@ class CreditCardController extends Controller
      */
     public function show(string $creditCardId)
     {
-        if(Auth::Check()){
-            $creditCard = CreditCard::find($creditCardId);
+        $creditCard = CreditCard::find($creditCardId);
+    
+        if($creditCard) {
+            return response()->json($creditCard);
+        } 
         
-            if($creditCard) {
-                $status = $creditCard->status;
-                $application_stage = $creditCard->application_stage;
-                $approval_date = $creditCard->approval_date;
-
-                return response()->json([
-                    'status' => $status,
-                    'application_stage' => $application_stage,
-                    'approval_date' => $approval_date,
-                ]);
-
-            } else {
-                return response()->json(['error' => 'Credit Card not found'], 404);
-            }
-        }
+        return response()->json(['error' => 'Credit Card not found'], 404);
     }
 
     /**
@@ -216,39 +212,36 @@ class CreditCardController extends Controller
      */
     public function update(Request $request, string $creditCardId)
     {
-        if(Auth::Check()){
-            $formMethod = $request->method();
-            if($formMethod == "PATCH"){
-                // Find the credit card record by its ID
-                $creditCard = CreditCard::findOrFail($creditCardId);
+        $formMethod = $request->method();
+        if($formMethod == "PATCH"){
+            // Find the credit card record by its ID
+            $creditCard = CreditCard::findOrFail($creditCardId);
 
-                $validator = Validator::make($request->all(), [
-                    'status' => 'required|string',
-                    'application_stage' => 'nullable|string',
-                    'approval_date' => 'nullable|date',
-                ]);
+            $validator = Validator::make($request->all(), [
+                'status' => 'required|string',
+                'application_stage' => 'nullable|string',
+                'approval_date' => 'nullable|date',
+            ]);
 
-                if($validator->fails()){
-                    return Response(['message' => $validator->errors()],401);
-                } 
+            if($validator->fails()){
+                return Response(['message' => $validator->errors()],401);
+            } 
 
-                // dd("ok");
-            
-                // Update the credit card record with the new data
-                // $creditCard->update([
-                //     'status' => $request->status,
-                //     'application_stage' => $request->application_stage,
-                //     'approval_date' => $request->approval_date,
-                // ]);
-                $isUpdated=$creditCard->update($request->all());
-                if($isUpdated){
-                    return Response(['message' => "Credit Card updated successfully"],200);
-                }
-                return Response(['message' => "Something went wrong"],500);
+            // dd("ok");
+        
+            // Update the credit card record with the new data
+            // $creditCard->update([
+            //     'status' => $request->status,
+            //     'application_stage' => $request->application_stage,
+            //     'approval_date' => $request->approval_date,
+            // ]);
+            $isUpdated=$creditCard->update($request->all());
+            if($isUpdated){
+                return Response(['message' => "Credit Card updated successfully"],200);
             }
-            return Response(['message'=>"Invalid form method "],405);
+            return Response(['message' => "Something went wrong"],500);
         }
-        return Response(['message'=>'Unauthorized'],401);
+        return Response(['message'=>"Invalid form method "],405);
     }
 
     /**
@@ -257,5 +250,31 @@ class CreditCardController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function updateStatus(Request $request, string $creditCardId)
+    {
+        $formMethod = $request->method();
+        if($formMethod == "PATCH"){
+            // Find the credit card record by its ID
+            $creditCard = CreditCard::findOrFail($creditCardId);
+
+            $validator = Validator::make($request->all(), [
+                'status' => 'required|string',
+                'application_stage' => 'nullable|string',
+                'approval_date' => 'nullable|date',
+                'remark' => 'nullable|string'
+            ]);
+
+            if($validator->fails()){
+                return Response(['message' => $validator->errors()],401);
+            } 
+            $isUpdated=$creditCard->update($request->all());
+            if($isUpdated){
+                return Response(['message' => "Credit Card updated successfully"],200);
+            }
+            return Response(['message' => "Something went wrong"],500);
+        }
+        return Response(['message'=>"Invalid form method "],405);
     }
 }

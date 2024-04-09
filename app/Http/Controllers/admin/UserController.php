@@ -20,7 +20,7 @@ class UserController extends Controller
         $this->middleware('auth:sanctum')->except('store');
 
         // Spatie middleware here
-        $this->middleware(['role:Superadmin|Admin'])->only('index','update','destroy');
+        $this->middleware(['role:Superadmin|Admin']);
     }
 
     /**
@@ -127,6 +127,9 @@ class UserController extends Controller
         return Response(['status' => false, 'message' => 'Unauthorized'], 401);
     }
 
+     /**
+     * Get user role
+     */
     public function getUserRoles($userId)
     {
         $user = User::find($userId);
@@ -143,6 +146,9 @@ class UserController extends Controller
         }
     }
 
+     /**
+     * Update user role
+     */
     public function assignRole(Request $request,$user_id) 
     {
         $validator=Validator::make($request->all(),['newRole'=>'required']);
@@ -179,7 +185,4 @@ class UserController extends Controller
             return Response(['status'=>false,'message'=>"User not found"],404);
         }
     }
-
-
-
 }

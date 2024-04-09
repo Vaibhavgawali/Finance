@@ -56,6 +56,7 @@
                                     <th class="">Approval Date</th>
                                     <th class="">Agent Name</th>
                                     <th class="">Bank</th>
+                                    <th class="">Remarks</th>
                                     <th class="text-center" id="actionColumn">Actions</th>
                                 </tr>
                             </thead>
@@ -106,9 +107,115 @@
                                                     name="approval_date">
                                             </div>
 
+                                            <div class="form-group">
+                                                <label for="remark">Remarks :</label>
+                                                <input type="text" class="form-control" id="remark"
+                                                    name="remark">
+                                            </div>
+
                                             <button type="submit" class="btn btn-primary"
                                                 id="submitButton">Update</button>
                                         </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="viewModal" tabindex="-1" role="dialog"
+                            aria-labelledby="statusModal" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="viewModalLabel">View Application</h5>
+                                        <button type="button" class="close" data-bs-dismiss="modal"
+                                            aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="name">Name</label>
+                                                <input type="text" id="name" class="form-control" disabled />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="card">Card</label>
+                                                <input type="text" id="card" class="form-control" disabled />
+                                            </div>
+                                            <div class="form-group pb-3">
+                                                <label for="pan_num">Pan Number</label>
+                                                <input type="text" id="pan_num" class="form-control" disabled />
+                                            </div>
+                                            <div class="form-group pb-3">
+                                                <label for="adhar_num">Adhar Number</label>
+                                                <input type="text" id="adhar_num" class="form-control" disabled />
+                                            </div>
+                                            <div class="form-group pb-3">
+                                                <label for="email">Email</label>
+                                                <input type="text" id="email" class="form-control" disabled />
+                                            </div>
+                                            <div class="form-group pb-3">
+                                                <label for="mobile">Mobile Number</label>
+                                                <input type="text" id="mobile" class="form-control" disabled />
+                                            </div>
+                                            <div class="form-group pb-3">
+                                                <label for="annual_income">Net Annual Income</label>
+                                                <input type="text" id="annual_income" class="form-control" disabled />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="residence_address">Residence Address</label>
+                                                <textarea class="form-control" id="residence_address" rows="3" disabled></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="office_address">Office Address</label>
+                                                <textarea class="form-control" id="office_address" rows="3" disabled></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="pancardFile">Pancard File</label>
+                                                <div>
+                                                    <a href="#" id="pancardLink" class="btn btn-sm btn-primary"
+                                                        target="_blank">View</a>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="aadharFrontFile">Aadhar Front File</label>
+                                                <div>
+                                                    <a href="#" id="aadharFrontLink" class="btn btn-sm btn-primary"
+                                                        target="_blank">View</a>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="aadharBackFile">Aadhar Back File</label>
+                                                <div>
+                                                    <a href="#" id="aadharBackLink" class="btn btn-sm btn-primary"
+                                                        target="_blank">View</a>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="itrFile">ITR (1,2 year)</label>
+                                                <div>
+                                                    <a href="#" id="itrLink" class="btn btn-sm btn-primary"
+                                                        target="_blank">View</a>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="bankStatementFile">Bank Statement (last 6
+                                                    months)</label>
+                                                <div>
+                                                    <a href="#" id="bankStatementLink"
+                                                        class="btn btn-sm btn-primary" target="_blank">View</a>
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
                                     </div>
                                 </div>
                             </div>
@@ -205,6 +312,9 @@
                                             data: 'card'
                                         },
                                         {
+                                            data: 'remark'
+                                        },
+                                        {
                                             data: 'actions'
                                         },
                                     ],
@@ -237,7 +347,51 @@
                                     dataTable.ajax.reload();
                                 });
 
-                                $(document).on('click', '.editButton', function() {
+                                $(document).on('click', '.viewButton', function() {
+                                    var creditCardId = $(this).data("credit-card-id");
+                                    viewModal(creditCardId);
+                                });
+
+                                // Function to show modal and fetch crtedit card details
+                                function viewModal(creditCardId) {
+                                    $.ajax({
+                                        url: "/credit-card/" + creditCardId,
+                                        type: "GET",
+                                        success: function(response) {
+                                            // console.log(response);
+
+                                            $("#name").val(response.name);
+                                            $("#card").val(response.card);
+                                            $("#pan_num").val(response.pan_num);
+                                            $("#adhar_num").val(response.adhar_num);
+                                            $("#email").val(response.email);
+                                            $("#mobile").val(response.mobile);
+                                            $("#annual_income").val(response.annual_income);
+                                            $("#residence_address").val(response.residence_address);
+                                            $("#office_address").val(response.office_address);
+
+                                            // Function to update file links
+                                            function updateFileLink(linkId, fileName) {
+                                                var fileUrl = "{{ asset('storage/credit-card/') }}/" + fileName;
+                                                $(linkId).attr("href", fileUrl);
+                                            }
+
+                                            // Inside the success callback of your AJAX request
+                                            updateFileLink("#pancardLink", response.pan_file);
+                                            updateFileLink("#aadharFrontLink", response.adhar_front_file);
+                                            updateFileLink("#aadharBackLink", response.adhar_back_file);
+                                            updateFileLink("#itrLink", response.itr_file);
+                                            updateFileLink("#bankStatementLink", response.bank_statement_file);
+
+                                            $("#viewModal").modal("show");
+                                        },
+                                        error: function(error) {
+                                            console.error(error);
+                                        },
+                                    });
+                                }
+
+                                $(document).on('click', '.statusButton', function() {
                                     var creditCardId = $(this).data("credit-card-id");
                                     showModal(creditCardId);
                                 });
@@ -253,6 +407,7 @@
                                             $("#status").val(response.status);
                                             $("#application_stage").val(response.application_stage);
                                             $("#approval_date").val(response.approval_date);
+                                            $("#remark").val(response.remark);
 
                                             $("#statusModal").modal("show");
                                         },
@@ -272,7 +427,7 @@
                                     $("#submitButton").prop("disabled", true);
 
                                     $.ajax({
-                                        url: "credit-card/" + creditCardId,
+                                        url: "credit-card-update-status/" + creditCardId,
                                         type: "PATCH",
                                         data: formData,
                                         headers: {

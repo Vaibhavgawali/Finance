@@ -38,6 +38,7 @@
                                     <th class="">Application Stage</th>
                                     <th class="">Approval Date</th>
                                     <th class="">Agent Name</th>
+                                    <th class="">Remarks</th>
                                     <th class="text-center" id="actionColumn">Actions</th>
                                 </tr>
                             </thead>
@@ -88,8 +89,61 @@
                                                     name="approval_date">
                                             </div>
 
+                                            <div class="form-group">
+                                                <label for="remark">Remarks :</label>
+                                                <input type="text" class="form-control" id="remark" name="remark">
+                                            </div>
+
                                             <button type="submit" class="btn btn-primary" id="submitButton">Update</button>
                                         </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="viewModalLabel">Demat Form Details</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="container">
+                                            <div class="row bg-white p-3 rounded-3">
+                                                <div class="col-md-12 col-12 border border-2 p-3 rounded-3">
+                                                    <form class="bg-white">
+                                                        <div class="form-group pb-3">
+                                                            <label for="name">Name:</label>
+                                                            <input type="text" name="name" id="name"
+                                                                class="form-control" disabled />
+                                                        </div>
+                                                        <div class="form-group pb-3">
+                                                            <label for="pan_num">Pan Number:</label>
+                                                            <input type="text" name="pan_num" id="pan_num"
+                                                                class="form-control" disabled />
+                                                        </div>
+                                                        <div class="form-group pb-3">
+                                                            <label for="adhar_num">Aadhar Number:</label>
+                                                            <input type="text" name="adhar_num" id="adhar_num"
+                                                                class="form-control" disabled />
+                                                        </div>
+                                                        <div class="form-group pb-3">
+                                                            <label for="phone">Mobile Number:</label>
+                                                            <input type="text" name="phone" id="phone"
+                                                                class="form-control" disabled />
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
                                     </div>
                                 </div>
                             </div>
@@ -178,6 +232,9 @@
                                             }
                                         },
                                         {
+                                            data: 'remark'
+                                        },
+                                        {
                                             data: 'actions'
                                         },
                                     ],
@@ -205,7 +262,33 @@
                                     dataTable.ajax.reload();
                                 });
 
-                                $(document).on('click', '.editButton', function() {
+
+                                $(document).on('click', '.viewButton', function() {
+                                    var dematId = $(this).data("demat-id");
+                                    viewModal(dematId);
+                                });
+
+                                // Function to show modal and fetch crtedit card details
+                                function viewModal(dematId) {
+                                    $.ajax({
+                                        url: "demat/" + dematId,
+                                        type: "GET",
+                                        success: function(response) {
+
+                                            $("#name").val(response.name);
+                                            $("#pan_num").val(response.pan_num);
+                                            $("#phone").val(response.phone);
+                                            $("#adhar_num").val(response.adhar_num);
+
+                                            $("#viewModal").modal("show");
+                                        },
+                                        error: function(error) {
+                                            console.error(error);
+                                        },
+                                    });
+                                }
+
+                                $(document).on('click', '.statusButton', function() {
                                     var dematId = $(this).data("demat-id");
                                     showModal(dematId);
                                 });
@@ -216,11 +299,14 @@
                                         url: "demat/" + dematId,
                                         type: "GET",
                                         success: function(response) {
+                                            console.log(response);
+
                                             $("#demat_id").val(dematId);
 
                                             $("#status").val(response.status);
                                             $("#application_stage").val(response.application_stage);
                                             $("#approval_date").val(response.approval_date);
+                                            $("#remark").val(response.remark);
 
                                             $("#statusModal").modal("show");
                                         },
@@ -240,7 +326,7 @@
                                     $("#submitButton").prop("disabled", true);
 
                                     $.ajax({
-                                        url: "demat/" + dematId,
+                                        url: "demat-update-status/" + dematId,
                                         type: "PATCH",
                                         data: formData,
                                         headers: {

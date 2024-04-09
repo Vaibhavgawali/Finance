@@ -21,88 +21,93 @@ use App\Models\Loan;
 class LoanController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except('create','store');
+        $this->middleware(['role:Superadmin|Admin'])->only('show','edit','update','updateStatus');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        if (Auth::check()) {
-            $users = Loan::with('loanRefer')->orderBy('id', 'desc')->get();
-            
-            if ($users) {
-                return view('dashboard.services.loan-list');
-            }
+
+        $users = Loan::with('loanRefer')->orderBy('id', 'desc')->get();
+        
+        if ($users) {
+            return view('dashboard.services.loan-list');
         }
-        return Response(['data' => 'Unauthorized'], 401);
     }
 
     public function getLoanTableData(Request $request)
     {
-        if (Auth::check()) {
-            $data = Loan::with('loanRefer')
-                    ->when(request()->has('incomeSourecFilter'), function ($query) {
-                        $incomeSourecFilter = request('incomeSourecFilter');
-                        $query->where('income_source', 'like', '%' . $incomeSourecFilter . '%');
-                    })
-                    ->when(request()->has('statusFilter'), function ($query) {
-                        $statusFilter = request('statusFilter');
-                        $query->where('status', 'like', '%' . $statusFilter . '%');
-                    })
-                    ->when(request()->has('search'), function ($query) {
-                        $search = request('search');
-                        $query->where(function ($q) use ($search) {
-                            $q->where('name', 'like', '%' . $search . '%')
-                            ->orWhere('mobile', 'like', '%' . $search . '%')
-                            ->orWhere('status', 'like', '%' . $search . '%')
-                            ->orWhere('loan_type', 'like', '%' . $search . '%')
-                            ->orWhere('loan_amount', 'like', '%' . $search . '%')
-                            ->orWhere('application_stage', 'like', '%' . $search . '%')
-                            ->orWhere('approval_date', 'like', '%' . $search . '%')
-                            ->orWhere('remark', 'like', '%' . $search . '%')
-                            ->orWhereHas('loanRefer', function ($q) use ($search) {
-                                $q->where('name', 'like', '%' . $search . '%');
-                            });
+
+        $data = Loan::with('loanRefer')
+                ->when(request()->has('incomeSourecFilter'), function ($query) {
+                    $incomeSourecFilter = request('incomeSourecFilter');
+                    $query->where('income_source', 'like', '%' . $incomeSourecFilter . '%');
+                })
+                ->when(request()->has('statusFilter'), function ($query) {
+                    $statusFilter = request('statusFilter');
+                    $query->where('status', 'like', '%' . $statusFilter . '%');
+                })
+                ->when(request()->has('search'), function ($query) {
+                    $search = request('search');
+                    $query->where(function ($q) use ($search) {
+                        $q->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('mobile', 'like', '%' . $search . '%')
+                        ->orWhere('status', 'like', '%' . $search . '%')
+                        ->orWhere('loan_type', 'like', '%' . $search . '%')
+                        ->orWhere('loan_amount', 'like', '%' . $search . '%')
+                        ->orWhere('application_stage', 'like', '%' . $search . '%')
+                        ->orWhere('approval_date', 'like', '%' . $search . '%')
+                        ->orWhere('remark', 'like', '%' . $search . '%')
+                        ->orWhereHas('loanRefer', function ($q) use ($search) {
+                            $q->where('name', 'like', '%' . $search . '%');
                         });
-                    })
-                    ->when(request()->filled('startDate') || request()->filled('endDate'), function ($query) {
-                        $startDate = request()->filled('startDate') ? Carbon::parse(request('startDate'))->startOfDay() : null;
-                        $endDate = request()->filled('endDate') ? Carbon::parse(request('endDate'))->endOfDay() : Carbon::now()->endOfDay();
-                        
-                        if ($startDate === null && $endDate !== null) {
-                            $query->where('created_at', '<=', $endDate);
-                        } else if ($startDate !== null && $endDate === null) {
-                            $query->where('created_at', '>=', $startDate);
+                    });
+                })
+                ->when(request()->filled('startDate') || request()->filled('endDate'), function ($query) {
+                    $startDate = request()->filled('startDate') ? Carbon::parse(request('startDate'))->startOfDay() : null;
+                    $endDate = request()->filled('endDate') ? Carbon::parse(request('endDate'))->endOfDay() : Carbon::now()->endOfDay();
+                    
+                    if ($startDate === null && $endDate !== null) {
+                        $query->where('created_at', '<=', $endDate);
+                    } else if ($startDate !== null && $endDate === null) {
+                        $query->where('created_at', '>=', $startDate);
+                    } else {
+                        $query->whereBetween('created_at', [$startDate, $endDate]);
+                    }
+                })
+                ->when(Auth::user()->hasRole('Distributor') || Auth::user()->hasRole('Retailer'), function ($query) {
+                    $logged_user_referral_id = auth()->user()->referral_id;
+                    $query->where(function ($q) use ($logged_user_referral_id) {
+                        $q->where('referred_by', $logged_user_referral_id)
+                            ->orWhereHas('loanRefer', function ($q) use ($logged_user_referral_id) {
+                                $q->where('referred_by', $logged_user_referral_id);
+                            });
+                    });
+                })
+                ->orderBy('id', 'desc')
+                ->get();
+                    //  dd($data);     
+        if ($data) { 
+                return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('actions', function ($row) {
+                        // Check if user has Superadmin or Admin role
+                        if (auth()->user()->hasRole('Superadmin') || auth()->user()->hasRole('Admin')) {
+                            $actions = '<a class="btn btn-sm btn-gradient-warning btn-rounded viewButton" data-loan-id="' . $row->id . '" >View</a>';  
+                            $actions .= '<a class="btn btn-sm btn-gradient-warning btn-rounded editButton" data-loan-id="' . $row->id . '" >Edit</a>';  
+                            $actions .= '<a class="btn btn-sm btn-gradient-warning btn-rounded statusButton" data-loan-id="' . $row->id . '" >Status</a>';  
+                            return $actions;
                         } else {
-                            $query->whereBetween('created_at', [$startDate, $endDate]);
+                            return '';
                         }
                     })
-                    ->when(Auth::user()->hasRole('Distributor') || Auth::user()->hasRole('Retailer'), function ($query) {
-                        $logged_user_referral_id = auth()->user()->referral_id;
-                        $query->where(function ($q) use ($logged_user_referral_id) {
-                            $q->where('referred_by', $logged_user_referral_id)
-                              ->orWhereHas('loanRefer', function ($q) use ($logged_user_referral_id) {
-                                  $q->where('referred_by', $logged_user_referral_id);
-                              });
-                        });
-                    })
-                    ->orderBy('id', 'desc')
-                    ->get();
-                        //  dd($data);     
-            if ($data) { 
-                    return DataTables::of($data)
-                        ->addIndexColumn()
-                        ->addColumn('actions', function ($row) {
-                            // Check if user has Superadmin or Admin role
-                            if (auth()->user()->hasRole('Superadmin') || auth()->user()->hasRole('Admin')) {
-                                $actions = '<a class="btn btn-sm btn-gradient-warning btn-rounded editButton" data-loan-id="' . $row->id . '" >Edit</a>';  
-                                return $actions;
-                            } else {
-                                return '';
-                            }
-                        })
-                        ->rawColumns(['actions'])
-                        ->make(true);                                                                                                                                                                                                                                                 
-            }
+                    ->rawColumns(['actions'])
+                    ->make(true);                                                                                                                                                                                                                                                 
         }
     }
 
@@ -111,7 +116,7 @@ class LoanController extends Controller
      */
     public function create()
     {
-        //
+        return view('frontend.loan-form');
     }
 
     /**
@@ -221,25 +226,23 @@ class LoanController extends Controller
      */
     public function show(string $id)
     {
-        if(Auth::Check()){
-            $loan = Loan::find($id);
-        
-            if($loan) {
-                $status = $loan->status;
-                $application_stage = $loan->application_stage;
-                $approval_date = $loan->approval_date;
-                $remark = $loan->remark;
+        $loan = Loan::find($id);
+    
+        if($loan) {
+            $status = $loan->status;
+            $application_stage = $loan->application_stage;
+            $approval_date = $loan->approval_date;
+            $remark = $loan->remark;
 
-                return response()->json([
-                    'status' => $status,
-                    'application_stage' => $application_stage,
-                    'approval_date' => $approval_date,
-                    'remark' => $remark,
-                ]);
+            return response()->json([
+                'status' => $status,
+                'application_stage' => $application_stage,
+                'approval_date' => $approval_date,
+                'remark' => $remark,
+            ]);
 
-            } else {
-                return response()->json(['error' => 'Loan not found'], 404);
-            }
+        } else {
+            return response()->json(['error' => 'Loan not found'], 404);
         }
     }
 
@@ -256,32 +259,29 @@ class LoanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        if(Auth::Check()){
-            $formMethod = $request->method();
-            if($formMethod == "PATCH"){
-                // Find the credit card record by its ID
-                $loan = Loan::findOrFail($id);
-// dd($loan);
-                $validator = Validator::make($request->all(), [
-                    'status' => 'required|string',
-                    'application_stage' => 'nullable|string',
-                    'approval_date' => 'nullable|date',
-                    'remark' => 'nullable|string',
-                ]);
+        $formMethod = $request->method();
+        if($formMethod == "PATCH"){
+            // Find the credit card record by its ID
+            $loan = Loan::findOrFail($id);
 
-                if($validator->fails()){
-                    return Response(['message' => $validator->errors()],401);
-                } 
+            $validator = Validator::make($request->all(), [
+                'status' => 'required|string',
+                'application_stage' => 'nullable|string',
+                'approval_date' => 'nullable|date',
+                'remark' => 'nullable|string',
+            ]);
 
-                $isUpdated=$loan->update($request->all());
-                if($isUpdated){
-                    return Response(['message' => "Loan updated successfully"],200);
-                }
-                return Response(['message' => "Something went wrong"],500);
+            if($validator->fails()){
+                return Response(['message' => $validator->errors()],401);
+            } 
+
+            $isUpdated=$loan->update($request->all());
+            if($isUpdated){
+                return Response(['message' => "Loan updated successfully"],200);
             }
-            return Response(['message'=>"Invalid form method "],405);
+            return Response(['message' => "Something went wrong"],500);
         }
-        return Response(['message'=>'Unauthorized'],401);
+        return Response(['message'=>"Invalid form method "],405);
     }
 
     /**
@@ -290,5 +290,32 @@ class LoanController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function updateStatus(Request $request, string $id)
+    {
+        $formMethod = $request->method();
+        if($formMethod == "PATCH"){
+            // Find the credit card record by its ID
+            $loan = Loan::findOrFail($id);
+
+            $validator = Validator::make($request->all(), [
+                'status' => 'required|string',
+                'application_stage' => 'nullable|string',
+                'approval_date' => 'nullable|date',
+                'remark' => 'nullable|string',
+            ]);
+
+            if($validator->fails()){
+                return Response(['message' => $validator->errors()],401);
+            } 
+
+            $isUpdated=$loan->update($request->all());
+            if($isUpdated){
+                return Response(['message' => "Loan updated successfully"],200);
+            }
+            return Response(['message' => "Something went wrong"],500);
+        }
+        return Response(['message'=>"Invalid form method "],405);
     }
 }

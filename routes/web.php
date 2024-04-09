@@ -40,21 +40,26 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 */
 
 Route::get('/', [WelcomeController::class, 'index']);
-Route::get('/register',[WelcomeController::class, 'register']);
+
 Route::get('/credit', [WelcomeController::class, 'credit']);
 Route::get('/creditcard', [WelcomeController::class, 'credit_card']);
-Route::get('/general-insurance', [WelcomeController::class, 'general_insurance']);
-Route::get('/life-insurance', [WelcomeController::class, 'life_insurance']);
-Route::get('/health-insurance', [WelcomeController::class, 'health_insurance']);
+
 Route::get('/loanForm', [WelcomeController::class, 'loan']);
 Route::get('/dematForm', [WelcomeController::class, 'demat']);
 Route::get('/loan-service', [WelcomeController::class, 'loan_service']);
+
+Route::get('/general-insurance', [WelcomeController::class, 'general_insurance']);
+Route::get('/life-insurance', [WelcomeController::class, 'life_insurance']);
+Route::get('/health-insurance', [WelcomeController::class, 'health_insurance']);
 
 Route::middleware(['web'])->group(function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [LoginController::class, 'login']);
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
+
+Route::get('/register',[WelcomeController::class, 'register']);
+Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
 Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
@@ -69,7 +74,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/home', [App\Http\Controllers\DashboardController::class, 'dashboard']); //redirect to dashboard if already logged in
 });
 
-Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
@@ -97,12 +101,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::get('get-role/{id}', [UserController::class, 'getUserRoles']);
     Route::post('assign-role/{id}', [UserController::class, 'assignRole']);
+
+    Route::patch('demat-update-status/{id}', [DematController::class, 'updateStatus']);
+    Route::patch('credit-card-update-status/{id}', [CreditCardController::class, 'updateStatus']);
 });
 
 Route::resource('/credit-card', CreditCardController::class);
 Route::resource('/loan', LoanController::class);
 Route::resource('/demat', DematController::class);
-
-// Route::post('/loan-submit', [CreditCardController::class, 'loanSubmit']);
-// Route::post('/demat-submit', [CreditCardController::class, 'dematSubmit']);
 
