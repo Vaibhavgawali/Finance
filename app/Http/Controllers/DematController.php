@@ -91,8 +91,11 @@ class DematController extends Controller
                         // Check if user has Superadmin or Admin role
                         if (auth()->user()->hasRole('Superadmin') || auth()->user()->hasRole('Admin')) {
                             $actions = '<a class="btn btn-sm btn-gradient-warning btn-rounded viewButton" data-demat-id="' . $row->id . '" >View</a>';  
-                            $actions .= '<a class="btn btn-sm btn-gradient-warning btn-rounded editButton" data-demat-id="' . $row->id . '" >Edit</a>';  
+                            // $actions .= '<a class="btn btn-sm btn-gradient-warning btn-rounded editButton" data-demat-id="' . $row->id . '" >Edit</a>';  
                             $actions .= '<a class="btn btn-sm btn-gradient-warning btn-rounded statusButton" data-demat-id="' . $row->id . '" >Status</a>';  
+                            $actions .= '<form class="delete-demat-form" data-demat-id="' . $row->id . '">
+                                            <button type="button" class="btn btn-sm btn-gradient-danger btn-rounded delete-user-button">Delete</button>
+                                        </form>';
                             return $actions;
                         } else {
                             return '';
@@ -214,7 +217,19 @@ class DematController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $demat = Demat::find($id);
+
+        if (!$demat) {
+            return Response(['status' => false, 'message' => "Demat not found"], 404);
+        }
+
+         $isDeleted = $demat->delete();
+
+        if ($isDeleted) {
+            return Response(['status' => true, 'message' => "Demat form deleted successfully"], 200);
+        }
+
+        return Response(['status' => false, 'message' => "Something went wrong"], 500);
     }
 
     /**

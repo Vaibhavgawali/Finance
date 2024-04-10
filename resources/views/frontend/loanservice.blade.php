@@ -3,12 +3,14 @@
     <div class="no-bottom no-top" id="content">
         <div id="top"></div>
         <!-- MultiStep Form -->
+
         <!-- section begin -->
         <section id="subheader" class="text-light"
             data-bgimage="url({{ asset('assets/images/background/subheader2.jpg') }}) top">
             <h1>Loan</h1>
         </section>
         <!-- section close -->
+
         <section>
             <div class="container">
                 <div class="row bg-white p-3 rounded-3 g-0">
@@ -20,7 +22,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group pb-3">
-                                            <input type="hidden" id="formUrl" value="/loan-submit">
+                                            <input type="hidden" id="formUrl" value="/loan">
 
                                             <select name="loan_type" id="loan_type" class="form-control">
                                                 <option value="null" selected disabled>
@@ -94,7 +96,8 @@
                                         </div>
                                         <div class="form-group pb-3">
                                             <select name="marital_status" id="marital_status" class="form-control">
-                                                <option value="null" selected disabled>Martial Status</option>
+                                                <option value="null" selected disabled>--Select Martial Status--
+                                                </option>
                                                 <option value="married">Married</option>
                                                 <option value="unmarried">Un Married</option>
                                             </select>
@@ -133,6 +136,55 @@
                                         <label for="" class="text-left text-[#2A2C5D] font-bold text-1xl">Present
                                             Address</label>
                                     </div>
+                                    <div class="col-md-6 col-lg-3">
+                                        <div class="form-group pb-3">
+                                            <textarea name="present_line1" id="present_line1" class="form-control" cols="" rows=""
+                                                placeholder="Address Line 1"></textarea>
+                                            <div id="present_line1_error" class="text-danger mx-2"></div>
+                                        </div>
+                                        <div class="form-group pb-3">
+                                            <textarea name="present_line2" id="present_line2" class="form-control" cols="" rows=""
+                                                placeholder="Address Line 2"></textarea>
+                                            <div id="present_line2_error" class="text-danger mx-2"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-3">
+                                        <div class="form-group pb-3">
+                                            <textarea name="present_line3" id="present_line3" class="form-control" cols="" rows=""
+                                                placeholder="Address Line 3"></textarea>
+                                            <div id="present_line3" class="text-danger mx-2"></div>
+                                        </div>
+                                        <div class="form-group pb-3">
+                                            <input class="form-control" type="text" name="present_landmark"
+                                                id="present_landmark" type="" placeholder="Landmark">
+                                            <div id="present_landmark_error" class="text-danger mx-2"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-3">
+                                        <div class="form-group pb-3">
+                                            <input class="form-control" type="text" name="present_state"
+                                                id="present_state" placeholder="State">
+                                            <div id="present_state_error" class="text-danger mx-2"></div>
+                                        </div>
+                                        <div class="form-group pb-3">
+                                            <input class="form-control" name="present_city" id="present_city"
+                                                type="text" placeholder="City">
+                                            <div id="present_city_error" class="text-danger mx-2"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-lg-3">
+                                        <div class="form-group pb-3">
+                                            <input class="form-control" name="present_pincode" id="present_pincode"
+                                                type="text" placeholder="Pincode">
+                                            <div id="present_pincode_error" class="text-danger mx-2"></div>
+                                        </div>
+                                        <div class="form-group pb-3">
+                                            <input class="form-control" name="present_phone" id="present_phone"
+                                                type="number" placeholder="Phone Number">
+                                            <div id="present_phone_error" class="text-danger mx-2"></div>
+                                        </div>
+                                    </div>
                                     <div id="show_permanent_address" class="row"></div>
                                     <div class="row">
                                         <div class="col-12 mb-1">
@@ -141,47 +193,51 @@
                                         </div>
                                         <div class="col-md-6 col-lg-3">
                                             <div class="form-group pb-3">
-                                                <textarea name="" id="" class="form-control" cols="" rows=""
+                                                <textarea name="office_line1" id="office_line1" class="form-control" cols="" rows=""
                                                     placeholder="Address Line 1"></textarea>
-                                                <div id="" class="text-danger mx-2"></div>
+                                                <div id="office_line1_error" class="text-danger mx-2"></div>
                                             </div>
                                             <div class="form-group pb-3">
-                                                <textarea name="" id="" class="form-control" cols="" rows=""
+                                                <textarea name="office_line2" id="office_line2" class="form-control" cols="" rows=""
                                                     placeholder="Address Line 2"></textarea>
-                                                <div id="" class="text-danger mx-2"></div>
+                                                <div id="office_line2_error" class="text-danger mx-2"></div>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-lg-3">
                                             <div class="form-group pb-3">
-                                                <textarea name="" id="" class="form-control" cols="" rows=""
+                                                <textarea name="office_line3" id="office_line3" class="form-control" cols="" rows=""
                                                     placeholder="Address Line 3"></textarea>
-                                                <div id="" class="text-danger mx-2"></div>
+                                                <div id="office_line3" class="text-danger mx-2"></div>
                                             </div>
                                             <div class="form-group pb-3">
-                                                <input class="form-control" type="" placeholder="Landmark">
-                                                <div id="" class="text-danger mx-2"></div>
+                                                <input class="form-control" type="text" name="office_landmark"
+                                                    id="office_landmark" type="" placeholder="Landmark">
+                                                <div id="office_landmark_error" class="text-danger mx-2"></div>
                                             </div>
-
                                         </div>
                                         <div class="col-md-6 col-lg-3">
                                             <div class="form-group pb-3">
-                                                <input class="form-control" type="" placeholder="State">
-                                                <div id="" class="text-danger mx-2"></div>
+                                                <input class="form-control" type="text" name="office_state"
+                                                    id="office_state" placeholder="State">
+                                                <div id="office_state_error" class="text-danger mx-2"></div>
                                             </div>
                                             <div class="form-group pb-3">
-                                                <input class="form-control" type="" placeholder="City">
-                                                <div id="" class="text-danger mx-2"></div>
+                                                <input class="form-control" name="office_city" id="office_city"
+                                                    type="text" placeholder="City">
+                                                <div id="office_city_error" class="text-danger mx-2"></div>
                                             </div>
-
                                         </div>
+
                                         <div class="col-md-6 col-lg-3">
                                             <div class="form-group pb-3">
-                                                <input class="form-control" type="" placeholder="Pincode">
-                                                <div id="" class="text-danger mx-2"></div>
+                                                <input class="form-control" name="office_pincode" id="office_pincode"
+                                                    type="text" placeholder="Pincode">
+                                                <div id="office_pincode_error" class="text-danger mx-2"></div>
                                             </div>
                                             <div class="form-group pb-3">
-                                                <input class="form-control" type="number" placeholder="Phone Number">
-                                                <div id="" class="text-danger mx-2"></div>
+                                                <input class="form-control" name="office_phone" id="office_phone"
+                                                    type="number" placeholder="Phone Number">
+                                                <div id="office_phone_error" class="text-danger mx-2"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -192,61 +248,20 @@
 
                             <div class="tab">
                                 <div class="row">
-                                    <div
-                                        class="flex top-9 justify-center items-center text-[14px] font-sans bg-[#dfe3f2] h-screen">
-                                        <div id="imageForm"
-                                            class="cardDiv w-[400px] h-auto p-4 shadow-[0 0 5px rgba(0,0,0,1.0)] rounded-md overflow-hidden bg-[#fafbff]">
-                                            <div class="topdiv flex justify-between items-center w-full">
-                                                <p class="text-[0.9rem] font-semibold text-slate-400">
-                                                    <select name="document_type" id="document_type">
-                                                        <option value="" selected disabled>--Select Documents--
-                                                        </option>
-                                                        <option value="">Pancard</option>
-                                                        <option value="adhar_card_doc">Adhar Card Front</option>
-                                                        <option value="adhar_card_doc">Adhar Card Back</option>
-                                                        <option value="">3 Year ITR </option>
-                                                        <option value="">1 Year Bank Statement</option>
-                                                        <option value="">Ownership Proof Residence</option>
-                                                        <option value="">Certificate of Incorporation</option>
-                                                        <option value="">GST Certificate/ MSME Certificate</option>
-                                                        <option value="">GST Return(Last 1 year)</option>
-                                                        <option value="">Office Address Proof</option>
-                                                        <option value="">MOA/AOA/MS</option>
-                                                        <option value="">Trade License</option>
-                                                        <option value="">Photo </option>
-                                                        <option value="">Other</option>
-                                                    </select>
-                                                </p>
-                                                <button type="submit" id="documents_submit"
-                                                    class="fileButton outline-0 border-0 bg-[#5256ad] text-white rounded transition-[0.3s] cursor-pointer shadow-md text-[0.8rem] py-2 px-3 hover:opacity-[0.8] active:translate-y-[5px]">
-                                                    Upload
-                                                </button>
-                                            </div>
-                                            <div action="" id=""
-                                                class="dragover w-full rounded-md border-dashed border-2 text-#c8c9dd font-medium relative bg-[#dfe3f259] flex justify-center items-center mt-5 select-none h-[160px]">
-                                                <div class="toggleText">
-                                                    <span class="innerDiv">Drag & drop image here or
-                                                        <span
-                                                            class="selectDiv text-[#5256ad] ml-[7px] cursor-pointer">Browse
-                                                        </span></span>
-                                                </div>
-                                                <input type="file" class="file hidden" name="upload_document"
-                                                    multiple />
-                                            </div>
-                                            <div class="progress-container">
-                                                <!-- <div class="progress-bar"  value="50" max="100"></div> -->
-                                                <div class="mb-1 text-base font-medium text-slate-500">
-                                                    Documents Uploaded <span id="count">0%</span>
-                                                </div>
-                                                <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 dark:bg-gray-700">
-                                                    <div id="progress-bar"
-                                                        class="progress-bar bg-blue-600 h-1.5 rounded-full dark:bg-blue-500 w-0">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div
-                                                class="containerDiv w-full flex justify-start items-start flex-wrap h-auto max-h-[300px] overflow-y-auto mt-5">
+                                    <div class="flex justify-center items-center bg-gray-200 h-screen">
+                                        <div class="w-96 p-4 shadow rounded-md bg-white">
+                                            <select name="document_type" id="document_type">
+                                                <option value="" selected disabled>--Select Document--</option>
+                                                <option value="pancard">Pancard</option>
+                                                <option value="adhar_front">Adhar Card Front</option>
+                                                <option value="adhar_back">Adhar Card Back</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                            <div class="mt-4">
+                                                <label for="upload_document" class="block text-gray-600">Upload
+                                                    Document</label>
+                                                <input type="file" name="upload_document" id="upload_document"
+                                                    class="mt-1">
                                             </div>
                                         </div>
                                     </div>
@@ -254,8 +269,6 @@
                             </div>
 
                     </div>
-
-
                     <div style="overflow: auto " class="mt-4">
                         <div style="float: right">
                             <button class="btn btn-secondary" type="button" id="prevBtn" onclick="nextPrev(-1)">
