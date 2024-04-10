@@ -93,8 +93,11 @@ class CreditCardController extends Controller
                     ->addColumn('actions', function ($row) {
                         if (auth()->user()->hasRole('Superadmin') || auth()->user()->hasRole('Admin')) {
                             $actions = '<a class="btn btn-sm btn-gradient-warning btn-rounded viewButton" data-credit-card-id="' . $row->id . '" >View</a>';  
-                            $actions .= '<a class="btn btn-sm btn-gradient-warning btn-rounded editButton" data-credit-card-id="' . $row->id . '" >Edit</a>';  
+                            // $actions .= '<a class="btn btn-sm btn-gradient-warning btn-rounded editButton" data-credit-card-id="' . $row->id . '" >Edit</a>';  
                             $actions .= '<a class="btn btn-sm btn-gradient-warning btn-rounded statusButton" data-credit-card-id="' . $row->id . '" >Status</a>';  
+                            $actions .= '<form class="delete-credit-card-form" data-credit-card-id="' . $row->id . '">
+                                            <button type="button" class="btn btn-sm btn-gradient-danger btn-rounded delete-user-button">Delete</button>
+                                        </form>';
                             return $actions;
                         } else {
                             return '';
@@ -249,7 +252,19 @@ class CreditCardController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $creditCard = CreditCard::find($id);
+
+        if (!$creditCard) {
+            return Response(['status' => false, 'message' => "Credit Card not found"], 404);
+        }
+
+         $isDeleted = $creditCard->delete();
+
+        if ($isDeleted) {
+            return Response(['status' => true, 'message' => "Credit Card form deleted successfully"], 200);
+        }
+
+        return Response(['status' => false, 'message' => "Something went wrong"], 500);
     }
 
     public function updateStatus(Request $request, string $creditCardId)

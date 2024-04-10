@@ -136,26 +136,27 @@
 
                         <!-- Modal -->
                         <div class="modal fade" id="viewModal" tabindex="-1" role="dialog"
-                            aria-labelledby="loanModalLabel" aria-hidden="true">
+                            aria-labelledby="viewModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="loanModalLabel">Loan Application Form</h5>
+                                        <h5 class="modal-title" id="viewModalLabel">Loan Application Form</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form id="loanForm" enctype="multipart/form-data" class="bg-white">
+                                        <form class="bg-white">
                                             <!-- One "tab" for each step in the form: -->
                                             <div class="tab">
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group pb-3">
                                                             <label for="loan_type">Loan Type</label>
-                                                            <select id="loan_type" class="form-control">
-                                                                <option value="null" selected disabled>--Select Loan
-                                                                    Type--</option>
+                                                            <select name="loan_type" id="loan_type" class="form-control">
+                                                                <option value="null" selected disabled>
+                                                                    --Select Loan Type--
+                                                                </option>
                                                                 <option value="Home Loan">Home Loan</option>
                                                                 <option value="Business Loan">Business Loan</option>
                                                                 <option value="Personal Loan">Personal Loan</option>
@@ -165,79 +166,108 @@
 
                                                         <div class="form-group pb-3">
                                                             <label for="name">Name</label>
-                                                            <input type="text" id="name" class="form-control" />
+                                                            <input type="text" name="name" id="name"
+                                                                class="form-control" placeholder="Name" />
                                                         </div>
 
                                                         <div class="form-group pb-3">
                                                             <label for="email">Email</label>
-                                                            <input type="text" id="email" class="form-control" />
+                                                            <input type="text" name="email" id="email"
+                                                                class="form-control" placeholder="Email" />
                                                         </div>
+                                                    </div>
 
+                                                    <div class="col-md-6">
                                                         <div class="form-group pb-3">
-                                                            <label for="mobile">Mobile Number</label>
-                                                            <input type="text" id="mobile" class="form-control" />
+                                                            <label for="mobile">Mobile</label>
+                                                            <input type="text" name="mobile" id="mobile"
+                                                                class="form-control" placeholder="Mobile Number" />
                                                         </div>
-
                                                         <div class="form-group pb-3">
                                                             <label for="income_source">Income Source</label>
-                                                            <select id="income_source" class="form-control">
-                                                                <option value="" selected disabled>--Select Income
-                                                                    Source--</option>
-                                                                <option value="salaried">Salaried</option>
-                                                                <option value="business">Business</option>
+
+                                                            <select name="income_source" id="income_source"
+                                                                class="form-control">
+                                                                <option value="" selected disabled>
+                                                                    --Select Income Source--
+                                                                </option>
+                                                                <option value="Salaried">Salaried</option>
+                                                                <option value="Business">Business</option>
                                                             </select>
                                                         </div>
 
                                                         <div class="form-group pb-3">
                                                             <label for="monthly_income">Monthly Income</label>
+
                                                             <input type="text" class="form-control"
-                                                                id="monthly_income" />
+                                                                name="monthly_income" id="monthly_income"
+                                                                placeholder="Monthly Income" />
                                                         </div>
+
                                                     </div>
+                                                </div>
+                                                <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group pb-3">
                                                             <label for="pincode">Pincode</label>
-                                                            <input type="text" class="form-control" id="pincode" />
+                                                            <input type="text" class="form-control" name="pincode"
+                                                                id="pincode" placeholder="Pincode" />
                                                         </div>
+
                                                         <div class="form-group pb-3">
                                                             <label for="dob">Date of Birth</label>
-                                                            <input type="text" id="dob" class="form-control" />
+                                                            <input type="text" placeholder="Date of Birth"
+                                                                onfocus="(this.type='date')" onblur="(this.type='text')"
+                                                                class="form-control" name="dob" id="dob" />
                                                         </div>
+
                                                         <div class="form-group pb-3">
                                                             <label for="pan_num">Pancard</label>
-                                                            <input type="text" id="pan_num" class="form-control" />
+                                                            <input type="text" class="form-control" name="pan_num"
+                                                                id="pan_num" placeholder="Pancard" />
                                                         </div>
+
                                                         <div class="form-group pb-3">
-                                                            <label for="marital_status">Martial Status</label>
-                                                            <select id="marital_status" class="form-control">
-                                                                <option value="null" selected disabled>Martial Status
-                                                                </option>
+                                                            <label for="marital_status">Marital Status</label>
+                                                            <select name="marital_status" id="marital_status"
+                                                                class="form-control">
+                                                                <option value="null" selected disabled>--Select Marital
+                                                                    Status--</option>
                                                                 <option value="married">Married</option>
-                                                                <option value="unmarried">Un Married</option>
+                                                                <option value="unmarried">Unmarried</option>
                                                             </select>
                                                         </div>
+
                                                         <div class="form-group pb-3">
                                                             <label for="adhar_num">Adhar Card Number</label>
-                                                            <input type="text" class="form-control" id="adhar_num" />
+                                                            <input type="text" class="form-control" name="adhar_num"
+                                                                id="adhar_num" placeholder="Adhar Card Number" />
                                                         </div>
+
                                                         <div class="form-group pb-3">
                                                             <label for="loan_amount">Loan Amount</label>
-                                                            <input type="text" class="form-control loan_amount"
-                                                                id="loan_amount" />
+                                                            <input type="text" class="loan_amount form-control"
+                                                                name="loan_amount" id="loan_amount"
+                                                                placeholder="Loan Amount" />
                                                         </div>
+
                                                         <div class="form-group pb-3">
                                                             <label for="credit_score">Credit Score</label>
                                                             <input type="text" class="form-control"
-                                                                id="credit_score" />
+                                                                name="credit_score" id="credit_score"
+                                                                placeholder="Credit Score" />
                                                         </div>
+
                                                         <div class="form-group pb-3">
                                                             <label for="mother_name">Mother's Name</label>
-                                                            <input type="text" class="form-control"
-                                                                id="mother_name" />
+                                                            <input type="text" class="form-control" name="mother_name"
+                                                                id="mother_name" placeholder="Mother's Name" />
                                                         </div>
+
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="tab">
                                                 <div class="row">
                                                     <div class="col-12 mb-1">
@@ -245,77 +275,158 @@
                                                             class="text-left text-[#2A2C5D] font-bold text-1xl">Present
                                                             Address</label>
                                                     </div>
-                                                    <div id="show_permanent_address" class="row"></div>
-                                                    <div class="row">
-                                                        <div class="col-12 mb-1">
-                                                            <label for=""
-                                                                class="text-left text-[#2A2C5D] font-bold text-1xl">Office
-                                                                Address</label>
+                                                    <div class="col-md-6 col-lg-3">
+                                                        <div class="form-group pb-3">
+                                                            <label for="present_line1">Address Line 1</label>
+                                                            <textarea name="present_line1" id="present_line1" class="form-control" cols="" rows=""
+                                                                placeholder="Address Line 1"></textarea>
                                                         </div>
-                                                        <div class="col-md-6 col-lg-3">
-                                                            <div class="form-group pb-3">
-                                                                <label for="office_address_line1">Address Line 1</label>
-                                                                <textarea name="office_address_line1" id="office_address_line1" class="form-control" cols="" rows=""
-                                                                    placeholder=""></textarea>
-                                                            </div>
-                                                            <div class="form-group pb-3">
-                                                                <label for="office_address_line2">Address Line 2</label>
-                                                                <textarea name="office_address_line2" id="office_address_line2" class="form-control" cols="" rows=""
-                                                                    placeholder=""></textarea>
-                                                            </div>
+                                                        <div class="form-group pb-3">
+                                                            <label for="present_line2">Address Line 2</label>
+                                                            <textarea name="present_line2" id="present_line2" class="form-control" cols="" rows=""
+                                                                placeholder="Address Line 2"></textarea>
                                                         </div>
-                                                        <div class="col-md-6 col-lg-3">
-                                                            <div class="form-group pb-3">
-                                                                <label for="office_address_line3">Address Line 3</label>
-                                                                <textarea name="office_address_line3" id="office_address_line3" class="form-control" cols="" rows=""
-                                                                    placeholder=""></textarea>
-                                                            </div>
-                                                            <div class="form-group pb-3">
-                                                                <label for="office_landmark">Landmark</label>
-                                                                <input type="text" class="form-control"
-                                                                    name="office_landmark" id="office_landmark"
-                                                                    placeholder="">
-                                                            </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-3">
+                                                        <div class="form-group pb-3">
+                                                            <label for="present_line3">Address Line 3</label>
+                                                            <textarea name="present_line3" id="present_line3" class="form-control" cols="" rows=""
+                                                                placeholder="Address Line 3"></textarea>
                                                         </div>
-                                                        <div class="col-md-6 col-lg-3">
-                                                            <div class="form-group pb-3">
-                                                                <label for="office_state">State</label>
-                                                                <input type="text" class="form-control"
-                                                                    name="office_state" id="office_state" placeholder="">
-                                                            </div>
-                                                            <div class="form-group pb-3">
-                                                                <label for="office_city">City</label>
-                                                                <input type="text" class="form-control"
-                                                                    name="office_city" id="office_city" placeholder="">
-                                                            </div>
+                                                        <div class="form-group pb-3">
+                                                            <label for="present_landmark">Landmark</label>
+                                                            <input class="form-control" type="text"
+                                                                name="present_landmark" id="present_landmark"
+                                                                placeholder="Landmark">
                                                         </div>
-                                                        <div class="col-md-6 col-lg-3">
-                                                            <div class="form-group pb-3">
-                                                                <label for="office_pincode">Pincode</label>
-                                                                <input type="text" class="form-control"
-                                                                    name="office_pincode" id="office_pincode"
-                                                                    placeholder="">
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-3">
+                                                        <div class="form-group pb-3">
+                                                            <label for="present_state">State</label>
+                                                            <input class="form-control" type="text"
+                                                                name="present_state" id="present_state"
+                                                                placeholder="State">
+                                                        </div>
+                                                        <div class="form-group pb-3">
+                                                            <label for="present_city">City</label>
+                                                            <input class="form-control" name="present_city"
+                                                                id="present_city" type="text" placeholder="City">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-3">
+                                                        <div class="form-group pb-3">
+                                                            <label for="present_pincode">Pincode</label>
+                                                            <input class="form-control" name="present_pincode"
+                                                                id="present_pincode" type="text"
+                                                                placeholder="Pincode">
+                                                        </div>
+                                                        <div class="form-group pb-3">
+                                                            <label for="present_phone">Phone Number</label>
+                                                            <input class="form-control" name="present_phone"
+                                                                id="present_phone" type="number"
+                                                                placeholder="Phone Number">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="tab">
+                                                <div class="row">
+                                                    <div class="col-12 mb-1">
+                                                        <label for=""
+                                                            class="text-left text-[#2A2C5D] font-bold text-1xl">Office
+                                                            Address</label>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-3">
+                                                        <div class="form-group pb-3">
+                                                            <label for="office_line1">Address Line 1</label>
+                                                            <textarea name="office_line1" id="office_line1" class="form-control" cols="" rows=""
+                                                                placeholder="Address Line 1"></textarea>
+                                                        </div>
+                                                        <div class="form-group pb-3">
+                                                            <label for="office_line2">Address Line 2</label>
+                                                            <textarea name="office_line2" id="office_line2" class="form-control" cols="" rows=""
+                                                                placeholder="Address Line 2"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-3">
+                                                        <div class="form-group pb-3">
+                                                            <label for="office_line3">Address Line 3</label>
+                                                            <textarea name="office_line3" id="office_line3" class="form-control" cols="" rows=""
+                                                                placeholder="Address Line 3"></textarea>
+                                                        </div>
+                                                        <div class="form-group pb-3">
+                                                            <label for="office_landmark">Landmark</label>
+                                                            <input class="form-control" type="text"
+                                                                name="office_landmark" id="office_landmark"
+                                                                placeholder="Landmark">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-3">
+                                                        <div class="form-group pb-3">
+                                                            <label for="office_state">State</label>
+                                                            <input class="form-control" type="text"
+                                                                name="office_state" id="office_state"
+                                                                placeholder="State">
+                                                        </div>
+                                                        <div class="form-group pb-3">
+                                                            <label for="office_city">City</label>
+                                                            <input class="form-control" name="office_city"
+                                                                id="office_city" type="text" placeholder="City">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-3">
+                                                        <div class="form-group pb-3">
+                                                            <label for="office_pincode">Pincode</label>
+                                                            <input class="form-control" name="office_pincode"
+                                                                id="office_pincode" type="text" placeholder="Pincode">
+                                                        </div>
+                                                        <div class="form-group pb-3">
+                                                            <label for="office_phone">Phone Number</label>
+                                                            <input class="form-control" name="office_phone"
+                                                                id="office_phone" type="number"
+                                                                placeholder="Phone Number">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="tab">
+                                                <div class="row">
+                                                    <div class="flex justify-center items-center bg-gray-200 h-screen">
+                                                        <div class="w-96 p-4 shadow rounded-md bg-white">
+                                                            <label for="upload_document"
+                                                                class="block text-gray-600">Uploaded Document</label>
+                                                            <select name="document_type" id="document_type">
+                                                                <option value="" selected disabled>--Select
+                                                                    Document--</option>
+                                                                <option value="pancard">Pancard</option>
+                                                                <option value="adhar_front">Adhar Card Front</option>
+                                                                <option value="adhar_back">Adhar Card Back</option>
+                                                                <option value="other">Other</option>
+                                                            </select>
+                                                            <div class="mt-4">
+                                                                <a href="#" id="upload_document" target="_blank"
+                                                                    class="btn btn-primary">View</a>
                                                             </div>
-                                                            <div class="form-group pb-3">
-                                                                <label for="office_phone">Phone Number</label>
-                                                                <input type="number" class="form-control"
-                                                                    name="office_phone" id="office_phone" placeholder="">
+                                                            <div class="mt-4">
+                                                                <a href="#" id="download_upload_document" download
+                                                                    class="btn btn-primary">Download</a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <!-- Other tabs go here -->
+                                            </div>
+
                                         </form>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Close</button>
-                                        <button type="button" id="submitForm" class="btn btn-primary">Submit</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
 
                         <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
                         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
@@ -462,11 +573,55 @@
 
                                 // Function to show modal and fetch loan details
                                 function viewModal(loanId) {
+
+                                    $('input, textarea, select').prop('disabled', true);
+                                    $('input, textarea').removeAttr('name placeholder');
+                                    $('select').removeAttr('name');
+
+                                    $('input[type="date"]').removeAttr('placeholder');
+
                                     $.ajax({
                                         url: "loan/" + loanId,
                                         type: "GET",
                                         success: function(response) {
 
+                                            $("#loan_type").val(response.loan_type);
+                                            $("#name").val(response.name);
+                                            $("#email").val(response.email);
+                                            $("#mobile").val(response.mobile);
+                                            $("#income_source").val(response.income_source);
+                                            $("#monthly_income").val(response.monthly_income);
+                                            $("#pincode").val(response.pincode);
+
+                                            $("#dob").val(response.dob);
+                                            $("#pan_num").val(response.pan_num);
+                                            $("#marital_status").val(response.marital_status);
+                                            $("#adhar_num").val(response.adhar_num);
+                                            $("#loan_amount").val(response.loan_amount);
+                                            $("#credit_score").val(response.credit_score);
+                                            $("#mother_name").val(response.mother_name);
+
+                                            $("#present_line1").val(response.loan_address.present_line1);
+                                            $("#present_line2").val(response.loan_address.present_line2);
+                                            $("#present_line3").val(response.loan_address.present_line3);
+                                            $("#present_landmark").val(response.loan_address.present_landmark);
+                                            $("#present_state").val(response.loan_address.present_state);
+                                            $("#present_city").val(response.loan_address.present_city);
+                                            $("#present_pincode").val(response.loan_address.present_pincode);
+                                            $("#present_phone").val(response.loan_address.present_phone);
+                                            $("#office_line1").val(response.loan_address.office_line1);
+                                            $("#office_line2").val(response.loan_address.office_line2);
+                                            $("#office_line3").val(response.loan_address.office_line3);
+                                            $("#office_landmark").val(response.loan_address.office_landmark);
+                                            $("#office_state").val(response.loan_address.office_state);
+                                            $("#office_city").val(response.loan_address.office_city);
+                                            $("#office_pincode").val(response.loan_address.office_pincode);
+                                            $("#office_phone").val(response.loan_address.office_phone);
+
+                                            $("#document_type").val(response.document_type);
+
+                                            var fileUrl = "{{ asset('storage/loan/') }}/" + response.upload_document;
+                                            $("#upload_document, #download_upload_document").attr("href", fileUrl);
 
                                             $("#viewModal").modal("show");
                                         },
@@ -478,7 +633,6 @@
 
                                 $(document).on('click', '.statusButton', function() {
                                     var loanId = $(this).data("loan-id");
-                                    alert(loanId);
                                     showModal(loanId);
                                 });
 
