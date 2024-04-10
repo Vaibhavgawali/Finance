@@ -42,7 +42,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 Route::get('/', [WelcomeController::class, 'index']);
 
 Route::get('/credit', [WelcomeController::class, 'credit']);
-Route::get('/creditcard', [WelcomeController::class, 'credit_card']);
+// Route::get('/creditcard', [WelcomeController::class, 'credit_card']);
 
 Route::get('/loanForm', [WelcomeController::class, 'loan']);
 Route::get('/dematForm', [WelcomeController::class, 'demat']);

@@ -5,7 +5,7 @@
         <!-- MultiStep Form -->
         <!-- section begin -->
         <section id="subheader" class="text-light"
-            data-bgimage="url({{ asset('assets/images/background/subheader2.jpg') }}) top">
+        data-bgimage="url({{ asset('assets/images/background/subheader2.jpg') }}) top">
             <h1>Loan</h1>
         </section>
         <!-- section close -->
