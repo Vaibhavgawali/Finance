@@ -5,7 +5,7 @@
 
         <!-- section begin -->
         <section id="subheader" class="text-light" style=""
-            data-bgimage="url({{ asset('assets/images/background/subheader2.jpg') }})" top">
+            data-bgimage="url({{ asset('assets/images/background/subheader2.jpg') }}) top" >
             <h1>Loan</h1>
         </section>
         <!-- section close -->
@@ -14,7 +14,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-4 col-md-6 mb30">
-                        <a href="/loan-service">
+                        <a href="/loan/create">
                             <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
                                 <i class="bg-color text-center text-light fa-solid fa-house"></i>
                                 <div class="fb-text">
@@ -25,7 +25,7 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 mb30">
-                        <a href="/loan-service">
+                        <a href="/loan/create">
                             <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
                                 <i class="bg-color text-center text-light fa-solid fa-car"></i>
                                 <div class="fb-text">
@@ -36,7 +36,7 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 mb30">
-                        <a href="/loan-service">
+                        <a href="/loan/create">
                             <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
                                 <i class="bg-color text-center text-light fa-solid fa-hand-holding-dollar"></i>
 
@@ -48,7 +48,7 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 mb30">
-                        <a href="/loan-service">
+                        <a href="/loan/create">
                             <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
                                 <i class="bg-color text-center text-light fa-solid fa-building"></i>
 

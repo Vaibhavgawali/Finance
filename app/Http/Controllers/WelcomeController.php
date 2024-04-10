@@ -26,10 +26,10 @@ class WelcomeController extends Controller
     {
         return view('frontend.demat');
     }
-    function credit_card()
-    {
-        return view('frontend.creditcard');
-    }
+    // function credit_card()
+    // {
+    //     return view('frontend.creditcard');
+    // }
     function general_insurance()
     {
         return view('frontend.generalinsurance');
@@ -48,6 +48,6 @@ class WelcomeController extends Controller
     }
     function loan_service()
     {
-        return view('frontend.loanservice');
+        return view('frontend.loan');
     }
 }
