@@ -235,44 +235,44 @@
                     </div>
                     <div class="col-md-6 col-lg-3">
                       <div class="form-group pb-3">
-                        <textarea name="office_line1" id="office_line1" class="form-control" cols="" rows="" placeholder="Address Line 1"></textarea>
-                        <div id="office_line1_error" class="text-danger mx-2"></div>
+                        <textarea name="" id="" class="form-control" cols="" rows="" placeholder="Address Line 1"></textarea>
+                        <div id="" class="text-danger mx-2"></div>
                       </div>
                       <div class="form-group pb-3">
-                        <textarea name="office_line2" id="office_line2"  class="form-control" cols="" rows="" placeholder="Address Line 2"></textarea>
-                        <div id="office_line2_error" class="text-danger mx-2"></div>
+                        <textarea name="" id=""  class="form-control" cols="" rows="" placeholder="Address Line 2"></textarea>
+                        <div id="" class="text-danger mx-2"></div>
                       </div>
                     </div>
                     <div class="col-md-6 col-lg-3">
                       <div class="form-group pb-3">
-                        <textarea name="office_line3" id="office_line3"  class="form-control" cols="" rows="" placeholder="Address Line 3"></textarea>
-                        <div id="office_line3" class="text-danger mx-2"></div>
+                        <textarea name="" id=""  class="form-control" cols="" rows="" placeholder="Address Line 3"></textarea>
+                        <div id="" class="text-danger mx-2"></div>
                       </div>
                       <div class="form-group pb-3">
-                        <input class="form-control" type="text" name="office_landmark" id="office_landmark" type="" placeholder="Landmark">
-                        <div id="office_landmark_error" class="text-danger mx-2"></div>
+                        <input class="form-control" type="" placeholder="Landmark">
+                        <div id="" class="text-danger mx-2"></div>
                       </div>
                       
                     </div>
                     <div class="col-md-6 col-lg-3">
                       <div class="form-group pb-3">
-                        <input class="form-control" type="text" name="office_state" id="office_state" placeholder="State">
-                        <div id="office_state_error" class="text-danger mx-2"></div>
+                        <input class="form-control" type="" placeholder="State">
+                        <div id="" class="text-danger mx-2"></div>
                       </div>
                       <div class="form-group pb-3">
-                        <input class="form-control" name="office_city" id="office_city" type="text" placeholder="City">
-                        <div id="office_city_error" class="text-danger mx-2"></div>
+                        <input class="form-control" type="" placeholder="City">
+                        <div id="" class="text-danger mx-2"></div>
                       </div>
   
                     </div>
                     <div class="col-md-6 col-lg-3">
                       <div class="form-group pb-3">
-                        <input class="form-control" name="office_pincode" id="office_pincode" type="text" placeholder="Pincode">
-                        <div id="office_pincode_error" class="text-danger mx-2"></div>
+                        <input class="form-control" type="" placeholder="Pincode">
+                        <div id="" class="text-danger mx-2"></div>
                       </div>
                       <div class="form-group pb-3">
-                        <input class="form-control" name="office_phone" id="office_phone" type="number" placeholder="Phone Number">
-                        <div id="office_phone_error" class="text-danger mx-2"></div>
+                        <input class="form-control" type="number" placeholder="Phone Number">
+                        <div id="" class="text-danger mx-2"></div>
                       </div>
                     </div>
                   </div>
@@ -310,7 +310,6 @@
                                 <option value="">Other</option>
                               </select>
                             </p>
-                            <div id="document_type_error" class="text-danger mx-2"></div>
                             <button
                               type="submit"
                               id="documents_submit"
@@ -332,8 +331,7 @@
                                 </span></span
                               >
                             </div>
-                            <input type="file" class="file hidden" name="upload_document" id="upload_document" multiple />
-                            <div id="upload_document_error" class="text-danger mx-2"></div>
+                            <input type="file" class="file hidden" name="upload_document" multiple />
                           </div>
                           <div class="progress-container">
                             <!-- <div class="progress-bar"  value="50" max="100"></div> -->
