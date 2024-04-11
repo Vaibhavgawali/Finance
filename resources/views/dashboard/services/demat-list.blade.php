@@ -6,8 +6,7 @@
         <div class="page-header">
             <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white me-2">
-                    <i class="mdi mdi-account-card-details"></i>
-                </span>Demat
+                    <i class="mdi mdi-chart-areaspline"></i>
             </h3>
         </div>
         <div class="row">
@@ -17,7 +16,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="start_date">Start Date:</label>
-                                <input type="date" id="start_date" name="start_date" class="form-control">
+                                <input type="date" id="start_date" name="start_date" class="form-control mb-3">
                             </div>
                             <div class="col-md-4">
                                 <label for="end_date">End Date:</label>
@@ -61,7 +60,7 @@
 
                                             <div class="form-group pb-2">
                                                 <label for="status">Status :</label>
-                                                <select class="form-control" id="status" name="status">
+                                                <select class="form-control p-3" id="status" name="status">
                                                     <option value="">-- Select --</option>
                                                     <option value="Initiated">Initiated</option>
                                                     <option value="Pending">Pending</option>
@@ -73,7 +72,7 @@
                                             <!-- Select tags -->
                                             <div class="form-group pb-2">
                                                 <label for="application_stage">Application Stage :</label>
-                                                <select class="form-control" id="application_stage"
+                                                <select class="form-control p-3" id="application_stage"
                                                     name="application_stage">
                                                     <option value="">-- Select --</option>
                                                     <option value="Initial">Initial</option>
@@ -116,25 +115,53 @@
                                             <div class="row bg-white p-3 rounded-3">
                                                 <div class="col-md-12 col-12 border border-2 p-3 rounded-3">
                                                     <form class="bg-white">
-                                                        <div class="form-group pb-3">
+                                                        <div class="form-group">
                                                             <label for="name">Name:</label>
-                                                            <input type="text" name="name" id="name"
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span
+                                                                        class="input-group-text bg-gradient-primary text-white p-3">
+                                                                        <i class="mdi mdi-account"></i></span>
+                                                                </div>
+                                                                <input type="text" name="name" id="name"
                                                                 class="form-control" disabled />
+                                                            </div>
                                                         </div>
-                                                        <div class="form-group pb-3">
+                                                        <div class="form-group">
                                                             <label for="pan_num">Pan Number:</label>
-                                                            <input type="text" name="pan_num" id="pan_num"
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span
+                                                                        class="input-group-text bg-gradient-primary text-white p-3">
+                                                                        <i class="mdi mdi-credit-card"></i></span>
+                                                                </div>
+                                                                <input type="text" name="pan_num" id="pan_num"
                                                                 class="form-control" disabled />
+                                                            </div>
                                                         </div>
-                                                        <div class="form-group pb-3">
+                                                        <div class="form-group">
                                                             <label for="adhar_num">Aadhar Number:</label>
-                                                            <input type="text" name="adhar_num" id="adhar_num"
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span
+                                                                        class="input-group-text bg-gradient-primary text-white p-3">
+                                                                        <i class="mdi mdi-credit-card-scan"></i></span>
+                                                                </div>
+                                                                <input type="text" name="adhar_num" id="adhar_num"
                                                                 class="form-control" disabled />
+                                                            </div>
                                                         </div>
-                                                        <div class="form-group pb-3">
+                                                        <div class="form-group">
                                                             <label for="phone">Mobile Number:</label>
-                                                            <input type="text" name="phone" id="phone"
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span
+                                                                        class="input-group-text bg-gradient-primary text-white p-3">
+                                                                        <i class="mdi mdi-cellphone"></i></span>
+                                                                </div>
+                                                                <input type="text" name="phone" id="phone"
                                                                 class="form-control" disabled />
+                                                            </div>
                                                         </div>
                                                     </form>
                                                 </div>

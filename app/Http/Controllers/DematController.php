@@ -90,12 +90,12 @@ class DematController extends Controller
                     ->addColumn('actions', function ($row) {
                         // Check if user has Superadmin or Admin role
                         if (auth()->user()->hasRole('Superadmin') || auth()->user()->hasRole('Admin')) {
-                            $actions = '<a class="btn btn-sm btn-gradient-warning btn-rounded viewButton" data-demat-id="' . $row->id . '" >View</a>';  
+                            $actions = '<div class="d-flex justify-content-center gap-2"><a class="btn btn-sm btn-gradient-primary btn-rounded viewButton" data-demat-id="' . $row->id . '" >View</a>';  
                             // $actions .= '<a class="btn btn-sm btn-gradient-warning btn-rounded editButton" data-demat-id="' . $row->id . '" >Edit</a>';  
-                            $actions .= '<a class="btn btn-sm btn-gradient-warning btn-rounded statusButton" data-demat-id="' . $row->id . '" >Status</a>';  
-                            $actions .= '<form class="delete-demat-form" data-demat-id="' . $row->id . '">
-                                            <button type="button" class="btn btn-sm btn-gradient-danger btn-rounded delete-user-button">Delete</button>
-                                        </form>';
+                            $actions .= '<a class="btn btn-sm btn-gradient-success btn-rounded statusButton" data-demat-id="' . $row->id . '" >Status</a>';  
+                            $actions .= '<form class="delete-finance-form" data-finance-route="demat" data-finance-id="' . $row->id . '">
+                                            <button type="button" class="btn btn-sm btn-gradient-danger btn-rounded delete-finance-button">Delete</button>
+                                        </form> </div>';
                             return $actions;
                         } else {
                             return '';

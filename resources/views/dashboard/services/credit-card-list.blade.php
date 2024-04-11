@@ -82,7 +82,7 @@
 
                                         <div class="form-group pb-2">
                                             <label for="status">Status :</label>
-                                            <select class="form-control" id="status" name="status">
+                                            <select class="form-control p-3" id="status" name="status">
                                                 <option value="">-- Select --</option>
                                                 <option value="Initiated">Initiated</option>
                                                 <option value="Pending">Pending</option>
@@ -94,7 +94,7 @@
                                         <!-- Select tags -->
                                         <div class="form-group pb-2">
                                             <label for="application_stage">Application Stage :</label>
-                                            <select class="form-control" id="application_stage"
+                                            <select class="form-control p-3" id="application_stage"
                                                 name="application_stage">
                                                 <option value="">-- Select --</option>
                                                 <option value="initial">Initial</option>
@@ -564,10 +564,6 @@
     }
 });
 
-                                        // var currentURL = window.location.href;
-                                        // setTimeout(function() {
-                                        //     window.location.href = currentURL;
-                                        // }, 1000);
                                     },
                                     error: function(error) {
                                         console.error(error);
