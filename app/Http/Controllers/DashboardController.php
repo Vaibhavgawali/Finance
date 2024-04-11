@@ -24,7 +24,16 @@ class DashboardController extends Controller
             $insuraceCount = Insurance::count();
         }else{
             $logged_user_referral_id=auth()->user()->referral_id;
-            $insuraceCount = Insurance::where('referral_id',$logged_user_referral_id)->count();
+            // $insuraceCount = Insurance::where('referral_id',$logged_user_referral_id)->count();
+            $insuraceCount = Insurance::where(function ($query) use ($logged_user_referral_id) {
+                $query->where('referral_id', $logged_user_referral_id)
+                      ->orWhereIn('referral_id', function ($subquery) use ($logged_user_referral_id) {
+                          $subquery->select('referral_id')
+                                   ->from('users')
+                                   ->where('referred_by', $logged_user_referral_id);
+                      });
+            })
+            ->count();
         }
 
         return view('dashboard.dashboard.dashboard', [

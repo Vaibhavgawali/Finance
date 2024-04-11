@@ -22,7 +22,7 @@ class InsuranceController extends Controller
         $this->middleware('auth:sanctum')->except('create','store');
         $this->middleware(['role:Superadmin|Admin'])->only('show','edit','update','updateStatus');
     }
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -63,15 +63,21 @@ class InsuranceController extends Controller
                         $query->whereBetween('created_at', [$startDate, $endDate]);
                     }
                 })
-                // ->when(Auth::user()->hasRole('Distributor') || Auth::user()->hasRole('Retailer'), function ($query) {
-                //     $logged_user_referral_id = auth()->user()->referral_id;
-                //     $query->where(function ($q) use ($logged_user_referral_id) {
-                //         $q->where('referred_by', $logged_user_referral_id)
-                //             ->orWhereHas('dematRefer', function ($q) use ($logged_user_referral_id) {
-                //                 $q->where('referred_by', $logged_user_referral_id);
-                //             });
-                //     });
-                // })
+                ->when(Auth::user()->hasRole('Distributor') || Auth::user()->hasRole('Retailer'), function ($query) {
+                    $logged_user_referral_id = auth()->user()->referral_id;
+                    // $query->where(function ($q) use ($logged_user_referral_id) {
+                    //     $q->where('referral_id', $logged_user_referral_id);
+                    // });
+                    $query->where(function ($q) use ($logged_user_referral_id) {
+                        $q->where('referral_id', $logged_user_referral_id)
+                          ->orWhereIn('referral_id', function ($subquery) use ($logged_user_referral_id) {
+                              $subquery->select('referral_id')
+                                       ->from('users')
+                                       ->where('referred_by', $logged_user_referral_id);
+                          });
+                    });
+
+                })
                 ->orderBy('id', 'desc')
                 ->get();
 
