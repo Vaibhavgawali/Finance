@@ -9,20 +9,29 @@ use App\Models\User;
 use App\Models\CreditCard;
 use App\Models\Loan;
 use App\Models\Demat;
+use App\Models\Insurance;
 
 class DashboardController extends Controller
 {
     function dashboard()
     {
-
         $creditCardCount = $this->getCount(CreditCard::class,'creditCardRefer');
         $loanCount = $this->getCount(Loan::class,'loanRefer');
         $dematCount = $this->getCount(Demat::class,'dematRefer');
+
+
+        if(Auth::user()->hasRole('Superadmin') || Auth::user()->hasRole('Admin')){
+            $insuraceCount = Insurance::count();
+        }else{
+            $logged_user_referral_id=auth()->user()->referral_id;
+            $insuraceCount = Insurance::where('referral_id',$logged_user_referral_id)->count();
+        }
 
         return view('dashboard.dashboard.dashboard', [
             'creditCardCount' => $creditCardCount,
             'loanCount' => $loanCount,
             'dematCount' => $dematCount,
+            'insuraceCount' => $insuraceCount,
         ]);
     }
 
