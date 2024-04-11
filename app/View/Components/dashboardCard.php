@@ -17,11 +17,14 @@ class dashboardCard extends Component
     public $title;
     public $totalCountLabel;
     public $totalCount;
+    public $icon;
 
 
-    public function __construct($bgClass,$url,$imageUrl, $title, $totalCountLabel, $totalCount)
+    public function __construct($bgClass,$url,$imageUrl, $title, $totalCountLabel, $totalCount,$icon)
     {
         $this->bgClass = $bgClass;
+        $this->icon = $icon;
+
         $this->url = $url;
         $this->imageUrl = $imageUrl;
         $this->title = $title;
