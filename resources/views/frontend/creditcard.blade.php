@@ -15,6 +15,7 @@
                     <div class="col-md-7 col-12 border border-2 p-3 rounded-3">
                         <h3 class="text-center">Personal Details</h3>
                         <form id="creditForm" enctype="multipart/form-data" class="bg-white">
+                            @csrf
                             <input type="hidden" id="formUrl" value="/credit-card">
 
                             <!-- One "tab" for each step in the form: -->
@@ -31,14 +32,14 @@
                                 </div>
 
                                 <div class="form-group pb-3">
-                                    <input type="text" name="pan_num" id="pan_num" class="form-control"
+                                    <input type="text" name="pan_number" id="pan_number" class="form-control"
                                         placeholder="Pan Number" />
-                                    <div id="pan_num_error" class="text-danger mx-2"></div>
+                                    <div id="pan_number_error" class="text-danger mx-2"></div>
                                 </div>
                                 <div class="form-group pb-3">
-                                    <input type="text" name="adhar_num" id="adhar_num" class="form-control"
+                                    <input type="text" name="adhar_number" id="adhar_number" class="form-control"
                                         placeholder="Adhar Number" />
-                                    <div id="adhar_num_error" class="text-danger mx-2"></div>
+                                    <div id="adhar_number_error" class="text-danger mx-2"></div>
                                 </div>
                                 <div class="form-group pb-3">
                                     <input type="text" name="email" id="email" class="form-control"
@@ -55,6 +56,18 @@
                                     <input type="text" name="annual_income" id="annual_income" class="form-control"
                                         placeholder="Net Annual Income" />
                                     <div id="annual_income_error" class="text-danger mx-2"></div>
+                                </div>
+                                <div style="overflow: auto">
+                                    <div style="float: right">
+                                        <button class="btn btn-secondary prevBtn" type="button" 
+                                            >
+                                            Previous
+                                        </button>
+                                        <button class="btn btn-primary nextBtn" type="button"  class="submit-btn"
+                                        >
+                                         Next
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -100,19 +113,20 @@
                                         id="bank_statement_file" accept="application/pdf" />
                                     <div id="bank_statement_file_error" class="text-danger mx-2"></div>
                                 </div>
-                            </div>
-                            <div style="overflow: auto">
-                                <div style="float: right">
-                                    <button class="btn btn-secondary" type="button" id="prevBtn"
-                                        onclick="nextPrev(-1)">
-                                        Previous
-                                    </button>
-                                    <button class="btn btn-primary" type="submit" id="nextBtn" class="submit-btn"
-                                        onclick="nextPrev(1)">
-                                        Next
-                                    </button>
+                                <div style="overflow: auto">
+                                    <div style="float: right">
+                                        <button class="btn btn-secondary prevBtn" type="button" id=""
+                                           >
+                                            Previous
+                                        </button>
+                                        <button class="btn btn-primary nextBtn" type="submit" id="credit_card_submit_btn" class="submit-btn"
+                                          >
+                                            Submit
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
+                            
 
                             <!-- Circles which indicates the steps of the form: -->
                             <div style="text-align: center; margin-top: 40px">

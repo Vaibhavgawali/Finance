@@ -1,4 +1,171 @@
 $(document).ready(function () {
+    var currentTab = 0;
+    showTab(currentTab);
+    updateStepper(currentTab); // Update stepper initially
+
+    function showTab(n) {
+        $(".tab").hide();
+        $(".tab").eq(n).show();
+        updateStepper(n); // Update stepper when showing a tab
+    }
+
+    function nextPrev(n) {
+        var tabs = $(".tab");
+        // Check if the form is valid before proceeding
+        if (n === -1 && currentTab === 0) return false; // If at the first tab, do nothing
+
+        // Check if the form is valid before proceeding
+        if (n === 1 && !validateForm()) return false;
+
+        // Hide the current tab
+        tabs.eq(currentTab).hide();
+        // Increment or decrement the current tab index
+        currentTab += n;
+        // Show the new tab
+        showTab(currentTab);
+    }
+
+    function validateForm() {
+        // Reset any previous error messages
+        $(".text-danger").text("");
+        var isValid = true;
+        var name = $("#name").val().trim();
+        var panNumber = $("#pan_number").val().trim();
+        var email = $("#email").val().trim();
+        var mobile = $("#mobile").val().trim();
+        var income = $("#annual_income").val().trim();
+        var adharNumber = $("#adhar_number").val().trim();
+        var panFile = $("#pan_file").prop("files")[0];
+        var adharFrontFile = $("#adhar_front_file").prop("files")[0];
+        var adharBackFile = $("#adhar_back_file").prop("files")[0];
+        var itrFile = $("#itr_file").prop("files")[0];
+        var bankStatementFile = $("#bank_statement_file").prop("files")[0];
+        
+        var allowedImageExtensions = /(jpg|jpeg|png|pdf)$/i;
+
+        // Validation for each input field
+        if (currentTab == 0) {
+            if (name === "") {
+                $("#name_error").text("Please enter your name.");
+                isValid = false;
+            } else  if (panNumber === "") {
+                $("#pan_number_error").text("Please enter your PAN number.");
+                isValid = false;
+            } else if (!isValidPanNumber(panNumber)) {
+                $("#pan_number_error").text("Please enter a valid PAN number.");
+                isValid = false;
+            } else if (adharNumber === "") {
+                $("#adhar_number_error").text("Please enter your Aadhar number.");
+                isValid = false;
+            } else if (!isValidAdharNumber(adharNumber)) {
+                $("#adhar_number_error").text("Please enter a valid Aadhar number.");
+                isValid = false;
+            }  else if (email === "") {
+                $("#email_error").text("Please enter your email.");
+                isValid = false;
+            } else if (!isValidEmail(email)) {
+                $("#email_error").text("Please enter a valid email address.");
+                isValid = false;
+            } else if (mobile === "") {
+                $("#mobile_error").text("Please enter your mobile number.");
+                isValid = false;
+            } else if (!isValidMobile(mobile)) {
+                $("#mobile_error").text("Please enter a valid mobile number.");
+                isValid = false;
+            } else if (income === "") {
+                $("#annual_income_error").text("Please enter your net annual income.");
+                isValid = false;
+            } else if (isNaN(income) || parseFloat(income) <= 0) {
+                $("#annual_income_error").text("Please enter a valid net annual income.");
+                isValid = false;
+            }
+        } else if (currentTab == 1) {
+            if ($("#residence_address").val().trim() === "") {
+                $("#residence_address_error").text("Please enter your address.");
+                isValid = false;
+            } else if ($("#office_address").val().trim() === "") {
+                $("#office_address_error").text("Please enter your office address.");
+                isValid = false;
+            } else  if (!panFile) {
+                $("#pan_file_error").text("Please upload your PAN card.");
+                isValid = false;
+            } else if (!allowedImageExtensions.test(panFile.name)) {
+                $("#pan_file_error").text("Please upload a PDF, JPEG, JPG, or PNG image.");
+                isValid = false;
+            } else if (panFile.size > 2048 * 1024) { // Max size in bytes (2048 KB)
+                $("#pan_file_error").text("File size should not exceed 2MB.");
+                isValid = false;
+            } else if (!adharFrontFile) {
+                $("#adhar_front_file_error").text("Please upload your Aadhar front.");
+                isValid = false;
+            } else if (!allowedImageExtensions.test(adharFrontFile.name)) {
+                $("#adhar_front_file_error").text("Please upload a PDF, JPEG, JPG, or PNG image.");
+                isValid = false;
+            } else if (adharFrontFile.size > 2048 * 1024) { // Max size in bytes (2048 KB)
+                $("#adhar_front_file_error").text("File size should not exceed 2MB.");
+                isValid = false;
+            } else if (!adharBackFile) {
+                $("#adhar_back_file_error").text("Please upload your Aadhar back.");
+                isValid = false;
+            } else if (!allowedImageExtensions.test(adharBackFile.name)) {
+                $("#adhar_back_file_error").text("Please upload a PDF, JPEG, JPG, or PNG image.");
+                isValid = false;
+            } else if (adharBackFile.size > 2048 * 1024) { // Max size in bytes (2048 KB)
+                $("#adhar_back_file_error").text("File size should not exceed 2MB.");
+                isValid = false;
+            } else if (!itrFile) {
+                $("#itr_file_error").text("Please upload your ITR file.");
+                isValid = false;
+            } else if (!allowedImageExtensions.test(itrFile.name)) {
+                $("#itr_file_error").text("Please upload a PDF, JPEG, JPG, or PNG image.");
+                isValid = false;
+            } else if (itrFile.size > 2048 * 1024) { // Max size in bytes (2048 KB)
+                $("#itr_file_error").text("File size should not exceed 2MB.");
+                isValid = false;
+            } else if (!bankStatementFile) {
+                $("#bank_statement_file_error").text("Please upload your bank statement file.");
+                isValid = false;
+            } else if (!allowedImageExtensions.test(bankStatementFile.name)) {
+                $("#bank_statement_file_error").text("Please upload a PDF, JPEG, JPG, or PNG image.");
+                isValid = false;
+            } else if (bankStatementFile.size > 2048 * 1024) { // Max size in bytes (2048 KB)
+                $("#bank_statement_file_error").text("File size should not exceed 2MB.");
+                isValid = false;
+            }
+            
+        }
+        return isValid;
+    }
+
+    function isValidPanNumber(panNumber) {
+        var panRegex = /[A-Z]{5}[0-9]{4}[A-Z]{1}/;
+        return panRegex.test(panNumber);
+    }
+
+    function isValidAdharNumber(adharNumber) {
+        var adharRegex = /^\d{12}$/;
+        return adharRegex.test(adharNumber);
+    }
+
+    function isValidEmail(email) {
+        var emailRegex = /\S+@\S+\.\S+/;
+        return emailRegex.test(email);
+    }
+
+    function isValidMobile(mobile) {
+        var mobileRegex = /^\d{10}$/;
+        return mobileRegex.test(mobile);
+    }
+
+    $(".nextBtn").on("click", function () {
+        nextPrev(1);
+    });
+
+    $(".prevBtn").on("click", function () {
+        nextPrev(-1);
+    });
+
+    // Function to extract parameter from URL
     function getParameterByName(name, url) {
         if (!url) url = window.location.href;
         name = name.replace(/[\[\]]/g, "\\$&");
@@ -11,275 +178,69 @@ $(document).ready(function () {
 
     // Get the insurance plan from the URL
     var creditcard = getParameterByName("creditcard");
-    // alert(creditcard);
     $("#card").val(creditcard);
-    var currentTab = 0;
-    showTab(currentTab);
 
-    function showTab(n) {
-        $(".tab").hide();
-        $(".tab").eq(n).show();
-
-        if (n == 0) {
-            $("#prevBtn").hide();
-        } else {
-            $("#prevBtn").show();
-        }
-
-        if (n == $(".tab").length - 1) {
-            $("#nextBtn").html("Submit");
-        } else {
-            $("#nextBtn").html("Next");
-        }
-
-        fixStepIndicator(n);
+    function updateStepper(n) {
+        $(".step").removeClass("active"); // Remove active class from all steps
+        $(".step").eq(n).addClass("active"); // Add active class to current step
     }
 
-    function nextPrev(n) {
-        var x = $(".tab");
+    $("#creditForm").submit(function (event) {
+        // Prevent default form submission
+        event.preventDefault();
 
-        if (n == 1 && !validateForm()) return false;
-
-        x.eq(currentTab).hide();
-        currentTab += n;
-
-        if (currentTab >= x.length) {
+        // Validate the form before submitting
+        if (validateForm()) {
             var formData = new FormData();
-            x.find("input, textarea, select").each(function () {
-                if ($(this).attr("type") === "file") {
-                    formData.append($(this).attr("name"), $(this)[0].files[0]);
-                } else {
-                    formData.append($(this).attr("name"), $(this).val());
-                }
-            });
 
-            var formUrl = $("#formUrl").val();
+            formData.append("card", $("#card").val());
+            formData.append("name", $("#name").val());
+            formData.append("pan_num", $("#pan_number").val());
+            formData.append("adhar_num", $("#adhar_number").val());
+            formData.append("email", $("#email").val());
+            formData.append("mobile", $("#mobile").val());
+            formData.append("annual_income", $("#annual_income").val());
+            formData.append("residence_address", $("#residence_address").val());
+            formData.append("office_address", $("#office_address").val());
+            formData.append("pan_file", $("#pan_file").prop("files")[0]);
+            formData.append("adhar_front_file", $("#adhar_front_file").prop("files")[0]);
+            formData.append("adhar_back_file", $("#adhar_back_file").prop("files")[0]);
+            formData.append("itr_file", $("#itr_file").prop("files")[0]);
+            formData.append("bank_statement_file", $("#bank_statement_file").prop("files")[0]);
 
-            // Send form data to server using AJAX for validation
+            // Submit form data via AJAX
             $.ajax({
+                url: "/credit-card",
                 type: "POST",
-                url: $('meta[name="base-url"]').attr("content") + formUrl,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 data: formData,
                 processData: false,
                 contentType: false,
-                headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-                        "content"
-                    ),
-                    Accept: "application/json",
-                },
                 success: function (response) {
-                    if (response.valid) {
-                        // Proceed to the next tab only if the response is valid
-                        showTab(currentTab);
-                    } else {
-                        // Display validation errors
-                        $(".error-message").text(response.message);
+                    if (response.status == true) {
+                        $(".error-message").remove();
+                        $("#credit_card_submit_btn").attr("disabled", true);
+                        window.location.reload();
+                        $("#creditForm")[0].reset();
+                        return false;
                     }
                 },
                 error: function (response) {
-                    console.log(response);
                     if (response.status === 422) {
                         var errors = response.responseJSON.errors;
                         $(".error-message").remove();
-
-                        // Display new errors
                         $.each(errors, function (field, messages) {
-                            var input = $('[name="' + field + '"]');
-                            input.after(
-                                '<div class="error-message invalid-feedback d-block">' +
-                                    messages.join(", ") +
-                                    "</div>"
-                            );
-                            input.focus();
-                            return false;
+                            // Display error messages
                         });
                     }
-
-                    console.error(xhr.responseText);
-                    // Display an error message or handle accordingly
-                    $(".error-message").text(
-                        "An error occurred. Please try again later."
-                    );
                 },
             });
-
-            return false;
+        } else {
+            // If form is invalid, display an error message or take appropriate action
+            console.log("Form submission failed. Please resolve all errors.");
         }
-
-        showTab(currentTab);
-    }
-
-    function validateForm() {
-        var x,
-            y,
-            valid = true;
-        x = $(".tab");
-        y = x.eq(currentTab).find("input, textarea");
-
-        y.each(function () {
-            var input = $(this);
-            var errorDiv = $("#" + input.attr("id") + "_error");
-            var selector = input.attr("id");
-
-            var formUrl = $("#formUrl").val();
-            if (formUrl == "/loan") {
-                var loanType = $("#loan_type").val();
-                $("#loan_type_error").html();
-                var loan_type_error = $("#loan_type_error");
-                if (
-                    loanType == "null" ||
-                    loanType == null ||
-                    loanType == "undefined" ||
-                    loanType == undefined
-                ) {
-                    input.addClass("invalid");
-                    loan_type_error.text("Loan type is required");
-                    valid = false;
-                } else {
-                    input.removeClass("invalid");
-                    loan_type_error.text("");
-                }
-
-                var maritalStatus = $("#marital_status").val();
-                $("#marital_status_error").html();
-                var marital_status_error = $("#marital_status_error");
-                if (
-                    maritalStatus == "null" ||
-                    maritalStatus == null ||
-                    maritalStatus == "undefined" ||
-                    maritalStatus == undefined
-                ) {
-                    input.addClass("invalid");
-                    marital_status_error.text("Marital Status is required");
-                    valid = false;
-                } else {
-                    input.removeClass("invalid");
-                    marital_status_error.text("");
-                }
-
-                var incomeSource = $("#income_source").val();
-                $("#income_source_error").html();
-                var income_source_error = $("#income_source_error");
-                if (
-                    incomeSource == "null" ||
-                    incomeSource == null ||
-                    incomeSource == "undefined" ||
-                    incomeSource == undefined
-                ) {
-                    input.addClass("invalid");
-                    income_source_error.text("Income source is required");
-                    valid = false;
-                } else {
-                    input.removeClass("invalid");
-                    income_source_error.text("");
-                }
-            }
-
-            if (
-                (input.val() == "" && input.is('input[type="text"]')) ||
-                input.is("select")
-            ) {
-                input.addClass("invalid");
-                errorDiv.text(selector + " is required");
-                valid = false;
-            } else if (input.is('input[type="file"]')) {
-                var allowedFormats = ["jpg", "jpeg", "png", "pdf"];
-                var fileExtension = input.val().split(".").pop().toLowerCase();
-                if ($.inArray(fileExtension, allowedFormats) == -1) {
-                    input.addClass("invalid");
-                    errorDiv.text(
-                        "File type not allowed. Please upload jpg, jpeg, png, or pdf files."
-                    );
-                    valid = false;
-                } else {
-                    input.removeClass("invalid");
-                    errorDiv.text(""); // Clear the error message if input is valid
-                }
-            } else if (input.is("textarea")) {
-                if (input.val().trim() === "") {
-                    input.addClass("invalid");
-                    errorDiv.text("Address is required");
-                    valid = false;
-                } else {
-                    input.removeClass("invalid");
-                    errorDiv.text(""); // Clear the error message if input is valid
-                }
-            } else {
-                input.removeClass("invalid");
-                errorDiv.text(""); // Clear the error message if input is valid
-
-                // Other validations (PAN, email, phone, Aadhar, income, etc.) can be added here
-                if (selector == "pan_num") {
-                    if (!input.val().match(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/)) {
-                        input.addClass("invalid");
-                        errorDiv.text("PAN is not valid");
-                        valid = false;
-                    }
-                } else if (selector == "email") {
-                    if (
-                        !input
-                            .val()
-                            .match(
-                                /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-                            )
-                    ) {
-                        input.addClass("invalid");
-                        errorDiv.text("Email is not valid");
-                        valid = false;
-                    }
-                } else if (selector == "mobile") {
-                    if (!input.val().match(/^\d{10}$/)) {
-                        input.addClass("invalid");
-                        errorDiv.text("Phone number is not valid");
-                        valid = false;
-                    }
-                } else if (selector == "adhar_num") {
-                    if (!input.val().match(/^\d{12}$/)) {
-                        input.addClass("invalid");
-                        errorDiv.text("Adhar number is not valid");
-                        valid = false;
-                    }
-                } else if (selector == "annual_income") {
-                    if (!input.val().match(/^\d+(\.\d{1,2})?$/)) {
-                        input.addClass("invalid");
-                        errorDiv.text("Income should contain only digits");
-                        valid = false;
-                    }
-                } else if (selector == "office_phone") {
-                    if (!input.val().match(/^\d{10}$/)) {
-                        input.addClass("invalid");
-                        errorDiv.text("Phone number is not valid");
-                        valid = false;
-                    }
-                }
-            }
-        });
-
-        return valid;
-    }
-
-    function fixStepIndicator(n) {
-        var x = $(".step");
-
-        x.removeClass("active");
-        x.eq(n).addClass("active");
-    }
-
-    $("#creditForm").on("submit", function (event) {
-        event.preventDefault();
     });
 
-    $("#loanForm").on("submit", function (event) {
-        event.preventDefault();
-        // alert("ok");
-    });
-
-    $("#nextBtn").on("click", function () {
-        nextPrev(1);
-    });
-
-    $("#prevBtn").on("click", function () {
-        nextPrev(-1);
-    });
 });
