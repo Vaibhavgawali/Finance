@@ -1,7 +1,19 @@
 @extends('frontend.layouts.main')
 
 @section('main-section')
-<div class="info-register pb-5">
+<section id="subheader" class="text-light pb-5" data-bgimage="url({{ asset('assets/images/background/subheader2.jpg') }}) top">
+    <div class="info-register pb-5">
+        <div class="container w-100 mt-200 ">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1>Reset Password</h1>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="info-register m-5">
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">

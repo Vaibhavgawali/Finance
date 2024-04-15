@@ -8,7 +8,7 @@
     <title>Finance</title>
 	<meta name="description" content="Finance Company">
 	<meta name="keywords" content="accounting, advising, advisory, business, company, consulting, corporate, finance, financial, investments, law, multi-purpose, services, tax help, visual composer">
-
+   
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"/>
     <link href="/admin-assets/assets/css/jquery.dataTables.css" rel="stylesheet">
     <link rel="stylesheet" href="/admin-assets/assets/vendors/mdi/css/materialdesignicons.min.css">
@@ -60,6 +60,7 @@
     <script src="/admin-assets/assets/js/user.js"></script>
     <script src="/admin-assets/assets/js/password.js"></script>
     <script src="/admin-assets/assets/js/register.js"></script>
+    <script src="/admin-assets/assets/js/delete_Credit_Loan_Demat.js"></script>
 
 </body>
 

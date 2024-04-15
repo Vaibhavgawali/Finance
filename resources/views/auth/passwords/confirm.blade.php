@@ -1,6 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
+<section id="subheader" class="text-light" data-bgimage="url({{ asset('assets/images/background/subheader2.jpg') }}) top">
+    <div class="info-register pb-5">
+        <div class="container w-100 mt-200 ">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1>Reset Password</h1>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</section>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">

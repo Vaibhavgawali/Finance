@@ -14,39 +14,42 @@
             <div class="row">
 
                 <div class="col-lg-4 col-md-6 mb30">
-                    <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
+                    <a href="/dashoard"><div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
                         <i class="bg-color text-center text-light fa-solid fa-graduation-cap"></i>
                         <div class="fb-text">
                             <h4>Child Education</h4>
                             <p>Estimate your child's graduation and post graduation costs and plan to build the required amount.</p>
                         </div>
-                    </div>
+                    </div></a>
                 </div>
 
                 <div class="col-lg-4 col-md-6 mb30">
-                    <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
-                        <i class="bg-color text-center text-light fa-solid fa-gift"></i>
+                   <a href="/dashboard"> <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
+                    <i class="bg-color text-center text-light fa-solid fa-gift"></i>
 
-                        <div class="fb-text">
-                            <h4>Wedding Expenses</h4>
-                            <p>The cost inflates each year. With inflation may cost 1.4 crores in 25 years.</p>
+                    <div class="fb-text">
+                        <h4>Wedding Expenses</h4>
+                        <p>The cost inflates each year. With inflation may cost 1.4 crores in 25 years.</p>
+                    </div>
+                </div></a>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb30">
+                    <a href="/dashboard">
+                        <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
+                            <i class="bg-color text-center text-light fa-solid fa-calendar"></i>
+    
+                            <div class="fb-text">
+                                <h4>Milestone Planning</h4>
+                                <p>Plan for any goal (eg: vacation, home ownership, wedding) with confidence.</p>
+    
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
                 <div class="col-lg-4 col-md-6 mb30">
-                    <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
-                        <i class="bg-color text-center text-light fa-solid fa-calendar"></i>
-
-                        <div class="fb-text">
-                            <h4>Milestone Planning</h4>
-                            <p>Plan for any goal (eg: vacation, home ownership, wedding) with confidence.</p>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb30">
+                   <a href="/dashboard">
                     <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
                         <i class="bg-color text-center text-light fa-solid fa-indian-rupee-sign"></i>
 
@@ -56,9 +59,11 @@
                             <br>
                         </div>
                     </div>
+                   </a>
                 </div>
 
                 <div class="col-lg-4 col-md-6 mb30">
+                  <a href="/dashboard">
                     <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
                         <i class="bg-color text-center text-light fa-solid fa-money-bill-transfer"></i>
 
@@ -67,18 +72,19 @@
                             <p>Provides periodic returns along with the benefits of life insurance cover.</p>
                         </div>
                     </div>
+                  </a>
                 </div>
 
                 <div class="col-lg-4 col-md-6 mb30">
-                    <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
-                        <i class="bg-color text-center text-light fa-solid fa-money-bill-trend-up"></i>
+                  <a href="/dashboard">  <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
+                    <i class="bg-color text-center text-light fa-solid fa-money-bill-trend-up"></i>
 
-                        <div class="fb-text">
-                            <h4>Investment Plan</h4>
-                            <br>
-                            <p>Provide an opportunity to save and gain long-term investment returns.</p>
-                        </div>
+                    <div class="fb-text">
+                        <h4>Investment Plan</h4>
+                        <br>
+                        <p>Provide an opportunity to save and gain long-term investment returns.</p>
                     </div>
+                </div></a>
                 </div>
 
                 <div>

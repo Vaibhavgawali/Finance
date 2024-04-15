@@ -83,7 +83,7 @@ class RetailerController extends Controller
                         if (auth()->user()->hasRole('Superadmin') || auth()->user()->hasRole('Admin')) {
                             $actions = '<a class="btn btn-sm btn-gradient-warning btn-rounded" href="users/'. $row->id . '" >View</a>';  
                             $actions .= '<a class="btn btn-sm btn-gradient-primary btn-rounded editButton" data-user-id="' . $row->id . '" >Edit</a>';  
-                            $actions .= '<form class="delete-user-form" data-user-id="' . $row->id . '">
+                            $actions .= '<form class="delete-user-form" data-user-route="users" data-user-role="Retailer" data-user-id="' . $row->id . '">
                                             <button type="button" class="btn btn-sm btn-gradient-danger btn-rounded delete-user-button">Delete</button>
                                         </form>';
                             return $actions;

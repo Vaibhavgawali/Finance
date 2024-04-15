@@ -6,30 +6,24 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class dashboardCard extends Component
+class retailer_dashboard_card extends Component
 {
     /**
      * Create a new component instance.
      */
     public $bgClass;
-    public $url;
-    public $imageUrl;
     public $title;
-    public $totalCountLabel;
-    public $totalCount;
     public $icon;
-
-
-    public function __construct($bgClass,$url,$imageUrl, $title, $totalCountLabel, $totalCount,$icon)
+    public $btnbg;
+    public $url;
+    public function __construct($bgClass,$title,$icon,$btnbg,$url)
     {
+        //
         $this->bgClass = $bgClass;
-        $this->icon = $icon;
-
-        $this->url = $url;
-        $this->imageUrl = $imageUrl;
         $this->title = $title;
-        $this->totalCountLabel = $totalCountLabel;
-        $this->totalCount = $totalCount;
+        $this->icon = $icon;
+        $this->btnbg = $btnbg;
+        $this->url = $url;
     }
 
     /**
@@ -37,6 +31,7 @@ class dashboardCard extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.dashboard-card');
+        
+        return view('components.retailer-dashboard-card');
     }
 }

@@ -6,7 +6,7 @@
         <div class="page-header">
             <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white me-2">
-                    <i class="mdi mdi-account-card-details"></i>
+                    <i class="mdi mdi-currency-inr"></i>
                 </span>Loan
             </h3>
 
@@ -92,7 +92,7 @@
 
                                             <div class="form-group pb-2">
                                                 <label for="status">Status :</label>
-                                                <select class="form-control" id="status" name="status">
+                                                <select class="form-control p-3" id="status" name="status">
                                                     <option value="">-- Select --</option>
                                                     <option value="Initiated">Initiated</option>
                                                     <option value="Pending">Pending</option>
@@ -104,7 +104,7 @@
                                             <!-- Select tags -->
                                             <div class="form-group pb-2">
                                                 <label for="application_stage">Application Stage :</label>
-                                                <select class="form-control" id="application_stage"
+                                                <select class="form-control p-3" id="application_stage"
                                                     name="application_stage">
                                                     <option value="">-- Select --</option>
                                                     <option value="Initial">Initial</option>
@@ -137,160 +137,254 @@
                         <!-- Modal -->
                         <div class="modal fade" id="viewModal" tabindex="-1" role="dialog"
                             aria-labelledby="viewModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="viewModalLabel">Loan Application Form</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <button type="button" class="close close-btn" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <div class="modal-body">
-                                        <form class="bg-white">
+                                    <div class="modal-body bg-white">
+                                        <form class="">
                                             <!-- One "tab" for each step in the form: -->
                                             <div class="tab">
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <div class="form-group pb-3">
+                                                        <div class="form-group">
                                                             <label for="loan_type">Loan Type</label>
-                                                            <select name="loan_type" id="loan_type" class="form-control">
-                                                                <option value="null" selected disabled>
-                                                                    --Select Loan Type--
-                                                                </option>
-                                                                <option value="Home Loan">Home Loan</option>
-                                                                <option value="Business Loan">Business Loan</option>
-                                                                <option value="Personal Loan">Personal Loan</option>
-                                                                <option value="Vehicle Loan">Vehicle Loan</option>
-                                                            </select>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span
+                                                                        class="input-group-text bg-gradient-primary text-white p-3">
+                                                                        <i class="mdi mdi-cash-multiple"></i></span>
+                                                                </div>
+                                                                <select name="loan_type" id="loan_type" class="form-control p-3">
+                                                                    <option value="null" selected disabled>
+                                                                        --Select Loan Type--
+                                                                    </option>
+                                                                    <option value="Home Loan">Home Loan</option>
+                                                                    <option value="Business Loan">Business Loan</option>
+                                                                    <option value="Personal Loan">Personal Loan</option>
+                                                                    <option value="Vehicle Loan">Vehicle Loan</option>
+                                                                </select>
+                                                            </div>
                                                         </div>
-
-                                                        <div class="form-group pb-3">
+                                                        <div class="form-group">
                                                             <label for="name">Name</label>
-                                                            <input type="text" name="name" id="name"
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span
+                                                                        class="input-group-text bg-gradient-primary text-white p-3">
+                                                                        <i class="mdi mdi-account"></i></span>
+                                                                </div>
+                                                                <input type="text" name="name" id="name"
                                                                 class="form-control" placeholder="Name" />
+                                                            </div>
                                                         </div>
-
-                                                        <div class="form-group pb-3">
+                                                        <div class="form-group">
                                                             <label for="email">Email</label>
-                                                            <input type="text" name="email" id="email"
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span
+                                                                        class="input-group-text bg-gradient-primary text-white p-3">
+                                                                        <i class="mdi mdi-email"></i></span>
+                                                                </div>
+                                                                <input type="text" name="email" id="email"
                                                                 class="form-control" placeholder="Email" />
+                                                            </div>
                                                         </div>
-                                                    </div>
-
-                                                    <div class="col-md-6">
-                                                        <div class="form-group pb-3">
+                                                        <div class="form-group">
                                                             <label for="mobile">Mobile</label>
-                                                            <input type="text" name="mobile" id="mobile"
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span
+                                                                        class="input-group-text bg-gradient-primary text-white p-3">
+                                                                        <i class="mdi mdi-cellphone"></i></span>
+                                                                </div>
+                                                                <input type="text" name="mobile" id="mobile"
                                                                 class="form-control" placeholder="Mobile Number" />
+                                                            </div>
                                                         </div>
-                                                        <div class="form-group pb-3">
+                                                        <div class="form-group">
                                                             <label for="income_source">Income Source</label>
-
-                                                            <select name="income_source" id="income_source"
-                                                                class="form-control">
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span
+                                                                        class="input-group-text bg-gradient-primary text-white p-3">
+                                                                        <i class="mdi mdi-hospital-building"></i></span>
+                                                                </div>
+                                                                <select name="income_source" id="income_source"
+                                                                class="form-control p-3">
                                                                 <option value="" selected disabled>
                                                                     --Select Income Source--
                                                                 </option>
                                                                 <option value="Salaried">Salaried</option>
                                                                 <option value="Business">Business</option>
                                                             </select>
+                                                            </div>
                                                         </div>
-
-                                                        <div class="form-group pb-3">
+                                                        
+                                                        <div class="form-group">
                                                             <label for="monthly_income">Monthly Income</label>
-
-                                                            <input type="text" class="form-control"
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span
+                                                                        class="input-group-text bg-gradient-primary text-white p-3">
+                                                                        <i class="mdi mdi-cards"></i></span>
+                                                                </div>
+                                                                <input type="text" class="form-control"
                                                                 name="monthly_income" id="monthly_income"
                                                                 placeholder="Monthly Income" />
+                                                            </div>
                                                         </div>
+                                                        <div class="form-group">
+                                                            <label for="pincode">Pincode</label>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span
+                                                                        class="input-group-text bg-gradient-primary text-white p-3">
+                                                                        <i class="mdi mdi-google-maps
+                                                                        "></i></span>
+                                                                </div>
+                                                                <input type="text" class="form-control" name="pincode"
+                                                                id="pincode" placeholder="Pincode" />
+                                                            </div>
+                                                        </div>
+                                                       
 
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <div class="form-group pb-3">
-                                                            <label for="pincode">Pincode</label>
-                                                            <input type="text" class="form-control" name="pincode"
-                                                                id="pincode" placeholder="Pincode" />
-                                                        </div>
-
-                                                        <div class="form-group pb-3">
+                                                        <div class="form-group">
                                                             <label for="dob">Date of Birth</label>
-                                                            <input type="text" placeholder="Date of Birth"
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span
+                                                                        class="input-group-text bg-gradient-primary text-white p-3">
+                                                                        <i class="mdi mdi-calendar
+                                                                        "></i></span>
+                                                                </div>
+                                                                <input type="text" placeholder="Date of Birth"
                                                                 onfocus="(this.type='date')" onblur="(this.type='text')"
                                                                 class="form-control" name="dob" id="dob" />
+                                                            </div>
                                                         </div>
-
-                                                        <div class="form-group pb-3">
+                                                        <div class="form-group">
                                                             <label for="pan_num">Pancard</label>
-                                                            <input type="text" class="form-control" name="pan_num"
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span
+                                                                        class="input-group-text bg-gradient-primary text-white p-3">
+                                                                        <i class="mdi mdi-credit-card
+                                                                        "></i></span>
+                                                                </div>
+                                                                <input type="text" class="form-control" name="pan_num"
                                                                 id="pan_num" placeholder="Pancard" />
+                                                            </div>
                                                         </div>
-
-                                                        <div class="form-group pb-3">
+                                                        <div class="form-group">
                                                             <label for="marital_status">Marital Status</label>
-                                                            <select name="marital_status" id="marital_status"
-                                                                class="form-control">
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span
+                                                                        class="input-group-text bg-gradient-primary text-white p-3">
+                                                                        <i class="mdi mdi-account-multiple
+                                                                        "></i></span>
+                                                                </div>
+                                                                <select name="marital_status" id="marital_status"
+                                                                class="form-control p-3">
                                                                 <option value="null" selected disabled>--Select Marital
                                                                     Status--</option>
                                                                 <option value="married">Married</option>
                                                                 <option value="unmarried">Unmarried</option>
                                                             </select>
+                                                            </div>
                                                         </div>
-
-                                                        <div class="form-group pb-3">
+                                                        <div class="form-group">
                                                             <label for="adhar_num">Adhar Card Number</label>
-                                                            <input type="text" class="form-control" name="adhar_num"
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span
+                                                                        class="input-group-text bg-gradient-primary text-white p-3">
+                                                                        <i class="mdi mdi-credit-card-scan
+                                                                        "></i></span>
+                                                                </div>
+                                                                <input type="text" class="form-control" name="adhar_num"
                                                                 id="adhar_num" placeholder="Adhar Card Number" />
+                                                            </div>
                                                         </div>
-
-                                                        <div class="form-group pb-3">
+                                                        <div class="form-group">
                                                             <label for="loan_amount">Loan Amount</label>
-                                                            <input type="text" class="loan_amount form-control"
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span
+                                                                        class="input-group-text bg-gradient-primary text-white p-3">
+                                                                        <i class="mdi mdi-cash-100
+                                                                        "></i></span>
+                                                                </div>
+                                                                <input type="text" class="loan_amount form-control"
                                                                 name="loan_amount" id="loan_amount"
                                                                 placeholder="Loan Amount" />
+                                                            </div>
                                                         </div>
-
-                                                        <div class="form-group pb-3">
+                                                        <div class="form-group">
                                                             <label for="credit_score">Credit Score</label>
-                                                            <input type="text" class="form-control"
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span
+                                                                        class="input-group-text bg-gradient-primary text-white p-3">
+                                                                        <i class="mdi mdi-credit-card
+                                                                        "></i></span>
+                                                                </div>
+                                                                <input type="text" class="form-control"
                                                                 name="credit_score" id="credit_score"
                                                                 placeholder="Credit Score" />
+                                                            </div>
                                                         </div>
-
-                                                        <div class="form-group pb-3">
+                                                        <div class="form-group">
                                                             <label for="mother_name">Mother's Name</label>
-                                                            <input type="text" class="form-control" name="mother_name"
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span
+                                                                        class="input-group-text bg-gradient-primary text-white p-3">
+                                                                        <i class="mdi mdi-account
+                                                                        "></i></span>
+                                                                </div>
+                                                                <input type="text" class="form-control" name="mother_name"
                                                                 id="mother_name" placeholder="Mother's Name" />
+                                                            </div>
                                                         </div>
 
                                                     </div>
                                                 </div>
+                                              
                                             </div>
 
                                             <div class="tab">
                                                 <div class="row">
                                                     <div class="col-12 mb-1">
                                                         <label for=""
-                                                            class="text-left text-[#2A2C5D] font-bold text-1xl">Present
+                                                            class="text-left fs-bold fs-3 my-3">Present
                                                             Address</label>
                                                     </div>
                                                     <div class="col-md-6 col-lg-3">
                                                         <div class="form-group pb-3">
                                                             <label for="present_line1">Address Line 1</label>
-                                                            <textarea name="present_line1" id="present_line1" class="form-control" cols="" rows=""
+                                                            <textarea name="present_line1" id="present_line1" class="form-control" cols="1" rows="1"
                                                                 placeholder="Address Line 1"></textarea>
                                                         </div>
                                                         <div class="form-group pb-3">
                                                             <label for="present_line2">Address Line 2</label>
-                                                            <textarea name="present_line2" id="present_line2" class="form-control" cols="" rows=""
+                                                            <textarea name="present_line2" id="present_line2" class="form-control" cols="1" rows="1"
                                                                 placeholder="Address Line 2"></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 col-lg-3">
                                                         <div class="form-group pb-3">
                                                             <label for="present_line3">Address Line 3</label>
-                                                            <textarea name="present_line3" id="present_line3" class="form-control" cols="" rows=""
+                                                            <textarea name="present_line3" id="present_line3" class="form-control" cols="1" rows="1"
                                                                 placeholder="Address Line 3"></textarea>
                                                         </div>
                                                         <div class="form-group pb-3">
@@ -334,25 +428,25 @@
                                                 <div class="row">
                                                     <div class="col-12 mb-1">
                                                         <label for=""
-                                                            class="text-left text-[#2A2C5D] font-bold text-1xl">Office
-                                                            Address</label>
+                                                        class="text-left fs-bold fs-3 mb-3">Office
+                                                        Address</label>
                                                     </div>
                                                     <div class="col-md-6 col-lg-3">
                                                         <div class="form-group pb-3">
                                                             <label for="office_line1">Address Line 1</label>
-                                                            <textarea name="office_line1" id="office_line1" class="form-control" cols="" rows=""
+                                                            <textarea name="office_line1" id="office_line1" class="form-control" cols="1" rows="1"
                                                                 placeholder="Address Line 1"></textarea>
                                                         </div>
                                                         <div class="form-group pb-3">
                                                             <label for="office_line2">Address Line 2</label>
-                                                            <textarea name="office_line2" id="office_line2" class="form-control" cols="" rows=""
+                                                            <textarea name="office_line2" id="office_line2" class="form-control" cols="1" rows="1"
                                                                 placeholder="Address Line 2"></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 col-lg-3">
                                                         <div class="form-group pb-3">
                                                             <label for="office_line3">Address Line 3</label>
-                                                            <textarea name="office_line3" id="office_line3" class="form-control" cols="" rows=""
+                                                            <textarea name="office_line3" id="office_line3" class="form-control" cols="1" rows="1"
                                                                 placeholder="Address Line 3"></textarea>
                                                         </div>
                                                         <div class="form-group pb-3">
@@ -396,8 +490,8 @@
                                                     <div class="flex justify-center items-center bg-gray-200 h-screen">
                                                         <div class="w-96 p-4 shadow rounded-md bg-white">
                                                             <label for="upload_document"
-                                                                class="block text-gray-600">Uploaded Document</label>
-                                                            <select name="document_type" id="document_type">
+                                                                class="text-left fs-bold fs-3 my-3 mx-2">Uploaded Document</label>
+                                                            <select name="document_type" id="document_type" class="p-3">
                                                                 <option value="" selected disabled>--Select
                                                                     Document--</option>
                                                                 <option value="pancard">Pancard</option>
@@ -421,7 +515,7 @@
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
+                                        <button type="button" class="btn btn-secondary close-btn"
                                             data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
@@ -570,11 +664,18 @@
                                     var loanId = $(this).data("loan-id");
                                     viewModal(loanId);
                                 });
+                                $(document).on('click','.close-btn',function()
+                            {
+                                $('#viewModal').modal('hide');
+                                $('input, textarea, select').prop('disabled', false);
+
+                            })
 
                                 // Function to show modal and fetch loan details
                                 function viewModal(loanId) {
 
                                     $('input, textarea, select').prop('disabled', true);
+                                  
                                     $('input, textarea').removeAttr('name placeholder');
                                     $('select').removeAttr('name');
 
@@ -584,6 +685,7 @@
                                         url: "loan/" + loanId,
                                         type: "GET",
                                         success: function(response) {
+                                        console.log(response)
 
                                             $("#loan_type").val(response.loan_type);
                                             $("#name").val(response.name);
@@ -619,6 +721,7 @@
                                             $("#office_phone").val(response.loan_address.office_phone);
 
                                             $("#document_type").val(response.document_type);
+                                            console.log(response.document_type)
 
                                             var fileUrl = "{{ asset('storage/loan/') }}/" + response.upload_document;
                                             $("#upload_document, #download_upload_document").attr("href", fileUrl);
@@ -675,11 +778,27 @@
                                             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
                                         },
                                         success: function(response) {
-                                            // hideModal();
-                                            var currentURL = window.location.href;
-                                            setTimeout(function() {
-                                                window.location.href = currentURL;
-                                            }, 1000);
+                                            hideModal();
+                                        
+                                        swal({
+    title: "Loan Status  Updated",
+    text: "Your Loan status have been successfully updated.",
+    icon: "success",
+    buttons: {
+        confirm: {
+            text: "OK",
+            value: true,
+            visible: true,
+            className: "swal-button--confirm",
+            closeModal: true
+        }
+    },
+    closeOnClickOutside: false // Prevent closing on click outside
+}).then((willRefresh) => {
+    if (willRefresh) {
+        location.reload(); // Reload the page
+    }
+});
                                         },
                                         error: function(error) {
                                             console.error(error);

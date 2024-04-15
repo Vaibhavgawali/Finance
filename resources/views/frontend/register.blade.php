@@ -4,7 +4,7 @@
         <div id="top"></div>
 
         <!-- section begin -->
-        <section id="subheader" class="text-light" data-bgimage="url(assets/images/background/subheader.jpg) top">
+        <section id="subheader" class="text-light" data-bgimage="url({{ asset('assets/images/background/subheader2.jpg') }}) top">
             <div class="center-y relative text-center">
                 <div class="container">
                     <div class="row">

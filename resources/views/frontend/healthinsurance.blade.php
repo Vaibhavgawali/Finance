@@ -13,7 +13,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-6 mb30">
-                    <a href="#">
+                    <a href="/dashboard">
 
                         <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
                             <i class="bg-color text-center text-light fa-solid fa-user"></i>
@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="col-lg-4 col-md-6 mb30">
-                    <a href="#">
+                    <a href="/dashboard">
                         <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
                             <i class="bg-color text-center text-light fa-solid fa-users"></i>
                             <div class="fb-text">
@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="col-lg-4 col-md-6 mb30">
-                    <a href="#">
+                    <a href="/dashboard">
                         <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
                             <i class="bg-color text-center text-light fa-solid fa-child"></i>
                             <div class="fb-text">
@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="col-lg-4 col-md-6 mb30">
-                    <a href="#">
+                    <a href="/dashboard">
                         <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
                             <i class="bg-color text-center text-light fa-solid fa-baby"></i>
                             <div class="fb-text">
@@ -63,7 +63,7 @@
                 </div>
 
                 <div class="col-lg-4 col-md-6 mb30">
-                    <a href="#">
+                    <a href="/dashboard">
                         <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
                             <i class="bg-color text-center text-light fa-solid fa-cubes-stacked"></i>
                             <div class="fb-text">
@@ -75,7 +75,7 @@
                 </div>
 
                 <div class="col-lg-4 col-md-6 mb30">
-                    <a href="#">
+                    <a href="/dashboard">
                         <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
                             <i class="bg-color text-center text-light fa-solid fa-heart-pulse"></i>
                             <div class="fb-text">

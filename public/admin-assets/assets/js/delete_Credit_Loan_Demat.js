@@ -1,34 +1,37 @@
 // Event delegation for delete users
-$(document).on("click", ".delete-user-button", function (e) {
+$(document).on("click", ".delete-finance-button", function (e) {
     e.preventDefault();
-    let user_id = $(this).closest(".delete-user-form").data("user-id");
-    let route = $(this).closest(".delete-user-form").data("user-route");
-    let role = $(this).closest(".delete-user-form").data("user-role");
-    userDeleteAlert(user_id, route,role);
+    let finance_id = $(this).closest(".delete-finance-form").data("finance-id");
+    let route = $(this).closest(".delete-finance-form").data("finance-route");
+    console.log(route);
+
+    // console.log(finance_id);
+    financeDeleteAlert(finance_id, route);
+    // console.log("this is clicked");
 });
 
-let userDeleteAlert = (user_id, route,role) => {
+let financeDeleteAlert = (finance_id, route) => {
     swal({
         title: "Are you sure?",
-        text: `Once deleted, you will not be able to recover this ${role}!`,
+        text: "Do you want to delete this user Application?",
         icon: "warning",
         buttons: true,
         dangerMode: true,
     }).then((willDelete) => {
         if (willDelete) {
-            deleteUserFunction(user_id, route,role);
+            deleteFinanceFunction(finance_id, route);
         } else {
-            swal(`Your ${route} is safe!`);
+            swal("Your user Application is safe!");
         }
     });
 };
 
 // Delete user
-const deleteUserFunction = (user_id, route,role) => {
+const deleteFinanceFunction = (finance_id, route) => {
     var data = {
-        user_id: user_id,
+        finance_id: finance_id,
     };
-    var url = `/${route}/${user_id}`;
+    var url = `/${route}/${finance_id}`;
 
     $.ajax({
         url: url,
@@ -42,7 +45,7 @@ const deleteUserFunction = (user_id, route,role) => {
                 setTimeout(function () {
                     window.location.reload();
                 }, 1000);
-                swal(`Your ${role}  has been deleted!`, {
+                swal("Your user Application has been deleted!", {
                     icon: "success",
                 });
             }
