@@ -99,8 +99,11 @@ class LoanController extends Controller
                         // Check if user has Superadmin or Admin role
                         if (auth()->user()->hasRole('Superadmin') || auth()->user()->hasRole('Admin')) {
                             $actions = '<a class="btn btn-sm btn-gradient-warning btn-rounded viewButton" data-loan-id="' . $row->id . '" >View</a>';  
-                            $actions .= '<a class="btn btn-sm btn-gradient-warning btn-rounded editButton" data-loan-id="' . $row->id . '" >Edit</a>';  
+                            // $actions .= '<a class="btn btn-sm btn-gradient-warning btn-rounded editButton" data-loan-id="' . $row->id . '" >Edit</a>';  
                             $actions .= '<a class="btn btn-sm btn-gradient-warning btn-rounded statusButton" data-loan-id="' . $row->id . '" >Status</a>';  
+                            $actions .= '<form class="delete-loan-form" data-loan-id="' . $row->id . '">
+                                            <button type="button" class="btn btn-sm btn-gradient-danger btn-rounded delete-user-button">Delete</button>
+                                        </form>';
                             return $actions;
                         } else {
                             return '';
@@ -116,7 +119,7 @@ class LoanController extends Controller
      */
     public function create()
     {
-        return view('frontend.loan-form');
+        return view('frontend.loanservice');
     }
 
     /**
@@ -226,20 +229,10 @@ class LoanController extends Controller
      */
     public function show(string $id)
     {
-        $loan = Loan::find($id);
+        $loan = Loan::with('loan_address')->find($id);
     
         if($loan) {
-            $status = $loan->status;
-            $application_stage = $loan->application_stage;
-            $approval_date = $loan->approval_date;
-            $remark = $loan->remark;
-
-            return response()->json([
-                'status' => $status,
-                'application_stage' => $application_stage,
-                'approval_date' => $approval_date,
-                'remark' => $remark,
-            ]);
+            return response()->json($loan);
 
         } else {
             return response()->json(['error' => 'Loan not found'], 404);
@@ -289,7 +282,19 @@ class LoanController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $loan = Loan::find($id);
+
+        if (!$loan) {
+            return Response(['status' => false, 'message' => "Loan not found"], 404);
+        }
+
+         $isDeleted = $loan->delete();
+
+        if ($isDeleted) {
+            return Response(['status' => true, 'message' => "Loan form deleted successfully"], 200);
+        }
+
+        return Response(['status' => false, 'message' => "Something went wrong"], 500);
     }
 
     public function updateStatus(Request $request, string $id)

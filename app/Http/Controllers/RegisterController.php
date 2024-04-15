@@ -9,17 +9,13 @@ use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use \App\Helpers\RegisterHelper;
+use App\Notifications\RegistrationNotification;
+use Illuminate\Support\Str;
 
 use App\Models\User;
 
 class RegisterController extends Controller
 {
-    public function __construct()
-    {
-        // $this->middleware('auth:sanctum');
-        // $this->middleware(['role_or_permission:Superadmin|Admin|add_distributor|add_retailer'])->only('store');
-    }
-
     public function register(Request $request): Response
     {
         // dd($request->all());
@@ -60,7 +56,7 @@ class RegisterController extends Controller
                 $role = "Client";
                 break;
         }
-        // dd($uniqueReferralId);
+
         $referredById =  "";
         if(Auth::user()){
             $referredById = auth()->user()->referral_id;
@@ -68,11 +64,13 @@ class RegisterController extends Controller
             $referredById =  "ghijk12345";
         }
 
+        $password = Str::password(8, true, true, true, false);
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'password' => "Password",
+            'password' => $password,
             'category' => $category,
             'user_id' => $uniqueUserId,
             'referral_id' => $uniqueReferralId,
@@ -80,9 +78,13 @@ class RegisterController extends Controller
         ]);
 
         if ($user) {     
+            /** Registration notification */
+            $user->notify(new RegistrationNotification($user,$password));
+
             /** assign role to user **/
             $user->assignRole($role);
             return Response(['status' => true, 'message' => "User added successfully !"], 200);
+            
         }
         return Response(['status' => false, 'message' => "Something went wrong"], 500);
     }
