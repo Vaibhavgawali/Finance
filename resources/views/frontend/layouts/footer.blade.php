@@ -73,6 +73,7 @@
 <!-- Javascript Files
 ================================================== -->
 <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/js/sweetaler.min.js') }}"></script>
 <script src="{{ asset('assets/js/reuse/header.js') }}"></script>
 <script src="{{ asset('assets/js/reuse/footer.js') }}"></script>
 <script src="{{ asset('assets/js/reuse/call.js') }}"></script>
@@ -98,6 +99,7 @@
 <script src="{{ asset('assets/js/register.js') }}"></script>
 <script src="{{ asset('assets/js/custom/creditcard.js') }}"></script>
 <script src="{{ asset('assets/js/custom/demat.js') }}"></script>
+<script src="{{ asset('assets/js/custom/loan_form.js') }}"></script>
 <script src="{{ asset('assets/js/custom/loan-service.js') }}"></script>
 
 <script>
