@@ -63,7 +63,7 @@
 
                     $json_data = json_encode([
                         'urc' => $authuser->phone,
-                        'umc' => '101871',
+                        'umc' => '555885',
                         'ak' => $ak,
                         'fname' => $fname,
                         'lname' => $lname,
@@ -90,7 +90,7 @@
                             <button type="button" class="btn btn-sm btn-primary mb-4 mt-2 text-white"
                                 onclick="storeDataAndRedirect()">Apply</button>
 
-                            <form id="retForm" action="http://uatnew.gibl.in/wallet/validate4/" method="POST"
+                            <form id="retForm" action="https://www.gibl.in/wallet/validate4/" method="POST"
                                 style="display: none">
                                 <input type="hidden" name="ret_data" value="<?php echo $encrypted_data; ?>">
                                 <button type="submit" onclick="proceedToGIBL()">Apply</button>
