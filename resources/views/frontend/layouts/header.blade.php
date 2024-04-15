@@ -140,7 +140,7 @@
                   </li>
 
                   <li>
-                    <a href="/demat">Demat Account<span></span></a>
+                    <a href="/demat/create">Demat Account<span></span></a>
                   </li>
                 </ul>
               </div>

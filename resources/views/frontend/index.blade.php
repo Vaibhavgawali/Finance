@@ -79,7 +79,7 @@
                         </div>
                         
                         <div class="col-lg-4 col-md-6 mb-sm-30">
-                            <a href="/demat">
+                            <a href="/demat/create">
                                 <div class="f-box f-border f-icon-left f-icon-rounded">
                                     <i class="bg-color-secondary text-light fa-solid fa-building-columns"></i>
                                     <div class="fb-text">

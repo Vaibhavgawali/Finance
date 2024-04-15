@@ -136,7 +136,7 @@
                         </form>
                     </div>
                     <div class="col-12 col-md-5">
-                        <img class="w-100" src="assets/images/credit card/2.png" alt="" />
+                        <img class="w-100" src="{{asset('assets/images/credit_card/2.png')}}" alt="" />
                     </div>
                 </div>
             </div>
