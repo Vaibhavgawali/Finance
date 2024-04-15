@@ -86,7 +86,7 @@
                     </div>
 
                     <div class="col-lg-4 col-md-6 mb30">
-                        <a href="/credit-card/create/create?creditcard=AU Bank">
+                        <a href="/credit-card/create?creditcard=AU Bank">
                             <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
                                 <i class="bg-color text-light">
                                     <img src="assets/images/services-logos/6.jpg" alt=""></i>

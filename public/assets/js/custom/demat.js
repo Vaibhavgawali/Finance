@@ -1,6 +1,8 @@
 $(document).ready(function () {
+    
     $("#demat_btn").click(function (e) {
         e.preventDefault();
+      
 
         var name = $("#name").val();
         var phone = $("#phone").val();
@@ -25,31 +27,7 @@ $(document).ready(function () {
             return false;
         }
 
-        if (
-            phone == "" ||
-            phone == null ||
-            phone == "undefined" ||
-            phone == undefined
-        ) {
-            $("#phone_error").html(
-                '<div class=" invalid-feedback d-block">Mobile number is required.</div>'
-            );
-            $("#phone").focus();
-            return false;
-        }
-
-        function validatePhoneNumber(phone) {
-            var phonePattern = /^[6-9]\d{9}$/;
-            return phonePattern.test(phone);
-        }
-
-        if (!validatePhoneNumber(phone)) {
-            $("#phone_error").html(
-                '<div class=" invalid-feedback d-block">Mobile number is invalid.</div>'
-            );
-            $("#phone").focus();
-            return false;
-        }
+      
 
         if (
             pan_num == "" ||
@@ -65,7 +43,7 @@ $(document).ready(function () {
         }
 
         // PAN format validation (Assuming PAN consists of 10 alphanumeric characters)
-        var panPattern = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
+        var panPattern = /[A-Z]{5}[0-9]{4}[A-Z]{1}/;
         if (!panPattern.test(pan_num)) {
             $("#pan_num_error").html(
                 '<div class="invalid-feedback d-block">Invalid PAN number format.</div>'
@@ -96,6 +74,31 @@ $(document).ready(function () {
             $("#adhar_num").focus();
             return false;
         }
+        if (
+            phone == "" ||
+            phone == null ||
+            phone == "undefined" ||
+            phone == undefined
+        ) {
+            $("#phone_error").html(
+                '<div class=" invalid-feedback d-block">Mobile number is required.</div>'
+            );
+            $("#phone").focus();
+            return false;
+        }
+
+        function validatePhoneNumber(phone) {
+            var phonePattern = /^[6-9]\d{9}$/;
+            return phonePattern.test(phone);
+        }
+
+        if (!validatePhoneNumber(phone)) {
+            $("#phone_error").html(
+                '<div class=" invalid-feedback d-block">Mobile number is invalid.</div>'
+            );
+            $("#phone").focus();
+            return false;
+        }
 
         var data = {
             name: name,
@@ -113,16 +116,25 @@ $(document).ready(function () {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
             success: function (response) {
-                // console.log(response);
                 if (response.status == true) {
                     $(".error-message").remove();
-
                     $("#demat_btn").attr("disabled", true);
-
-                    $("#dematForm")[0].reset();
+                    swal({
+                        title: "Success!",
+                        text: "Demat account application submitted successfully.",
+                        icon: "success",
+                        button: "OK",
+                        closeOnClickOutside: false
+                    }).then((value) => {
+                        if (value) {
+                            window.location.reload();
+                            $("#dematForm")[0].reset();
+                        }
+                    });
                     return false;
                 }
             },
+            
 
             error: function (response) {
                 console.log(response.status);

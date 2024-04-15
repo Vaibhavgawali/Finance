@@ -1,0 +1,472 @@
+$(document).ready(function () {
+    if (window.location.pathname === "/loan/create") {
+        console.log("script is running on Loan page");
+
+        var currentTab = 0;
+        showTab(currentTab);
+        updateStepper(currentTab); // Update stepper initially
+        //   console.log("hi");
+        function showTab(n) {
+            $(".tab").hide();
+            $(".tab").eq(n).show();
+            updateStepper(n); // Update stepper when showing a tab
+        }
+
+        function nextPrev(n) {
+            // swal({
+            //     title: "Good job!",
+            //     text: "You clicked the button!",
+            //     icon: "success",
+            //     button: "Aww yiss!",
+            //   });
+            var tabs = $(".tab");
+            // Check if the form is valid before proceeding
+            if (n === -1 && currentTab === 0) return false; // If at the first tab, do nothing
+
+            // Check if the form is valid before proceeding
+            if (n === 1 && !validateForm()) return false;
+
+            // Hide the current tab
+            tabs.eq(currentTab).hide();
+            // Increment or decrement the current tab index
+            currentTab += n;
+            // Show the new tab
+            showTab(currentTab);
+        }
+
+        function validateForm() {
+            // Reset any previous error messages
+            $(".text-danger").text("");
+            var isValid = true;
+            var loanType = $("#loan_type").val();
+            var name = $("#name").val().trim();
+            var email = $("#email").val().trim();
+            var mobile = $("#mobile").val().trim();
+            var incomeSource = $("#income_source").val();
+            var monthlyIncome = $("#monthly_income").val().trim();
+            var pincode = $("#pincode").val().trim();
+            var dob = $("#dob").val().trim();
+            var panNum = $("#pan_num").val().trim();
+            var maritalStatus = $("#marital_status").val();
+            var adharNum = $("#adhar_num").val().trim();
+            var loanAmount = $("#loan_amount").val().trim();
+            var creditScore = $("#credit_score").val().trim();
+            var motherName = $("#mother_name").val().trim();
+            // Retrieve present address values
+            var presentLine1 = $("#present_line1").val().trim();
+            var presentLine2 = $("#present_line2").val().trim();
+            var presentLine3 = $("#present_line3").val().trim();
+            var presentLandmark = $("#present_landmark").val().trim();
+            var presentState = $("#present_state").val().trim();
+            var presentCity = $("#present_city").val().trim();
+            var presentPincode = $("#present_pincode").val().trim();
+            var presentPhone = $("#present_phone").val().trim();
+
+            // Retrieve office address values
+            var officeLine1 = $("#office_line1").val().trim();
+            var officeLine2 = $("#office_line2").val().trim();
+            var officeLine3 = $("#office_line3").val().trim();
+            var officeLandmark = $("#office_landmark").val().trim();
+            var officeState = $("#office_state").val().trim();
+            var officeCity = $("#office_city").val().trim();
+            var officePincode = $("#office_pincode").val().trim();
+            var officePhone = $("#office_phone").val().trim();
+            var document_type = $("#document_type").val();
+            var upload_document = $("#upload_document").prop("files")[0];
+            var allowedImageExtensions = /(jpg|jpeg|png|pdf)$/i;
+
+            // var panFile = $("#pan_file").prop("files")[0];
+
+            // var allowedImageExtensions = /(jpg|jpeg|png|pdf)$/i;
+
+            // Validation for each input field
+            if (currentTab == 0) {
+             
+                if (
+                    loanType === "" ||
+                    loanType == "null" ||
+                    loanType == null ||
+                    loanType == "undefined" ||
+                    loanType == undefined
+                ) {
+                    $("#loan_type_error").text("Please select loan type.");
+                    isValid = false;
+                } else if (name === "") {
+                    $("#name_error").text("Please enter your name.");
+                    isValid = false;
+                } else if (email === "") {
+                    $("#email_error").text("Please enter your email.");
+                    isValid = false;
+                } else if (!isValidEmail(email)) {
+                    $("#email_error").text(
+                        "Please enter a valid email address."
+                    );
+                    isValid = false;
+                } else if (mobile === "") {
+                    $("#mobile_error").text("Please enter your mobile number.");
+                    isValid = false;
+                } else if (!isValidMobile(mobile)) {
+                    $("#mobile_error").text(
+                        "Please enter a valid mobile number."
+                    );
+                    isValid = false;
+                } else if (
+                    incomeSource === "" ||
+                    incomeSource == "null" ||
+                    incomeSource == null ||
+                    incomeSource == "undefined" ||
+                    incomeSource == undefined
+                ) {
+                    $("#income_source_error").text(
+                        "Please select your income source."
+                    );
+                    isValid = false;
+                } else if (
+                    monthlyIncome === "" ||
+                    monthlyIncome == "null" ||
+                    monthlyIncome == null ||
+                    monthlyIncome == "undefined" ||
+                    monthlyIncome == undefined
+                ) {
+                    $("#monthly_income_error").text(
+                        "Please enter your monthly income."
+                    );
+                    isValid = false;
+                } else if (
+                    isNaN(monthlyIncome) ||
+                    parseFloat(monthlyIncome) <= 0
+                ) {
+                    $("#monthly_income_error").text(
+                        "Please enter a valid monthly income."
+                    );
+                    isValid = false;
+                } else if (pincode === "") {
+                    $("#pincode_error").text("Please enter your pincode.");
+                    isValid = false;
+                } else if (!isValidPincode(pincode)) {
+                    $("#pincode_error").text("Please enter a valid pincode.");
+                    isValid = false;
+                } else if (dob === "") {
+                    $("#dob_error").text("Please enter your date of birth.");
+                    isValid = false;
+                } else if (panNum === "") {
+                    $("#pan_num_error").text("Please enter your PAN number.");
+                    isValid = false;
+                } else if (!isValidPanNumber(panNum)) {
+                    $("#pan_num_error").text(
+                        "Please enter a valid PAN number."
+                    );
+                    isValid = false;
+                } else if (
+                    maritalStatus === "" ||
+                    maritalStatus == "null" ||
+                    maritalStatus == null ||
+                    maritalStatus == "undefined" ||
+                    maritalStatus == undefined
+                ) {
+                    $("#marital_status_error").text(
+                        "Please select your marital status."
+                    );
+                    isValid = false;
+                } else if (adharNum === "") {
+                    $("#adhar_num_error").text(
+                        "Please enter your Aadhar number."
+                    );
+                    isValid = false;
+                } else if (!isValidAdharNumber(adharNum)) {
+                    $("#adhar_num_error").text(
+                        "Please enter a valid Aadhar number."
+                    );
+                    isValid = false;
+                } else if (loanAmount === "") {
+                    $("#loan_amount_error").text(
+                        "Please enter your loan amount."
+                    );
+                    isValid = false;
+                } else if (isNaN(loanAmount) || parseFloat(loanAmount) <= 0) {
+                    $("#loan_amount_error").text(
+                        "Please enter a valid loan amount."
+                    );
+                    isValid = false;
+                } else if (creditScore === "") {
+                    $("#credit_score_error").text(
+                        "Please enter your credit score."
+                    );
+                    isValid = false;
+                } else if (
+                    isNaN(creditScore) ||
+                    parseFloat(creditScore) <= 0 ||
+                    parseFloat(creditScore) > 999
+                ) {
+                    $("#credit_score_error").text(
+                        "Please enter a valid credit score."
+                    );
+                    isValid = false;
+                } else if (motherName === "") {
+                    $("#mother_name_error").text(
+                        "Please enter your mother's name."
+                    );
+                    isValid = false;
+                }
+            } else if (currentTab == 1) {
+                if (presentLine1 === "") {
+                    $("#present_line1_error").text(
+                        "Please enter your address line 1."
+                    );
+                    isValid = false;
+                } else if (presentLine2 === "") {
+                    $("#present_line2_error").text(
+                        "Please enter your address line 2."
+                    );
+                    isValid = false;
+                } else if (presentLine3 === "") {
+                    $("#present_line3_error").text(
+                        "Please enter your address line 3."
+                    );
+                    isValid = false;
+                } else if (presentState === "") {
+                    $("#present_state_error").text("Please enter your state.");
+                    isValid = false;
+                } else if (presentCity === "") {
+                    $("#present_city_error").text("Please enter your city.");
+                    isValid = false;
+                } else if (presentPincode === "") {
+                    $("#present_pincode_error").text(
+                        "Please enter your pincode."
+                    );
+                    isValid = false;
+                } else if (!isValidPincode(presentPincode)) {
+                    $("#present_pincode_error").text(
+                        "Please enter a valid pincode."
+                    );
+                    isValid = false;
+                } else if (presentPhone === "") {
+                    $("#present_phone_error").text(
+                        "Please enter your phone number."
+                    );
+                    isValid = false;
+                } else if (!isValidMobile(presentPhone)) {
+                    $("#present_phone_error").text(
+                        "Please enter a valid phone number."
+                    );
+                    isValid = false;
+                } else if (officeLine1 === "") {
+                    $("#office_line1_error").text(
+                        "Please enter your address line 1."
+                    );
+                    isValid = false;
+                } else if (officeLine2 === "") {
+                    $("#office_line2_error").text(
+                        "Please enter your address line 2."
+                    );
+                    isValid = false;
+                } else if (officeLine3 === "") {
+                    $("#office_line3_error").text(
+                        "Please enter your address line 3."
+                    );
+                    isValid = false;
+                } else if (officeState === "") {
+                    $("#office_state_error").text("Please enter your state.");
+                    isValid = false;
+                } else if (officeCity === "") {
+                    $("#office_city_error").text("Please enter your city.");
+                    isValid = false;
+                } else if (officePincode === "") {
+                    $("#office_pincode_error").text(
+                        "Please enter your pincode."
+                    );
+                    isValid = false;
+                } else if (!isValidPincode(officePincode)) {
+                    $("#office_pincode_error").text(
+                        "Please enter a valid pincode."
+                    );
+                    isValid = false;
+                } else if (officePhone === "") {
+                    $("#office_phone_error").text(
+                        "Please enter your phone number."
+                    );
+                    isValid = false;
+                } else if (!isValidMobile(officePhone)) {
+                    $("#office_phone_error").text(
+                        "Please enter a valid phone number."
+                    );
+                    isValid = false;
+                }
+            }
+            //  else if (currentTab == 2) {
+            //     if (
+            //         document_type === "" ||
+            //         document_type === null ||
+            //         document_type === "undefined" ||
+            //         document_type === undefined
+            //     ) {
+            //         $("#document_type_error").text(
+            //             "Please select a document type."
+            //         );
+            //         isValid = false;
+            //     } else if (!upload_document) {
+            //         $("#upload_document_error").text(
+            //             "Please upload a document."
+            //         );
+            //         isValid = false;
+            //     } else if (!allowedImageExtensions.test(upload_document.name)) {
+            //         $("#upload_document_error").text(
+            //             "Please upload a PDF, JPEG, JPG, or PNG image."
+            //         );
+            //         isValid = false;
+            //     } else if (upload_document.size > 2048 * 1024) {
+            //         $("#upload_document_error").text(
+            //             "Please upload a document less than 2MB."
+            //         );
+            //         isValid = false;
+            //     }
+            //     return isValid;
+            // }
+
+        }
+        
+        function isValidPanNumber(panNumber) {
+            var panRegex = /[A-Z]{5}[0-9]{4}[A-Z]{1}/;
+            return panRegex.test(panNumber);
+        }
+
+        function isValidAdharNumber(adharNumber) {
+            var adharRegex = /^\d{12}$/;
+            return adharRegex.test(adharNumber);
+        }
+
+        function isValidEmail(email) {
+            var emailRegex = /\S+@\S+\.\S+/;
+            return emailRegex.test(email);
+        }
+        function isValidPincode(pincode) {
+            var pincodeRegex = /^\d{6}$/; // Regular expression for pincode (6 digits)
+            return pincodeRegex.test(pincode);
+        }
+
+        function isValidMobile(mobile) {
+            var mobileRegex = /^\d{10}$/;
+            return mobileRegex.test(mobile);
+        }
+
+        $(".nextBtn").on("click", function () {
+            nextPrev(1);
+            console.log("hi");
+        });
+
+        $(".prevBtn").on("click", function () {
+            nextPrev(-1);
+        });
+
+        // Function to extract parameter from URL
+        // function getParameterByName(name, url) {
+        //     if (!url) url = window.location.href;
+        //     name = name.replace(/[\[\]]/g, "\\$&");
+        //     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        //         results = regex.exec(url);
+        //     if (!results) return null;
+        //     if (!results[2]) return "";
+        //     return decodeURIComponent(results[2].replace(/\+/g, " "));
+        // }
+
+        // Get the insurance plan from the URL
+
+        function updateStepper(n) {
+            $(".step").removeClass("active"); // Remove active class from all steps
+            $(".step").eq(n).addClass("active"); // Add active class to current step
+        }
+
+        $("#loanForm").submit(function (event) {
+            // Prevent default form submission
+            event.preventDefault();
+
+            // Validate the form before submitting
+            if (validateForm()) {
+                var formData = new FormData();
+
+                // Append personal information
+                formData.append("loan_type", loanType);
+                formData.append("name", name);
+                formData.append("email", email);
+                formData.append("mobile", mobile);
+                formData.append("income_source", incomeSource);
+                formData.append("monthly_income", monthlyIncome);
+                formData.append("pincode", pincode);
+                formData.append("dob", dob);
+                formData.append("pan_num", panNum);
+                formData.append("adhar_num", adharNum);
+                formData.append("marital_status", maritalStatus);
+                formData.append("loan_amount", loanAmount);
+                formData.append("credit_score", creditScore);
+                formData.append("mother_name", motherName);
+
+                // Append present address
+                formData.append("present_line1", presentLine1);
+                formData.append("present_line2", presentLine2);
+                formData.append("present_line3", presentLine3);
+                formData.append("present_landmark", presentLandmark);
+                formData.append("present_state", presentState);
+                formData.append("present_city", presentCity);
+                formData.append("present_pincode", presentPincode);
+                formData.append("present_phone", presentPhone);
+
+                // Append office address
+                formData.append("office_line1", officeLine1);
+                formData.append("office_line2", officeLine2);
+                formData.append("office_line3", officeLine3);
+                formData.append("office_landmark", officeLandmark);
+                formData.append("office_state", officeState);
+                formData.append("office_city", officeCity);
+                formData.append("office_pincode", officePincode);
+                formData.append("office_phone", officePhone);
+
+                // Append document type and upload document
+                formData.append("document_type", document_type);
+                formData.append("upload_document", upload_document);
+
+                // formData.append(
+                //     "bank_statement_file",
+                //     $("#bank_statement_file").prop("files")[0]
+                // );
+
+                // Submit form data via AJAX
+                console.log(formData);
+                $.ajax({
+                    url: "/credit-card",
+                    type: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                            "content"
+                        ),
+                    },
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        if (response.status == true) {
+                            $(".error-message").remove();
+                            $("#loan_submit_btn").attr("disabled", true);
+                            window.location.reload();
+                            $("#creditForm")[0].reset();
+                            return false;
+                        }
+                    },
+                    error: function (response) {
+                        if (response.status === 422) {
+                            var errors = response.responseJSON.errors;
+                            $(".error-message").remove();
+                            $.each(errors, function (field, messages) {
+                                // Display error messages
+                            });
+                        }
+                    },
+                });
+            } else {
+                // If form is invalid, display an error message or take appropriate action
+                console.log(
+                    "Form submission failed. Please resolve all errors."
+                );
+            }
+        });
+    }
+});
