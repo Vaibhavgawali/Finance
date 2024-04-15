@@ -1,11 +1,16 @@
 // Event delegation for delete users
-$(document).on("click", ".delete-user-button", function (e) {
+$(document).on("click", ".delete-finance-button", function (e) {
     e.preventDefault();
-    let user_id = $(this).closest(".delete-user-form").data("finance-id");
-    userDeleteAlert(user_id);
+    let finance_id = $(this).closest(".delete-finance-form").data("finance-id");
+    let route = $(this).closest(".delete-finance-form").data("finance-route");
+    console.log(route);
+
+    // console.log(finance_id);
+    financeDeleteAlert(finance_id, route);
+    // console.log("this is clicked");
 });
 
-let userDeleteAlert = (user_id) => {
+let financeDeleteAlert = (finance_id, route) => {
     swal({
         title: "Are you sure?",
         text: "Once deleted, you will not be able to recover this user!",
@@ -14,7 +19,7 @@ let userDeleteAlert = (user_id) => {
         dangerMode: true,
     }).then((willDelete) => {
         if (willDelete) {
-            deleteUserFunction(user_id);
+            deleteFinanceFunction(finance_id, route);
         } else {
             swal("Your user is safe!");
         }
@@ -22,11 +27,11 @@ let userDeleteAlert = (user_id) => {
 };
 
 // Delete user
-const deleteUserFunction = (user_id) => {
+const deleteFinanceFunction = (finance_id, route) => {
     var data = {
-        user_id: user_id,
+        finance_id: finance_id,
     };
-    var url = `/credit-card/${user_id}`;
+    var url = `/${route}/${finance_id}`;
 
     $.ajax({
         url: url,
