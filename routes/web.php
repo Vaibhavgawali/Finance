@@ -17,6 +17,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CreditCardController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\DematController;
+use App\Http\Controllers\InsuranceController;
 
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\UserProfileController;
@@ -98,15 +99,18 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/getCreditCardTableData', [CreditCardController::class, 'getCreditCardTableData'])->name('getCreditCardTableData');
     Route::get('/getLoanTableData', [LoanController::class, 'getLoanTableData'])->name('getLoanTableData');
     Route::get('/getDematTableData', [DematController::class, 'getDematTableData'])->name('getDematTableData');
+    Route::get('/getInsuranceTableData', [InsuranceController::class, 'getInsuranceTableData'])->name('getInsuranceTableData');
 
     Route::get('get-role/{id}', [UserController::class, 'getUserRoles']);
     Route::post('assign-role/{id}', [UserController::class, 'assignRole']);
 
     Route::patch('demat-update-status/{id}', [DematController::class, 'updateStatus']);
+    Route::patch('insurance-update-status/{id}', [InsuranceController::class, 'updateStatus']);
     Route::patch('credit-card-update-status/{id}', [CreditCardController::class, 'updateStatus']);
 });
 
 Route::resource('/credit-card', CreditCardController::class);
 Route::resource('/loan', LoanController::class);
 Route::resource('/demat', DematController::class);
+Route::resource('/insurance', InsuranceController::class);
 

@@ -4,23 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
-use Auth;
-use Validator;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use PDF;
 use Yajra\DataTables\DataTables;
+use Validator;
 use Carbon\Carbon;
 
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 
-use App\Models\CreditCard;
-use App\Models\Loan;
-use App\Models\Demat;
+use App\Models\Insurance;
 
-class DematController extends Controller
+class InsuranceController extends Controller
 {
     public function __construct()
     {
@@ -34,29 +29,26 @@ class DematController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            $users = Demat::with('dematRefer')->orderBy('id', 'desc')->get();
+            $users = Insurance::orderBy('id', 'desc')->get();
             
             if ($users) {
-                return view('dashboard.services.demat-list');
+                return view('dashboard.services.insurance-list');
             }
         }
         return Response(['data' => 'Unauthorized'], 401);
     }
 
-    public function getDematTableData(Request $request)
+    public function getInsuranceTableData(Request $request)
     {
-        $data =Demat::with('dematRefer')
-                ->when(request()->has('search'), function ($query) {
+        $data =Insurance::
+                when(request()->has('search'), function ($query) {
                     $search = request('search');
                     $query->where(function ($q) use ($search) {
                         $q->where('name', 'like', '%' . $search . '%')
                         ->orWhere('phone', 'like', '%' . $search . '%')
                         ->orWhere('status', 'like', '%' . $search . '%')
                         ->orWhere('application_stage', 'like', '%' . $search . '%')
-                        ->orWhere('approval_date', 'like', '%' . $search . '%')
-                        ->orWhereHas('dematRefer', function ($q) use ($search) {
-                            $q->where('name', 'like', '%' . $search . '%');
-                        });
+                        ->orWhere('approval_date', 'like', '%' . $search . '%');
                     });
                 })
                 ->when(request()->filled('startDate') || request()->filled('endDate'), function ($query) {
@@ -73,12 +65,18 @@ class DematController extends Controller
                 })
                 ->when(Auth::user()->hasRole('Distributor') || Auth::user()->hasRole('Retailer'), function ($query) {
                     $logged_user_referral_id = auth()->user()->referral_id;
+                    // $query->where(function ($q) use ($logged_user_referral_id) {
+                    //     $q->where('referral_id', $logged_user_referral_id);
+                    // });
                     $query->where(function ($q) use ($logged_user_referral_id) {
-                        $q->where('referred_by', $logged_user_referral_id)
-                            ->orWhereHas('dematRefer', function ($q) use ($logged_user_referral_id) {
-                                $q->where('referred_by', $logged_user_referral_id);
-                            });
+                        $q->where('referral_id', $logged_user_referral_id)
+                          ->orWhereIn('referral_id', function ($subquery) use ($logged_user_referral_id) {
+                              $subquery->select('referral_id')
+                                       ->from('users')
+                                       ->where('referred_by', $logged_user_referral_id);
+                          });
                     });
+
                 })
                 ->orderBy('id', 'desc')
                 ->get();
@@ -90,12 +88,12 @@ class DematController extends Controller
                     ->addColumn('actions', function ($row) {
                         // Check if user has Superadmin or Admin role
                         if (auth()->user()->hasRole('Superadmin') || auth()->user()->hasRole('Admin')) {
-                            $actions = '<div class="d-flex justify-content-center gap-2"><a class="btn btn-sm btn-gradient-primary btn-rounded viewButton" data-demat-id="' . $row->id . '" >View</a>';  
+                            // $actions = '<a class="btn btn-sm btn-gradient-warning btn-rounded viewButton" data-demat-id="' . $row->id . '" >View</a>';  
                             // $actions .= '<a class="btn btn-sm btn-gradient-warning btn-rounded editButton" data-demat-id="' . $row->id . '" >Edit</a>';  
-                            $actions .= '<a class="btn btn-sm btn-gradient-success btn-rounded statusButton" data-demat-id="' . $row->id . '" >Status</a>';  
-                            $actions .= '<form class="delete-finance-form" data-finance-route="demat" data-finance-id="' . $row->id . '">
-                                            <button type="button" class="btn btn-sm btn-gradient-danger btn-rounded delete-finance-button">Delete</button>
-                                        </form> </div>';
+                            $actions = '<a class="btn btn-sm btn-gradient-warning btn-rounded statusButton" data-insurance-id="' . $row->id . '" >Status</a>';  
+                            $actions .= '<form class="delete-demat-form" data-insurance-id="' . $row->id . '">
+                                            <button type="button" class="btn btn-sm btn-gradient-danger btn-rounded delete-user-button">Delete</button>
+                                        </form>';
                             return $actions;
                         } else {
                             return '';
@@ -111,7 +109,7 @@ class DematController extends Controller
      */
     public function create()
     {
-        return view('frontend.demat');
+        //
     }
 
     /**
@@ -119,43 +117,33 @@ class DematController extends Controller
      */
     public function store(Request $request)
     {
-        $rules = [
-            'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:10',
-            'pan_num' => ['required', 'string', 'max:10', 'regex:/^[A-Z]{5}\d{4}[A-Z]$/'],
-            'adhar_num' => ['required', 'string', 'max:12', 'regex:/^\d{12}$/'],
-        ];
+        // Get the encrypted data from the request
+        $encryptedData = $request->input('ret_data');
+        $jsonData = base64_decode($encryptedData);
+        $decodedData = json_decode($jsonData, true); 
+        // dd($decodedData);
 
-        // Validate the request data
-        $validator = Validator::make($request->all(), $rules);
-        
-        // Check if validation fails
-        if ($validator->fails()) {
-            return Response(['status' => false, 'errors' => $validator->errors()], 422);
+        $name = $decodedData['fname'];
+        if (!empty($decodedData['lname'])) {
+            $name .= " " . $decodedData['lname'];
         }
 
-        $referral_id="";
-        if (Auth::user()) {
-            $referral_id = Auth::user()->referral_id;
-        } else {
-            $referral_id = "ghijk12345";
-        }
-
-        $demat = Demat::create([
-            'referred_by'=>$referral_id,
-            'name'=>$request->name,
-            'phone'=>$request->phone,
-            'pan_num' => $request->pan_num,
-            'adhar_num' => $request->adhar_num,
+        $insurance = Insurance::create([
+            'urc' => $decodedData['urc'],
+            'umc' => $decodedData['umc'],
+            'ak' => $decodedData['ak'],
+            'name' => $name,
+            'email' => $decodedData['email'],
+            'phone' => $decodedData['phno'],
+            'referral_id' => $decodedData['pin'],
             'status'=>'Initiated'
         ]);
 
-        if ($demat) {     
-            return Response(['status' => true, 'message' => "Demat submitted successfully !"], 200);
+        if ($insurance) {     
+            return Response(['status' => true, 'message' => "Insurance submitted successfully !"], 200);
         }
 
         return Response(['status' => false, 'message' => "Something went wrong"], 500);
-
     }
 
     /**
@@ -163,14 +151,13 @@ class DematController extends Controller
      */
     public function show(string $id)
     {
-        $demat = Demat::find($id);
+        $insurance = Insurance::find($id);
     
-        if($demat) {
-            return response()->json($demat);
-
+        if($insurance) {
+            return response()->json($insurance);
+    
         }
-        return response()->json(['error' => 'Demat not found'], 404);
-  
+        return response()->json(['error' => 'Insurance not found'], 404);
     }
 
     /**
@@ -186,47 +173,24 @@ class DematController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $formMethod = $request->method();
-        if($formMethod == "PATCH"){
-            // Find the demat record by its ID
-            $demat = Demat::findOrFail($id);
-
-            $validator = Validator::make($request->all(), [
-                'name' => 'required|string|max:255',
-                'phone' => 'required|string|max:10',
-                'pan_num' => ['required', 'string', 'max:10', 'regex:/^[A-Z]{5}\d{4}[A-Z]$/'],
-                'adhar_num' => ['required', 'string', 'max:12', 'regex:/^\d{12}$/'],
-            ]);
-
-            if($validator->fails()){
-                return Response(['message' => $validator->errors()],401);
-            } 
-
-            $isUpdated=$demat->update($request->all());
-
-            if($isUpdated){
-                return Response(['message' => "Demat updated successfully"],200);
-            }
-            return Response(['message' => "Something went wrong"],500);
-        }
-        return Response(['message'=>"Invalid form method "],405);
-    }   
+        //
+    }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        $demat = Demat::find($id);
+        $insurance = Insurance::find($id);
 
-        if (!$demat) {
-            return Response(['status' => false, 'message' => "Demat not found"], 404);
+        if (!$insurance) {
+            return Response(['status' => false, 'message' => "Insurance not found"], 404);
         }
 
-         $isDeleted = $demat->delete();
+         $isDeleted = $insurance->delete();
 
         if ($isDeleted) {
-            return Response(['status' => true, 'message' => "Demat form deleted successfully"], 200);
+            return Response(['status' => true, 'message' => "Insurance form deleted successfully"], 200);
         }
 
         return Response(['status' => false, 'message' => "Something went wrong"], 500);
@@ -240,7 +204,7 @@ class DematController extends Controller
         $formMethod = $request->method();
         if($formMethod == "PATCH"){
             // Find the demat record by its ID
-            $demat = Demat::findOrFail($id);
+            $insurance = Insurance::findOrFail($id);
 
             $validator = Validator::make($request->all(), [
                 'status' => 'required|string',
@@ -253,12 +217,13 @@ class DematController extends Controller
                 return Response(['message' => $validator->errors()],401);
             } 
 
-            $isUpdated=$demat->update($request->all());
+            $isUpdated=$insurance->update($request->all());
             if($isUpdated){
-                return Response(['message' => "Demat updated successfully"],200);
+                return Response(['message' => "Insurance updated successfully"],200);
             }
             return Response(['message' => "Something went wrong"],500);
         }
         return Response(['message'=>"Invalid form method "],405);
     }
+
 }
