@@ -21,6 +21,7 @@ class UserController extends Controller
 
         // Spatie middleware here
         $this->middleware(['role:Superadmin|Admin'])->except('show');
+        $this->middleware(['role:Superadmin|Admin|Distributor'])->only('show');
     }
 
     /**
