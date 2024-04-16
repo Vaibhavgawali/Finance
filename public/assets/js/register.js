@@ -1,6 +1,4 @@
-let RegisteredAlert = () => {
-    swal("Good job!", "Registered sucessfully!", "success");
-};
+
 
 $(document).ready(function () {
     $("#add_user_button").click(function (e) {
@@ -104,13 +102,18 @@ $(document).ready(function () {
                     $(".error-message").remove();
 
                     $("#add_user_button").attr("disabled", true);
-                    // RegisteredAlert();
-
-                    $("#add_user_form")[0].reset();
-
-                    setTimeout(function () {
-                        window.location.href = `${window.location.origin}/${user_type}`;
-                    }, 2000);
+                    swal({
+                        title: "Success!",
+                        text: "Registered successfully login credentials sent on your email.",
+                        icon: "success",
+                        button: "OK",
+                        closeOnClickOutside: false
+                    }).then((value) => {
+                        if (value) {
+                            window.location.href = `${window.location.origin}/${user_type}`;
+                            $("#add_user_form")[0].reset();
+                        }
+                    });
                 }
             },
 

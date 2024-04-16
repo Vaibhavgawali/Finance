@@ -5,10 +5,9 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Finance</title>
+    <title>Blarkafin - Finance & Insurance Company</title>
 	<meta name="description" content="Finance Company">
 	<meta name="keywords" content="accounting, advising, advisory, business, company, consulting, corporate, finance, financial, investments, law, multi-purpose, services, tax help, visual composer">
-   
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"/>
     <link href="/admin-assets/assets/css/jquery.dataTables.css" rel="stylesheet">
     <link rel="stylesheet" href="/admin-assets/assets/vendors/mdi/css/materialdesignicons.min.css">
@@ -26,7 +25,6 @@
 
     <script src="https://cdn.datatables.net/buttons/2.0.0/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.html5.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script src="/admin-assets/assets/vendors/js/vendor.bundle.base.js"></script>
 </head>

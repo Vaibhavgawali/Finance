@@ -108,11 +108,19 @@ $(document).ready(function () {
                 console.log(response);
                 if (response.status == true) {
                     $("#reset_password_button").attr("disabled", true);
-                    // quizCreatedAlert();
-                    setTimeout(function () {
-                        window.location.href =
+                    swal({
+                        title: "Success!",
+                        text: "Password changed successfully.",
+                        icon: "success",
+                        button: "OK",
+                        closeOnClickOutside: false
+                    }).then((value) => {
+                        if (value) {
+                            window.location.href =
                             window.location.origin + "/dashboard/";
-                    }, 2000);
+                        }
+                    });
+                   
 
                     return false;
                 }
