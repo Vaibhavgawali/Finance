@@ -73,14 +73,20 @@
                                             <!-- Select tags -->
                                             <div class="form-group pb-2">
                                                 <label for="application_stage">Application Stage :</label>
-                                                <select class="form-control" id="application_stage"
+                                                <select class="form-control p-3" id="application_stage"
                                                     name="application_stage">
                                                     <option value="">-- Select --</option>
-                                                    <option value="Initial">Initial</option>
-                                                    <option value="Processing">Processing</option>
-                                                    <option value="Completed">Completed</option>
+                                                    <option value="Initiated">Initiated</option>
+                                                    <option value="Login">Login</option>
+                                                    <option value="In Progress">In Progress</option>
+                                                    <option value="Pending">Pending</option>
+                                                    <option value="Approved">Approved</option>
+                                                    <option value="Disbursed">Disbursed</option>
+                                                    <option value="Rejected">Rejected</option>
+                                                    <option value="Revoked">Revoked</option>
                                                 </select>
                                             </div>
+
 
                                             <!-- Date input -->
                                             <div class="form-group">

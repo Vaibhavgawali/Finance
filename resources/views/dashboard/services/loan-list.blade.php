@@ -107,11 +107,17 @@
                                                 <select class="form-control p-3" id="application_stage"
                                                     name="application_stage">
                                                     <option value="">-- Select --</option>
-                                                    <option value="Initial">Initial</option>
-                                                    <option value="Processing">Processing</option>
-                                                    <option value="Completed">Completed</option>
+                                                    <option value="Initiated">Initiated</option>
+                                                    <option value="Login">Login</option>
+                                                    <option value="In Progress">In Progress</option>
+                                                    <option value="Pending">Pending</option>
+                                                    <option value="Approved">Approved</option>
+                                                    <option value="Disbursed">Disbursed</option>
+                                                    <option value="Rejected">Rejected</option>
+                                                    <option value="Revoked">Revoked</option>
                                                 </select>
                                             </div>
+
 
                                             <!-- Date input -->
                                             <div class="form-group">
@@ -141,7 +147,8 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="viewModalLabel">Loan Application Form</h5>
-                                        <button type="button" class="close close-btn" data-dismiss="modal" aria-label="Close">
+                                        <button type="button" class="close close-btn" data-dismiss="modal"
+                                            aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
@@ -159,7 +166,8 @@
                                                                         class="input-group-text bg-gradient-primary text-white p-3">
                                                                         <i class="mdi mdi-cash-multiple"></i></span>
                                                                 </div>
-                                                                <select name="loan_type" id="loan_type" class="form-control p-3">
+                                                                <select name="loan_type" id="loan_type"
+                                                                    class="form-control p-3">
                                                                     <option value="null" selected disabled>
                                                                         --Select Loan Type--
                                                                     </option>
@@ -179,7 +187,7 @@
                                                                         <i class="mdi mdi-account"></i></span>
                                                                 </div>
                                                                 <input type="text" name="name" id="name"
-                                                                class="form-control" placeholder="Name" />
+                                                                    class="form-control" placeholder="Name" />
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
@@ -191,7 +199,7 @@
                                                                         <i class="mdi mdi-email"></i></span>
                                                                 </div>
                                                                 <input type="text" name="email" id="email"
-                                                                class="form-control" placeholder="Email" />
+                                                                    class="form-control" placeholder="Email" />
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
@@ -203,7 +211,7 @@
                                                                         <i class="mdi mdi-cellphone"></i></span>
                                                                 </div>
                                                                 <input type="text" name="mobile" id="mobile"
-                                                                class="form-control" placeholder="Mobile Number" />
+                                                                    class="form-control" placeholder="Mobile Number" />
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
@@ -215,16 +223,16 @@
                                                                         <i class="mdi mdi-hospital-building"></i></span>
                                                                 </div>
                                                                 <select name="income_source" id="income_source"
-                                                                class="form-control p-3">
-                                                                <option value="" selected disabled>
-                                                                    --Select Income Source--
-                                                                </option>
-                                                                <option value="Salaried">Salaried</option>
-                                                                <option value="Business">Business</option>
-                                                            </select>
+                                                                    class="form-control p-3">
+                                                                    <option value="" selected disabled>
+                                                                        --Select Income Source--
+                                                                    </option>
+                                                                    <option value="Salaried">Salaried</option>
+                                                                    <option value="Business">Business</option>
+                                                                </select>
                                                             </div>
                                                         </div>
-                                                        
+
                                                         <div class="form-group">
                                                             <label for="monthly_income">Monthly Income</label>
                                                             <div class="input-group">
@@ -234,8 +242,8 @@
                                                                         <i class="mdi mdi-cards"></i></span>
                                                                 </div>
                                                                 <input type="text" class="form-control"
-                                                                name="monthly_income" id="monthly_income"
-                                                                placeholder="Monthly Income" />
+                                                                    name="monthly_income" id="monthly_income"
+                                                                    placeholder="Monthly Income" />
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
@@ -244,14 +252,15 @@
                                                                 <div class="input-group-prepend">
                                                                     <span
                                                                         class="input-group-text bg-gradient-primary text-white p-3">
-                                                                        <i class="mdi mdi-google-maps
+                                                                        <i
+                                                                            class="mdi mdi-google-maps
                                                                         "></i></span>
                                                                 </div>
                                                                 <input type="text" class="form-control" name="pincode"
-                                                                id="pincode" placeholder="Pincode" />
+                                                                    id="pincode" placeholder="Pincode" />
                                                             </div>
                                                         </div>
-                                                       
+
 
                                                     </div>
                                                 </div>
@@ -263,12 +272,14 @@
                                                                 <div class="input-group-prepend">
                                                                     <span
                                                                         class="input-group-text bg-gradient-primary text-white p-3">
-                                                                        <i class="mdi mdi-calendar
+                                                                        <i
+                                                                            class="mdi mdi-calendar
                                                                         "></i></span>
                                                                 </div>
                                                                 <input type="text" placeholder="Date of Birth"
-                                                                onfocus="(this.type='date')" onblur="(this.type='text')"
-                                                                class="form-control" name="dob" id="dob" />
+                                                                    onfocus="(this.type='date')"
+                                                                    onblur="(this.type='text')" class="form-control"
+                                                                    name="dob" id="dob" />
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
@@ -277,11 +288,12 @@
                                                                 <div class="input-group-prepend">
                                                                     <span
                                                                         class="input-group-text bg-gradient-primary text-white p-3">
-                                                                        <i class="mdi mdi-credit-card
+                                                                        <i
+                                                                            class="mdi mdi-credit-card
                                                                         "></i></span>
                                                                 </div>
                                                                 <input type="text" class="form-control" name="pan_num"
-                                                                id="pan_num" placeholder="Pancard" />
+                                                                    id="pan_num" placeholder="Pancard" />
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
@@ -290,16 +302,18 @@
                                                                 <div class="input-group-prepend">
                                                                     <span
                                                                         class="input-group-text bg-gradient-primary text-white p-3">
-                                                                        <i class="mdi mdi-account-multiple
+                                                                        <i
+                                                                            class="mdi mdi-account-multiple
                                                                         "></i></span>
                                                                 </div>
                                                                 <select name="marital_status" id="marital_status"
-                                                                class="form-control p-3">
-                                                                <option value="null" selected disabled>--Select Marital
-                                                                    Status--</option>
-                                                                <option value="married">Married</option>
-                                                                <option value="unmarried">Unmarried</option>
-                                                            </select>
+                                                                    class="form-control p-3">
+                                                                    <option value="null" selected disabled>--Select
+                                                                        Marital
+                                                                        Status--</option>
+                                                                    <option value="married">Married</option>
+                                                                    <option value="unmarried">Unmarried</option>
+                                                                </select>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
@@ -308,11 +322,13 @@
                                                                 <div class="input-group-prepend">
                                                                     <span
                                                                         class="input-group-text bg-gradient-primary text-white p-3">
-                                                                        <i class="mdi mdi-credit-card-scan
+                                                                        <i
+                                                                            class="mdi mdi-credit-card-scan
                                                                         "></i></span>
                                                                 </div>
-                                                                <input type="text" class="form-control" name="adhar_num"
-                                                                id="adhar_num" placeholder="Adhar Card Number" />
+                                                                <input type="text" class="form-control"
+                                                                    name="adhar_num" id="adhar_num"
+                                                                    placeholder="Adhar Card Number" />
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
@@ -321,12 +337,13 @@
                                                                 <div class="input-group-prepend">
                                                                     <span
                                                                         class="input-group-text bg-gradient-primary text-white p-3">
-                                                                        <i class="mdi mdi-cash-100
+                                                                        <i
+                                                                            class="mdi mdi-cash-100
                                                                         "></i></span>
                                                                 </div>
                                                                 <input type="text" class="loan_amount form-control"
-                                                                name="loan_amount" id="loan_amount"
-                                                                placeholder="Loan Amount" />
+                                                                    name="loan_amount" id="loan_amount"
+                                                                    placeholder="Loan Amount" />
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
@@ -335,12 +352,13 @@
                                                                 <div class="input-group-prepend">
                                                                     <span
                                                                         class="input-group-text bg-gradient-primary text-white p-3">
-                                                                        <i class="mdi mdi-credit-card
+                                                                        <i
+                                                                            class="mdi mdi-credit-card
                                                                         "></i></span>
                                                                 </div>
                                                                 <input type="text" class="form-control"
-                                                                name="credit_score" id="credit_score"
-                                                                placeholder="Credit Score" />
+                                                                    name="credit_score" id="credit_score"
+                                                                    placeholder="Credit Score" />
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
@@ -349,24 +367,25 @@
                                                                 <div class="input-group-prepend">
                                                                     <span
                                                                         class="input-group-text bg-gradient-primary text-white p-3">
-                                                                        <i class="mdi mdi-account
+                                                                        <i
+                                                                            class="mdi mdi-account
                                                                         "></i></span>
                                                                 </div>
-                                                                <input type="text" class="form-control" name="mother_name"
-                                                                id="mother_name" placeholder="Mother's Name" />
+                                                                <input type="text" class="form-control"
+                                                                    name="mother_name" id="mother_name"
+                                                                    placeholder="Mother's Name" />
                                                             </div>
                                                         </div>
 
                                                     </div>
                                                 </div>
-                                              
+
                                             </div>
 
                                             <div class="tab">
                                                 <div class="row">
                                                     <div class="col-12 mb-1">
-                                                        <label for=""
-                                                            class="text-left fs-bold fs-3 my-3">Present
+                                                        <label for="" class="text-left fs-bold fs-3 my-3">Present
                                                             Address</label>
                                                     </div>
                                                     <div class="col-md-6 col-lg-3">
@@ -427,9 +446,8 @@
                                             <div class="tab">
                                                 <div class="row">
                                                     <div class="col-12 mb-1">
-                                                        <label for=""
-                                                        class="text-left fs-bold fs-3 mb-3">Office
-                                                        Address</label>
+                                                        <label for="" class="text-left fs-bold fs-3 mb-3">Office
+                                                            Address</label>
                                                     </div>
                                                     <div class="col-md-6 col-lg-3">
                                                         <div class="form-group pb-3">
@@ -490,8 +508,10 @@
                                                     <div class="flex justify-center items-center bg-gray-200 h-screen">
                                                         <div class="w-96 p-4 shadow rounded-md bg-white">
                                                             <label for="upload_document"
-                                                                class="text-left fs-bold fs-3 my-3 mx-2">Uploaded Document</label>
-                                                            <select name="document_type" id="document_type" class="p-3">
+                                                                class="text-left fs-bold fs-3 my-3 mx-2">Uploaded
+                                                                Document</label>
+                                                            <select name="document_type" id="document_type"
+                                                                class="p-3">
                                                                 <option value="" selected disabled>--Select
                                                                     Document--</option>
                                                                 <option value="pancard">Pancard</option>
@@ -664,18 +684,17 @@
                                     var loanId = $(this).data("loan-id");
                                     viewModal(loanId);
                                 });
-                                $(document).on('click','.close-btn',function()
-                            {
-                                $('#viewModal').modal('hide');
-                                $('input, textarea, select').prop('disabled', false);
+                                $(document).on('click', '.close-btn', function() {
+                                    $('#viewModal').modal('hide');
+                                    $('input, textarea, select').prop('disabled', false);
 
-                            })
+                                })
 
                                 // Function to show modal and fetch loan details
                                 function viewModal(loanId) {
 
                                     $('input, textarea, select').prop('disabled', true);
-                                  
+
                                     $('input, textarea').removeAttr('name placeholder');
                                     $('select').removeAttr('name');
 
@@ -685,7 +704,7 @@
                                         url: "loan/" + loanId,
                                         type: "GET",
                                         success: function(response) {
-                                        console.log(response)
+                                            console.log(response)
 
                                             $("#loan_type").val(response.loan_type);
                                             $("#name").val(response.name);
@@ -779,26 +798,26 @@
                                         },
                                         success: function(response) {
                                             hideModal();
-                                        
-                                        swal({
-    title: "Loan Status  Updated",
-    text: "Your Loan status have been successfully updated.",
-    icon: "success",
-    buttons: {
-        confirm: {
-            text: "OK",
-            value: true,
-            visible: true,
-            className: "swal-button--confirm",
-            closeModal: true
-        }
-    },
-    closeOnClickOutside: false // Prevent closing on click outside
-}).then((willRefresh) => {
-    if (willRefresh) {
-        location.reload(); // Reload the page
-    }
-});
+
+                                            swal({
+                                                title: "Loan Status  Updated",
+                                                text: "Your Loan status have been successfully updated.",
+                                                icon: "success",
+                                                buttons: {
+                                                    confirm: {
+                                                        text: "OK",
+                                                        value: true,
+                                                        visible: true,
+                                                        className: "swal-button--confirm",
+                                                        closeModal: true
+                                                    }
+                                                },
+                                                closeOnClickOutside: false // Prevent closing on click outside
+                                            }).then((willRefresh) => {
+                                                if (willRefresh) {
+                                                    location.reload(); // Reload the page
+                                                }
+                                            });
                                         },
                                         error: function(error) {
                                             console.error(error);

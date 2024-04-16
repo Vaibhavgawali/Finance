@@ -75,11 +75,17 @@
                                                 <select class="form-control p-3" id="application_stage"
                                                     name="application_stage">
                                                     <option value="">-- Select --</option>
-                                                    <option value="Initial">Initial</option>
-                                                    <option value="Processing">Processing</option>
-                                                    <option value="Completed">Completed</option>
+                                                    <option value="Initiated">Initiated</option>
+                                                    <option value="Login">Login</option>
+                                                    <option value="In Progress">In Progress</option>
+                                                    <option value="Pending">Pending</option>
+                                                    <option value="Approved">Approved</option>
+                                                    <option value="Disbursed">Disbursed</option>
+                                                    <option value="Rejected">Rejected</option>
+                                                    <option value="Revoked">Revoked</option>
                                                 </select>
                                             </div>
+
 
                                             <!-- Date input -->
                                             <div class="form-group">
@@ -124,7 +130,7 @@
                                                                         <i class="mdi mdi-account"></i></span>
                                                                 </div>
                                                                 <input type="text" name="name" id="name"
-                                                                class="form-control" disabled />
+                                                                    class="form-control" disabled />
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
@@ -136,7 +142,7 @@
                                                                         <i class="mdi mdi-credit-card"></i></span>
                                                                 </div>
                                                                 <input type="text" name="pan_num" id="pan_num"
-                                                                class="form-control" disabled />
+                                                                    class="form-control" disabled />
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
@@ -148,7 +154,7 @@
                                                                         <i class="mdi mdi-credit-card-scan"></i></span>
                                                                 </div>
                                                                 <input type="text" name="adhar_num" id="adhar_num"
-                                                                class="form-control" disabled />
+                                                                    class="form-control" disabled />
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
@@ -160,7 +166,7 @@
                                                                         <i class="mdi mdi-cellphone"></i></span>
                                                                 </div>
                                                                 <input type="text" name="phone" id="phone"
-                                                                class="form-control" disabled />
+                                                                    class="form-control" disabled />
                                                             </div>
                                                         </div>
                                                     </form>
