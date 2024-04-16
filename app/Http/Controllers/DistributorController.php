@@ -28,7 +28,7 @@ class DistributorController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->except('store');
+        $this->middleware('auth:sanctum');
         $this->middleware(['role_or_permission:Superadmin|Admin|view_distributor_list'])->only('index','getDistributorTableData');
         $this->middleware(['role_or_permission:Superadmin|Admin|add_distributor'])->only('create','store');
     }

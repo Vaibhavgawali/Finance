@@ -18,6 +18,12 @@ use App\Models\AddressProofDocuments;
 
 class ProfileController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+    }
+
      /**
      * Upload profile image
      */

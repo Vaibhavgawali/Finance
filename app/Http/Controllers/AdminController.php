@@ -26,6 +26,14 @@ use App\Models\UserExperience;
 
 class AdminController extends Controller
 {   
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+
+        // Spatie middleware here
+        $this->middleware(['role:Superadmin']);
+    }
+    
      /**
      * Display a listing of the resource.
      */

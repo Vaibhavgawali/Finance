@@ -13,6 +13,14 @@ use App\Models\Insurance;
 
 class DashboardController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+
+        // Spatie middleware here
+        $this->middleware(['role:Superadmin|Admin|Retailer|Distributor']);
+    }
+
     function dashboard()
     {
         $creditCardCount = $this->getCount(CreditCard::class,'creditCardRefer');
