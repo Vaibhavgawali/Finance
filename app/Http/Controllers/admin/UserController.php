@@ -24,6 +24,7 @@ class UserController extends Controller
         $this->middleware(['role:Superadmin|Admin|Distributor'])->only('show');
     }
 
+    
     /**
      * Display a listing of the resource.
      */
