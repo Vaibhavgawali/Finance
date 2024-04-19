@@ -536,25 +536,25 @@ $(document).ready(function () {
 
                 // Append document type and upload document
                 // Display the selected file in the console for debugging
-                console.log(
-                    "Selected file:",
-                    $("#upload_document").prop("files")[0]
-                );
+                // console.log(
+                //     "Selected file:",
+                //     $("#upload_document").prop("files")[0]
+                // );
 
                 // Append document type and upload document
-                formData.append(
-                    "document_type",
-                    $("#identity_proof_file").val()
-                );
-                formData.append(
-                    "upload_document",
-                    $("#upload_document").prop("files")[0]
-                );
-                formData.append("identity_proof", $("#identity_proof_file").prop("files")[0]);
-                formData.append("residence_proof", $("#residence_proof_file").prop("files")[0]);
-                formData.append("employment_proof", $("#employment_proof_file").prop("files")[0]);
-                formData.append("income_proof", $("#income_proof_file").prop("files")[0]);
-                formData.append("itr_proof", $("#itr_proof_file").prop("files")[0]);
+                // formData.append(
+                //     "document_type",
+                //     $("#identity_proof_file").val()
+                // );
+                // formData.append(
+                //     "upload_document",
+                //     $("#upload_document").prop("files")[0]
+                // );
+                formData.append("pan_file", $("#identity_proof_file").prop("files")[0]);
+                formData.append("adhar_front_file", $("#residence_proof_file").prop("files")[0]);
+                formData.append("adhar_back_file", $("#employment_proof_file").prop("files")[0]);
+                formData.append("itr_file", $("#income_proof_file").prop("files")[0]);
+                formData.append("bank_statement_file", $("#itr_file").prop("files")[0]);
 
 
                 console.log(formData); // Check formData in the console after appending
@@ -576,7 +576,7 @@ $(document).ready(function () {
                     success: function (response) {
                         if (response.status == true) {
                             $(".error-message").remove();
-                            $("#loan_submit_btn").attr("disabled", true);
+                            // $("#loan_submit_btn").attr("disabled", true);
                             swal({
                                 title: "Success!",
                                 text: "Loan application submitted successfully.",
@@ -588,7 +588,8 @@ $(document).ready(function () {
                                     window.open(
                                         "https://ugrocapital.com/lead-form?gp_code=MTg3NjUtICBBWFlCWkNEUFFfR1AxOTMy"
                                     );
-                                    $("#loanForm")[0].reset();
+                                    window.location.reload();
+                                    
                                 }
                             });
                             return false;
