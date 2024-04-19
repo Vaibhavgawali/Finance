@@ -1,6 +1,6 @@
 $(document).ready(function () {
     if (window.location.pathname === "/loan/create") {
-        console.log("script is running on Loan page");
+        // console.log("script is running on Loan page");
 
         var currentTab = 0;
         showTab(currentTab);
@@ -13,7 +13,6 @@ $(document).ready(function () {
         }
 
         function nextPrev(n) {
-           
             var tabs = $(".tab");
             // Check if the form is valid before proceeding
             if (n === -1 && currentTab === 0) return false; // If at the first tab, do nothing
@@ -67,13 +66,15 @@ $(document).ready(function () {
             var officePincode = $("#office_pincode").val().trim();
             var officePhone = $("#office_phone").val().trim();
 
-            var document_type = $("#document_type").val();
-            var upload_document = $("#upload_document").prop("files")[0];
+            var identity_proof = $("#identity_proof_file").prop("files")[0];
+            var residence_proof = $("#residence_proof_file").prop("files")[0];
+            var itr_file = $("#itr_file").prop("files")[0];
+            var employment_proof = $("#employment_proof_file").prop("files")[0];
+            var income_proof = $("#income_proof_file").prop("files")[0];
+
             var allowedImageExtensions = /(jpg|jpeg|png|pdf)$/i;
 
             // var panFile = $("#pan_file").prop("files")[0];
-
-            // var allowedImageExtensions = /(jpg|jpeg|png|pdf)$/i;
 
             // Validation for each input field
             if (currentTab == 0) {
@@ -136,6 +137,14 @@ $(document).ready(function () {
                         "Please enter a valid monthly income."
                     );
                     isValid = false;
+                } else if (
+                    isNaN(monthlyIncome) ||
+                    parseFloat(monthlyIncome) <= 15000
+                ) {
+                    $("#monthly_income_error").text(
+                        "Monthly income should be greater than 15,000."
+                    );
+                    isValid = false;
                 } else if (pincode === "") {
                     $("#pincode_error").text("Please enter your pincode.");
                     isValid = false;
@@ -144,6 +153,14 @@ $(document).ready(function () {
                     isValid = false;
                 } else if (dob === "") {
                     $("#dob_error").text("Please enter your date of birth.");
+                    isValid = false;
+                } else if (!isValidDate(dob)) {
+                    $("#dob_error").text("Please enter a valid date of birth.");
+                    isValid = false;
+                } else if (!isValidAge(dob)) {
+                    $("#dob_error").text(
+                        "Age should be in the range of 23 to 55."
+                    );
                     isValid = false;
                 } else if (panNum === "") {
                     $("#pan_num_error").text("Please enter your PAN number.");
@@ -289,34 +306,37 @@ $(document).ready(function () {
                     isValid = false;
                 }
             } else if (currentTab == 2) {
-                if (
-                    document_type === "" ||
-                    document_type === null ||
-                    document_type === "undefined" ||
-                    document_type === undefined
-                ) {
-                    $("#document_type_error").text(
-                        "Please select a document type."
-                    );
+                
+                if (!identity_proof) {
+                    $("#identity_proof_file_error").text("Please upload your identity proof.");
                     isValid = false;
-                } else if (!upload_document) {
-                    $("#upload_document_error").text(
-                        "Please upload a document."
-                    );
+                } else if (!residence_proof) {
+                    $("#residence_proof_file_error").text("Please upload your residence proof.");
                     isValid = false;
-                } else if (!allowedImageExtensions.test(upload_document.name)) {
-                    $("#upload_document_error").text(
-                        "Please upload a PDF, JPEG, JPG, or PNG image."
-                    );
+                } else if (!employment_proof) {
+                    $("#employment_proof_file_error").text("Please upload your employment proof.");
                     isValid = false;
-                } else if (upload_document.size > 2048 * 1024) {
-                    $("#upload_document_error").text(
-                        "Please upload a document less than 2MB."
-                    );
+                } else if (!income_proof) {
+                    $("#income_proof_error").text("Please upload your income proof.");
                     isValid = false;
-                }
+                } else if (!itr_file) {
+                    $("#itr_file_error").text("Please upload your ITR.");
+                    isValid = false;
+                } else if (!allowedImageExtensions.test(residence_proof.name) || residence_proof.size > 2048 * 1024) {
+                    $("#residence_proof_file_error").text("Invalid file format or size. Please upload a PDF, JPEG, JPG, or PNG image with a maximum size of 2MB.");
+                    isValid = false;
+                } else if (!allowedImageExtensions.test(employment_proof.name) || employment_proof.size > 2048 * 1024) {
+                    $("#employment_proof_file_error").text("Invalid file format or size. Please upload a PDF, JPEG, JPG, or PNG image with a maximum size of 2MB.");
+                    isValid = false;
+                } else if (!allowedImageExtensions.test(income_proof.name) || income_proof.size > 2048 * 1024) {
+                    $("#income_proof_error").text("Invalid file format or size. Please upload a PDF, JPEG, JPG, or PNG image with a maximum size of 2MB.");
+                    isValid = false;
+                } else if (!allowedImageExtensions.test(itr_file.name) || itr_file.size > 2048 * 1024) {
+                    $("#itr_file_error").text("Invalid file format or size. Please upload a PDF, JPEG, JPG, or PNG image with a maximum size of 2MB.");
+                    isValid = false;
+                } 
             }
-            console.log("valid;", isValid);
+            // console.log("valid;", isValid);
             return isValid;
         }
 
@@ -338,6 +358,63 @@ $(document).ready(function () {
             var pincodeRegex = /^\d{6}$/; // Regular expression for pincode (6 digits)
             return pincodeRegex.test(pincode);
         }
+        function isValidDate(dateString) {
+            var dateRegex = /^\d{4}-\d{2}-\d{2}$/; // Regular expression for date in the format yyyy-mm-dd
+            if (!dateRegex.test(dateString)) {
+                return false; // Return false if the date format is incorrect
+            }
+            // Split the date string into year, month, and day components
+            var parts = dateString.split("-");
+            var year = parseInt(parts[0], 10);
+            var month = parseInt(parts[1], 10);
+            var day = parseInt(parts[2], 10);
+            // Check if the month and day components are valid
+            if (month < 1 || month > 12 || day < 1 || day > 31) {
+                return false;
+            }
+            // Check for specific month-day combinations
+            if (
+                (month == 4 || month == 6 || month == 9 || month == 11) &&
+                day > 30
+            ) {
+                return false;
+            }
+            if (month == 2) {
+                var isLeapYear =
+                    (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
+                if ((day > 29 && isLeapYear) || (day > 28 && !isLeapYear)) {
+                    return false;
+                }
+            }
+            // If all checks pass, return true
+            return true;
+        }
+        function isValidAge(dateString) {
+            var dateRegex = /^\d{4}-\d{2}-\d{2}$/; // Regular expression for date in the format yyyy-mm-dd
+            if (!dateRegex.test(dateString)) {
+                return false; // Return false if the date format is incorrect
+            }
+            // Split the date string into year, month, and day components
+            var parts = dateString.split("-");
+            var year = parseInt(parts[0], 10);
+            var month = parseInt(parts[1], 10);
+            var day = parseInt(parts[2], 10);
+
+            // Calculate age based on provided date of birth
+            var today = new Date();
+            var birthDate = new Date(year, month - 1, day); // Note: JavaScript months are 0-based
+            var age = today.getFullYear() - birthDate.getFullYear();
+            var monthDiff = today.getMonth() - birthDate.getMonth();
+            if (
+                monthDiff < 0 ||
+                (monthDiff === 0 && today.getDate() < birthDate.getDate())
+            ) {
+                age--;
+            }
+
+            // Check if age falls within the specified range
+            return age >= 23 && age <= 55;
+        }
 
         function isValidMobile(mobile) {
             var mobileRegex = /^\d{10}$/;
@@ -346,7 +423,7 @@ $(document).ready(function () {
 
         $(".nextBtn").on("click", function () {
             nextPrev(1);
-            console.log("hi");
+            // console.log("hi");
         });
 
         $(".prevBtn").on("click", function () {
@@ -465,11 +542,20 @@ $(document).ready(function () {
                 );
 
                 // Append document type and upload document
-                formData.append("document_type", $("#document_type").val());
+                formData.append(
+                    "document_type",
+                    $("#identity_proof_file").val()
+                );
                 formData.append(
                     "upload_document",
                     $("#upload_document").prop("files")[0]
                 );
+                formData.append("identity_proof", $("#identity_proof_file").prop("files")[0]);
+                formData.append("residence_proof", $("#residence_proof_file").prop("files")[0]);
+                formData.append("employment_proof", $("#employment_proof_file").prop("files")[0]);
+                formData.append("income_proof", $("#income_proof_file").prop("files")[0]);
+                formData.append("itr_proof", $("#itr_proof_file").prop("files")[0]);
+
 
                 console.log(formData); // Check formData in the console after appending
 
@@ -496,10 +582,12 @@ $(document).ready(function () {
                                 text: "Loan application submitted successfully.",
                                 icon: "success",
                                 button: "OK",
-                                closeOnClickOutside: false
+                                closeOnClickOutside: false,
                             }).then((value) => {
                                 if (value) {
-                                    window.open('https://ugrocapital.com/lead-form?gp_code=MTg3NjUtICBBWFlCWkNEUFFfR1AxOTMy')
+                                    window.open(
+                                        "https://ugrocapital.com/lead-form?gp_code=MTg3NjUtICBBWFlCWkNEUFFfR1AxOTMy"
+                                    );
                                     $("#loanForm")[0].reset();
                                 }
                             });
@@ -518,9 +606,9 @@ $(document).ready(function () {
                 });
             } else {
                 // If form is invalid, display an error message or take appropriate action
-                console.log(
-                    "Form submission failed. Please resolve all errors."
-                );
+                // console.log(
+                //     "Form submission failed. Please resolve all errors."
+                // );
             }
         });
     }

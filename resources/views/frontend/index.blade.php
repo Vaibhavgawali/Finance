@@ -33,7 +33,7 @@
                             </a>
                         </div>
                         <div class="col-lg-4 col-md-6 mb30">
-                            <a href="/loan">
+                            <a href="/loan-service">
                                 <div class="f-box f-border f-icon-left f-icon-rounded">
                                     <i class="bg-color-secondary text-light fa-solid fa-sack-dollar"></i>
                                     <div class="fb-text">
