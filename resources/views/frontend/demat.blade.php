@@ -36,7 +36,7 @@
                                 <div id="phone_error" class="text-danger mx-2"></div>
                             </div>
 
-                            <button type="submit" id="demat_btn" class="btn btn-primary">Submit</button>
+                            <button type="submit" id="demat_btn" class="btn btn-primary">Apply</button>
                         </form>
                     </div>
                     <div class="col-12 col-md-5">

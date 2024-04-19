@@ -127,7 +127,7 @@ $(document).ready(function () {
                         closeOnClickOutside: false
                     }).then((value) => {
                         if (value) {
-                            window.location.reload();
+                            window.open('https://hdfcsky.page.link/u9fo')
                             $("#dematForm")[0].reset();
                         }
                     });

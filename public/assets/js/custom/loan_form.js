@@ -499,7 +499,7 @@ $(document).ready(function () {
                                 closeOnClickOutside: false
                             }).then((value) => {
                                 if (value) {
-                                    window.location.reload();
+                                    window.open('https://ugrocapital.com/lead-form?gp_code=MTg3NjUtICBBWFlCWkNEUFFfR1AxOTMy')
                                     $("#loanForm")[0].reset();
                                 }
                             });
