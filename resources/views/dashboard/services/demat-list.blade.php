@@ -258,12 +258,17 @@
                                             data: 'approval_date'
                                         },
                                         {
-                                            data: 'demat_refer',
-                                            render: function(data, type, row) {
-                                                var firstWord = data.name.split(' ')[0];
-                                                return firstWord.charAt(0).toUpperCase() + firstWord.slice(1);
-                                            }
-                                        },
+    data: 'credit_card_refer',
+    render: function(data, type, row) {
+        if (data && data.name) { // Check if data and data.name are not null
+            let {name} = data;
+            console.log("name", name);
+            return name.charAt(0).toUpperCase() + name.slice(1);
+        } else {
+            return ""; // Return an empty string or handle it as appropriate
+        }
+    }
+},
                                         {
                                             data: 'remark'
                                         },
