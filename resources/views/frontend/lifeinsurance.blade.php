@@ -14,7 +14,7 @@
             <div class="row">
 
                 <div class="col-lg-4 col-md-6 mb30">
-                    <a href="/dashoard"><div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
+                    <a href="/dashboard"><div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">
                         <i class="bg-color text-center text-light fa-solid fa-graduation-cap"></i>
                         <div class="fb-text">
                             <h4>Child Education</h4>
