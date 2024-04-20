@@ -176,6 +176,7 @@ class LoanController extends Controller
         
         // Check if validation fails
         if ($validator->fails()) {
+            
             return Response(['status' => false, 'errors' => $validator->errors()], 422);
         }
 

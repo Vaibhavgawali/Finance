@@ -45,7 +45,7 @@
                 <div class="col-md-12">
                     <div class="de-flex">
                         <div class="de-flex-col">
-                            &copy; Copyright 2024 - Blarkafin Designed & Developed by <a href="https://zynovvatech.com">
+                            &copy; Copyright 2024 -BlarkaFin Associate with GIBL  Developed by &nbsp;<a href="https://zynovvatech.com">
                                 ZynovvaTech</a>
                         </div>
 

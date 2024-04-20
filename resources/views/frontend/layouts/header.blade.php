@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Blarkafin - Finance & Insurance Company</title>
+  <title>Blarkafin - Finance & Insurance Company </title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <meta content="Blarkafin - Insurance and Finance Company" name="description" />
   <meta content="" name="keywords" />
@@ -105,7 +105,7 @@
                 <!-- logo begin -->
                 <div id="logo">
                   <a href="/">
-                    <img alt="" class="logo" src="{{asset('assets/images/logo-light.png')}}" />
+                    <img alt="" class="logo" src="{{asset('assets/images/logo-light.jpg')}}" />
                     <img alt="" class="logo-2" src="{{asset('assets/images/logo.png')}}" />
                   </a>
                 </div>

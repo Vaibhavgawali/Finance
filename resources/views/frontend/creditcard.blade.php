@@ -103,7 +103,7 @@
                                     <div id="adhar_back_file_error" class="text-danger mx-2"></div>
                                 </div>
                                 <div class="form-group pb-3">
-                                    <label for="itr_file">Upload ITR(1,2 year)</label>
+                                    <label for="itr_file">Upload ITR(1,2 year) / Salary slip</label>
                                     <input type="file" name="itr_file" class="form-control" id="itr_file" />
                                     <div id="itr_file_error" class="text-danger mx-2"></div>
                                 </div>

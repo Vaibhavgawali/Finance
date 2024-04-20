@@ -583,8 +583,8 @@
                                                                 class="card-img-absolute" alt="circle-image">
                                                             <h4 class="font-weight-normal mb-2">
                                                             </h4>
-                                                            <h2 class="mb-2">ITR <div class="card-text fs-6">
-                                                                (1,2 year)</div>
+                                                            <h2 class="mb-2">ITR (1,2 year) / Salary Slip <div class="card-text fs-6">
+                                                               </div>
                                                             </h2>
 
                                                             <div class="d-flex gap-3">
