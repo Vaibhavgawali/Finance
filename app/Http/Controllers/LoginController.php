@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 class LoginController extends Controller
 {
     use AuthenticatesUsers;
@@ -34,5 +35,4 @@ class LoginController extends Controller
                 ?: redirect()->intended($this->redirectPath());
         }
     }
-
 }
