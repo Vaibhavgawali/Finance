@@ -310,7 +310,7 @@
                                                             class="card-img-absolute" alt="circle-image">
                                                         <h4 class="font-weight-normal mb-2">
                                                         </h4>
-                                                        <h2 class="mb-2">ITR (1,2 year)</h2>
+                                                        <h2 class="mb-2">ITR (1,2 year) / Salary Slip </h2>
                                                         <div class="d-flex gap-3">
                                                             <a href="" target="_blank" id="itrLink"
                                                             class="btn btn-gradient-info btn-icon-text">

@@ -7,12 +7,32 @@
         <section id="subheader" class="text-light" style=""
             data-bgimage="url({{ asset('assets/images/background/subheader2.jpg') }}) top" >
             <h1>Loan</h1>
+            
         </section>
         <!-- section close -->
 
         <section>
             <div class="container">
                 <div class="row">
+                    <div class="col-12">
+                        <p class="fs-4">Before proceeding with your loan application, please make sure you have the following documents ready:</p>
+                        <h6 class="fs-6 text-dark">Documents to be required</h6>
+                        <ul class="mt-4">
+                          <li><strong>Identity Proof</strong>: Any document with your personal details like name, age, gender, etc., can be submitted as identity proof, such as passport, PAN Card or driver’s licence.</li>
+                          <li><strong>Residence Proof</strong>: Your permanent and current place of residence should be mentioned on a document that is considered as an address proof such as Aadhaar Card or Voter ID.</li>
+                          <li><strong>Employment Proof</strong>: Documents showing your employment details, such as whether you are salaried or a self-employed applicant (business), name of the organisation, etc. are considered as employment proof.</li>
+                          <li><strong>Income Proof</strong>: Documents showing your net monthly in-hand income such as bank statements are considered as proof of your earnings.</li>
+                        </ul>
+                        <h6 class="fs-6 text-dark">Loan Criteria Hinges on Several Key Factors</h6>
+                        <ol>
+                          <li><strong>Age:</strong> To qualify for a loan, your age typically must fall within the range of 23 to 55 years. This is normally used to gauge your financial stability.</li>
+                          <li><strong>Credit Score:</strong> A good credit score is crucial for approval. Having a comparatively low credit score can greatly impact your chances of securing a good loan amount. A bad credit score can affect your ROI as well. You need to have a credit score of 750 or higher.</li>
+                          <li><strong>Employment Criteria:</strong> For salaried individuals, stable employment is required and having a work experience of 1 to 3 years can be helpful. For self-employed individuals, you must have a well-established and verifiable income source.</li>
+                          <li><strong>Income Level:</strong> Your monthly income plays a vital role. A minimum income requirement is there. An amount of INR 15,000 for salaried individuals is kept as a necessary condition. Self-employed applicants may need to demonstrate a higher income based on their business size and nature.</li>
+                          <li><strong>Employment Stability:</strong> Consistency in your employment history is important. Frequent job changes have a negative impact.</li>
+                          <li><strong>Existing Financial Commitment:</strong> Your existing loans and credit card debts will play an important role in determining whether or not the loan will be sanctioned. High levels of debt will affect your eligibility as they may hinder your ability to repay a new loan.</li>
+                        </ol>
+                    </div>
                     <div class="col-lg-4 col-md-6 mb30">
                         <a href="/loan/create">
                             <div class="f-box f-border f-icon-left f-icon-rounded f-box-s1">

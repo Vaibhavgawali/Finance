@@ -143,13 +143,6 @@ class LoanController extends Controller
             'loan_amount' => 'required|numeric',
             'credit_score' => 'required|numeric',
             'mother_name' => 'required|string|max:255',
-
-            'pan_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
-            'adhar_front_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
-            'adhar_back_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
-            'itr_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
-            'bank_statement_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
-            
             // 'document_type' => 'required|string|max:255',
             // 'upload_document' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048', 
 
@@ -170,6 +163,12 @@ class LoanController extends Controller
             'office_city' => 'nullable|string',
             'office_pincode' => 'nullable|string|max:6',
             'office_phone' => 'nullable|string',
+
+            'pan_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
+            'adhar_front_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
+            'adhar_back_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
+            'itr_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
+            'bank_statement_file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
         ];
         
         // Validate the request data
@@ -177,6 +176,7 @@ class LoanController extends Controller
         
         // Check if validation fails
         if ($validator->fails()) {
+            
             return Response(['status' => false, 'errors' => $validator->errors()], 422);
         }
 
@@ -223,10 +223,6 @@ class LoanController extends Controller
 
             //     $loan->upload_document = $documentName;
             // }
-
-            
-
-          
             $documentFields = ['pan_file', 'adhar_front_file', 'adhar_back_file','itr_file','bank_statement_file'];
 
             foreach ($documentFields as $documentField) {
@@ -234,9 +230,9 @@ class LoanController extends Controller
                 if ($request->hasFile($documentField)) {
                     $document = $request->file($documentField);
                     $documentName = $document->hashName();                
-                    $document->move(public_path('storage/credit-card'), $documentName);
+                    $document->move(public_path('storage/loan'), $documentName);
                     // Set the document name to the respective column in the CreditCard model
-                    $creditCard->$documentField = $documentName;
+                    $loan->$documentField = $documentName;
                 }
             }
             $loan->save();

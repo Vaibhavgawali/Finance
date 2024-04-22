@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="/admin-assets/assets/css/style.css">
     <link rel="stylesheet" href="/admin-assets/assets/css/candidate-quiz.css">
 
-    <link rel="shortcut icon" href="/admin-assets/assets/images/logomini.png" />
+    <link rel="shortcut icon" href="{{asset('assets/images/fevicon.png')}}" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="base-url" content="{{ url('') }}">
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>

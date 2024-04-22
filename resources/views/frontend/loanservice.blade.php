@@ -1,37 +1,37 @@
 @extends('frontend/layouts.main')
 @section('main-section')
-    <div class="no-bottom no-top" id="content">
-        <div id="top"></div>
-        <!-- MultiStep Form -->
-        <!-- section begin -->
-        <section id="subheader" class="text-light"
-            data-bgimage="url({{ asset('assets/images/background/subheader2.jpg') }}) top">
-            <h1>Loan</h1>
-        </section>
-        <!-- section close -->
-        <section>
-            <div class="container">
-                <div class="row bg-white p-3 rounded-3 g-0">
-                    <div class="col-md-12 col-12 border border-2 p-3 rounded-3">
-                        <h3 class="text-center">Loan Application</h3>
-                        <form id="loanForm" enctype="multipart/form-data" class="bg-white">
-                            <!-- One "tab" for each step in the form: -->
-                            @csrf
-                            <div class="tab">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group pb-3">
-                                            <select name="loan_type" id="loan_type" class="form-control">
-                                                <option value="null" selected disabled>
-                                                    --Select Loan Type--
-                                                </option>
-                                                <option value="Home Loan">Home Loan</option>
-                                                <option value="Business Loan">Business Loan</option>
-                                                <option value="Personal Loan">Personal Loan</option>
-                                                <option value="Vehicle Loan">Vehicle Loan</option>
-                                            </select>
-                                            <div id="loan_type_error" class="text-danger mx-2"></div>
-                                        </div>
+<div class="no-bottom no-top" id="content">
+  <div id="top"></div>
+  <!-- MultiStep Form -->
+  <!-- section begin -->
+  <section id="subheader" class="text-light"
+    data-bgimage="url({{ asset('assets/images/background/subheader2.jpg') }}) top">
+    <h1>Loan</h1>
+  </section>
+  <!-- section close -->
+  <section>
+    <div class="container">
+      <div class="row bg-white p-3 rounded-3 g-0">
+        <div class="col-md-12 col-12 border border-2 p-3 rounded-3">
+          <h3 class="text-center">Loan Application</h3>
+          <form id="loanForm" enctype="multipart/form-data" class="bg-white">
+            <!-- One "tab" for each step in the form: -->
+            @csrf
+            <div class="tab">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group pb-3">
+                    <select name="loan_type" id="loan_type" class="form-control">
+                      <option value="null" selected disabled>
+                        --Select Loan Type--
+                      </option>
+                      <option value="Home Loan">Home Loan</option>
+                      <option value="Business Loan">Business Loan</option>
+                      <option value="Personal Loan">Personal Loan</option>
+                      <option value="Vehicle Loan">Vehicle Loan</option>
+                    </select>
+                    <div id="loan_type_error" class="text-danger mx-2"></div>
+                  </div>
 
                                         <div class="form-group pb-3">
                                             <input type="text" name="name" id="name" class="form-control"
@@ -322,52 +322,55 @@
                   </div>
                 </div>
               </div> --}}
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group mb-3">
-                                            <select name="document_type" id="document_type" class="form-control">
-                                                <option value="" selected disabled>--Select Documents--</option>
-                                                <option value="pancard">Pancard</option>
-                                                <option value="adhar_card_doc">Adhar Card Front</option>
-                                                <option value="adhar_card_doc">Adhar Card Back</option>
-                                                <option value="3_year_itr">3 Year ITR </option>
-                                                <option value="1_year_bank_statement">1 Year Bank Statement</option>
-                                                <option value="ownership_proof">Ownership Proof Residence</option>
-                                                <option value="certificate_of_incorporation">Certificate of Incorporation
-                                                </option>
-                                                <option value="gst_certificate">GST Certificate/ MSME Certificate</option>
-                                                <option value="gst_return">GST Return(Last 1 year)</option>
-                                                <option value="office_address">Office Address Proof</option>
-                                                <option value="MOA">MOA/AOA/MS</option>
-                                                <option value="trade_license">Trade License</option>
-                                                <option value="photo">Photo </option>
-                                                <option value="other">Other</option>
-                                            </select>
-                                        </div>
-                                        <div id="document_type_error" class="text-danger mx-2"></div>
+              <div class="row">
+                <div class="col-md-6">
 
+                  <div class="form-group pb-3">
+                    <label for="identity_proof_file">Identity Proof (Adhaar, PAN, Passport )</label>
+                    <input type="file" name="identity_proof_file" class="form-control" id="identity_proof_file"
+                      accept="application/pdf" />
+                    <div id="identity_proof_file_error" class="text-danger mx-2"></div>
+                  </div>
+                  <div class="form-group pb-3">
+                    <label for="residence_proof_file">Residence Proof</label>
+                    <input type="file" name="residence_proof_file" class="form-control" id="residence_proof_file"
+                      accept="application/pdf" />
+                    <div id="residence_proof_file_error" class="text-danger mx-2"></div>
+                  </div>
+                  <div class="form-group pb-3">
+                    <label for="itr_file">Upload ITR(1,2 year)/ Salary Slip</label>
+                    <input type="file" name="itr_file" class="form-control" id="itr_file" />
+                    <div id="itr_file_error" class="text-danger mx-2"></div>
+                </div>
 
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="file" class="form-control" name="upload_document"
-                                                id="upload_document" multiple>
-                                        </div>
-                                        <div id="upload_document_error" class="text-danger mx-2"></div>
-                                    </div>
-                                </div>
-                                <div style="overflow: auto">
-                                    <div style="float: right">
-                                        <button class="btn btn-secondary prevBtn" type="button" id="">
-                                            Previous
-                                        </button>
-                                        <button class="btn btn-primary nextBtn" type="submit" id="loan_submit_btn"
-                                            class="submit-btn">
-                                            Submit
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group pb-3">
+                    <label for="employment_proof_file">Employment Proof</label>
+                    <input type="file" name="employment_proof_file" class="form-control" id="employment_proof_file"
+                      accept="application/pdf" />
+                    <div id="employment_proof_file_error" class="text-danger mx-2"></div>
+                  </div>
+                  <div class="form-group pb-3">
+                    <label for="income_proof">Income Proof</label>
+                    <input type="file" name="income_proof_file" class="form-control" id="income_proof_file"
+                      accept="application/pdf" />
+                    <div id="income_proof_error" class="text-danger mx-2"></div>
+                  </div>
+                </div>
+
+              </div>
+              <div style="overflow: auto">
+                <div style="float: right">
+                  <button class="btn btn-secondary prevBtn" type="button" id="">
+                    Previous
+                  </button>
+                  <button class="btn btn-primary nextBtn" type="submit" id="loan_submit_btn" class="submit-btn">
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </div>
 
                     </div>
 
