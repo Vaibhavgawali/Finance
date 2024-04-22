@@ -7,6 +7,7 @@
             <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white me-2">
                     <i class="mdi mdi-chart-areaspline"></i>
+                </span>Demat
             </h3>
         </div>
         <div class="row">
@@ -258,17 +259,19 @@
                                             data: 'approval_date'
                                         },
                                         {
-    data: 'credit_card_refer',
-    render: function(data, type, row) {
-        if (data && data.name) { // Check if data and data.name are not null
-            let {name} = data;
-            console.log("name", name);
-            return name.charAt(0).toUpperCase() + name.slice(1);
-        } else {
-            return ""; // Return an empty string or handle it as appropriate
-        }
-    }
-},
+                                            data: 'credit_card_refer',
+                                            render: function(data, type, row) {
+                                                if (data && data.name) { // Check if data and data.name are not null
+                                                    let {
+                                                        name
+                                                    } = data;
+                                                    console.log("name", name);
+                                                    return name.charAt(0).toUpperCase() + name.slice(1);
+                                                } else {
+                                                    return ""; // Return an empty string or handle it as appropriate
+                                                }
+                                            }
+                                        },
                                         {
                                             data: 'remark'
                                         },
@@ -371,11 +374,30 @@
                                             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
                                         },
                                         success: function(response) {
-                                            // hideModal();
-                                            var currentURL = window.location.href;
-                                            setTimeout(function() {
-                                                window.location.href = currentURL;
-                                            }, 1000);
+                                            hideModal();
+                                            swal({
+                                                title: "Demat Status  Updated",
+                                                text: "Your Demat status have been successfully updated.",
+                                                icon: "success",
+                                                buttons: {
+                                                    confirm: {
+                                                        text: "OK",
+                                                        value: true,
+                                                        visible: true,
+                                                        className: "swal-button--confirm",
+                                                        closeModal: true
+                                                    }
+                                                },
+                                                closeOnClickOutside: false // Prevent closing on click outside
+                                            }).then((willRefresh) => {
+                                                if (willRefresh) {
+                                                    location.reload(); // Reload the page
+                                                }
+                                            });
+                                            // var currentURL = window.location.href;
+                                            // setTimeout(function() {
+                                            //     window.location.href = currentURL;
+                                            // }, 1000);
                                         },
                                         error: function(error) {
                                             console.error(error);

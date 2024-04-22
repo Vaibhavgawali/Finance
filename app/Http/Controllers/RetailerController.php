@@ -40,10 +40,17 @@ class RetailerController extends Controller
     {
 
         if (Auth::check()) {
+            // $users = User::where('category', 'Retailer')
+            //         ->orderBy('id', 'desc')
+            //         ->get();
             $users = User::where('category', 'Retailer')
                     ->orderBy('id', 'desc')
+                    // ->with('referral')
+                    // ->when(Auth::check() && Auth::user()->hasRole('Distributor'), function ($query) {
+                    //     $query->orWhere('referred_by', Auth::user()->referral_id);
+                    // })
                     ->get();
-           
+        //    dd($users);
             if ($users) {
                 return view('dashboard.retailer.index');
             }
@@ -67,10 +74,10 @@ class RetailerController extends Controller
                             ->orWhereHas('referral', function ($q) use ($search) {
                                 $q->where('name', 'like', '%' . $search . '%');
                             });
-                            if (Auth::check() &&  Auth::user()->hasRole('Distributor')) {
-                                $q->orWhere('referred_by', Auth::user()->referral_id);
-                            }
                         });
+                    })
+                    ->when(Auth::user()->hasRole('Distributor'), function ($query) {
+                        $query->where('referred_by', Auth::user()->referral_id);
                     })
                     ->orderBy('id', 'desc')
                     ->get();
