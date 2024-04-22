@@ -469,10 +469,13 @@ $(document).ready(function () {
         e.preventDefault();
 
         var url = window.location.origin + `/basic-details-update`;
+        var baseUrl = $('meta[name="base-url"]').attr("content");
 
+        console.log(url);
+        console.log(baseUrl);
         $.ajax({
             type: "PATCH",
-            url: url,
+            url: baseUrl + "/basic-details-update",
             data: data,
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
