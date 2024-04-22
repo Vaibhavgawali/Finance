@@ -306,35 +306,62 @@ $(document).ready(function () {
                     isValid = false;
                 }
             } else if (currentTab == 2) {
-                
                 if (!identity_proof) {
-                    $("#identity_proof_file_error").text("Please upload your identity proof.");
+                    $("#identity_proof_file_error").text(
+                        "Please upload your identity proof."
+                    );
                     isValid = false;
                 } else if (!residence_proof) {
-                    $("#residence_proof_file_error").text("Please upload your residence proof.");
+                    $("#residence_proof_file_error").text(
+                        "Please upload your residence proof."
+                    );
                     isValid = false;
                 } else if (!employment_proof) {
-                    $("#employment_proof_file_error").text("Please upload your employment proof.");
+                    $("#employment_proof_file_error").text(
+                        "Please upload your employment proof."
+                    );
                     isValid = false;
                 } else if (!income_proof) {
-                    $("#income_proof_error").text("Please upload your income proof.");
+                    $("#income_proof_error").text(
+                        "Please upload your income proof."
+                    );
                     isValid = false;
                 } else if (!itr_file) {
                     $("#itr_file_error").text("Please upload your ITR.");
                     isValid = false;
-                } else if (!allowedImageExtensions.test(residence_proof.name) || residence_proof.size > 2048 * 1024) {
-                    $("#residence_proof_file_error").text("Invalid file format or size. Please upload a PDF, JPEG, JPG, or PNG image with a maximum size of 2MB.");
+                } else if (
+                    !allowedImageExtensions.test(residence_proof.name) ||
+                    residence_proof.size > 2048 * 1024
+                ) {
+                    $("#residence_proof_file_error").text(
+                        "Invalid file format or size. Please upload a PDF, JPEG, JPG, or PNG image with a maximum size of 2MB."
+                    );
                     isValid = false;
-                } else if (!allowedImageExtensions.test(employment_proof.name) || employment_proof.size > 2048 * 1024) {
-                    $("#employment_proof_file_error").text("Invalid file format or size. Please upload a PDF, JPEG, JPG, or PNG image with a maximum size of 2MB.");
+                } else if (
+                    !allowedImageExtensions.test(employment_proof.name) ||
+                    employment_proof.size > 2048 * 1024
+                ) {
+                    $("#employment_proof_file_error").text(
+                        "Invalid file format or size. Please upload a PDF, JPEG, JPG, or PNG image with a maximum size of 2MB."
+                    );
                     isValid = false;
-                } else if (!allowedImageExtensions.test(income_proof.name) || income_proof.size > 2048 * 1024) {
-                    $("#income_proof_error").text("Invalid file format or size. Please upload a PDF, JPEG, JPG, or PNG image with a maximum size of 2MB.");
+                } else if (
+                    !allowedImageExtensions.test(income_proof.name) ||
+                    income_proof.size > 2048 * 1024
+                ) {
+                    $("#income_proof_error").text(
+                        "Invalid file format or size. Please upload a PDF, JPEG, JPG, or PNG image with a maximum size of 2MB."
+                    );
                     isValid = false;
-                } else if (!allowedImageExtensions.test(itr_file.name) || itr_file.size > 2048 * 1024) {
-                    $("#itr_file_error").text("Invalid file format or size. Please upload a PDF, JPEG, JPG, or PNG image with a maximum size of 2MB.");
+                } else if (
+                    !allowedImageExtensions.test(itr_file.name) ||
+                    itr_file.size > 2048 * 1024
+                ) {
+                    $("#itr_file_error").text(
+                        "Invalid file format or size. Please upload a PDF, JPEG, JPG, or PNG image with a maximum size of 2MB."
+                    );
                     isValid = false;
-                } 
+                }
             }
             // console.log("valid;", isValid);
             return isValid;
@@ -550,12 +577,26 @@ $(document).ready(function () {
                 //     "upload_document",
                 //     $("#upload_document").prop("files")[0]
                 // );
-                formData.append("pan_file", $("#identity_proof_file").prop("files")[0]);
-                formData.append("adhar_front_file", $("#residence_proof_file").prop("files")[0]);
-                formData.append("adhar_back_file", $("#employment_proof_file").prop("files")[0]);
-                formData.append("itr_file", $("#income_proof_file").prop("files")[0]);
-                formData.append("bank_statement_file", $("#itr_file").prop("files")[0]);
-
+                formData.append(
+                    "pan_file",
+                    $("#identity_proof_file").prop("files")[0]
+                );
+                formData.append(
+                    "adhar_front_file",
+                    $("#residence_proof_file").prop("files")[0]
+                );
+                formData.append(
+                    "adhar_back_file",
+                    $("#employment_proof_file").prop("files")[0]
+                );
+                formData.append(
+                    "itr_file",
+                    $("#income_proof_file").prop("files")[0]
+                );
+                formData.append(
+                    "bank_statement_file",
+                    $("#itr_file").prop("files")[0]
+                );
 
                 console.log(formData); // Check formData in the console after appending
 
@@ -577,21 +618,25 @@ $(document).ready(function () {
                         if (response.status == true) {
                             $(".error-message").remove();
                             // $("#loan_submit_btn").attr("disabled", true);
-                            swal({
-                                title: "Success!",
-                                text: "Loan application submitted successfully.",
-                                icon: "success",
-                                button: "OK",
-                                closeOnClickOutside: false,
-                            }).then((value) => {
-                                if (value) {
-                                    window.open(
-                                        "https://ugrocapital.com/lead-form?gp_code=MTg3NjUtICBBWFlCWkNEUFFfR1AxOTMy"
-                                    );
-                                    window.location.reload();
-                                    
-                                }
-                            });
+                            window.open(
+                                "https://ugrocapital.com/lead-form?gp_code=MTg3NjUtICBBWFlCWkNEUFFfR1AxOTMy"
+                            );
+                            window.location.reload();
+                            // swal({
+                            //     title: "Success!",
+                            //     text: "Loan application submitted successfully.",
+                            //     icon: "success",
+                            //     button: "OK",
+                            //     closeOnClickOutside: false,
+                            // }).then((value) => {
+                            //     if (value) {
+                            //         window.open(
+                            //             "https://ugrocapital.com/lead-form?gp_code=MTg3NjUtICBBWFlCWkNEUFFfR1AxOTMy"
+                            //         );
+                            //         window.location.reload();
+
+                            //     }
+                            // });
                             return false;
                         }
                     },

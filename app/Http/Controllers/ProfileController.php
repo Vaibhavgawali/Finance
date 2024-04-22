@@ -214,6 +214,7 @@ class ProfileController extends Controller
 
         $AuthUserId=Auth::user()->id;
         $userId = $request->input('user_id');
+        // dd($userId);
         $user = User::findOrFail($userId);
         if($userId == $AuthUserId){
 

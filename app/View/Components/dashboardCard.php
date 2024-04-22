@@ -18,9 +18,10 @@ class dashboardCard extends Component
     public $totalCountLabel;
     public $totalCount;
     public $icon;
+    public $btnbg;
+    public $applyUrl;
 
-
-    public function __construct($bgClass,$url,$imageUrl, $title, $totalCountLabel, $totalCount,$icon)
+    public function __construct($bgClass,$url,$imageUrl, $title, $totalCountLabel, $totalCount,$icon,$btnbg,$applyUrl)//
     {
         $this->bgClass = $bgClass;
         $this->icon = $icon;
@@ -30,6 +31,8 @@ class dashboardCard extends Component
         $this->title = $title;
         $this->totalCountLabel = $totalCountLabel;
         $this->totalCount = $totalCount;
+        $this->applyUrl = $applyUrl;
+        $this->btnbg = $btnbg;
     }
 
     /**

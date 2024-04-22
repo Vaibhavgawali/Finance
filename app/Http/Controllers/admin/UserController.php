@@ -20,8 +20,8 @@ class UserController extends Controller
         $this->middleware('auth:sanctum')->except('store');
 
         // Spatie middleware here
-        $this->middleware(['role:Superadmin|Admin'])->except('show');
-        $this->middleware(['role:Superadmin|Admin|Distributor'])->only('show');
+        $this->middleware(['role:Superadmin|Admin'])->only('update','destroy','getUserRoles','assignRole');
+        $this->middleware(['role:Superadmin|Admin|Distributor|Retailer'])->only('show');
     }
 
     

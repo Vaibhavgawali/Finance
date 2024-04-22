@@ -1,8 +1,6 @@
 $(document).ready(function () {
-    
     $("#demat_btn").click(function (e) {
         e.preventDefault();
-      
 
         var name = $("#name").val();
         var phone = $("#phone").val();
@@ -26,8 +24,6 @@ $(document).ready(function () {
             $("#name").focus();
             return false;
         }
-
-      
 
         if (
             pan_num == "" ||
@@ -119,23 +115,24 @@ $(document).ready(function () {
                 if (response.status == true) {
                     $(".error-message").remove();
                     $("#demat_btn").attr("disabled", true);
-                    swal({
-                        title: "Success!",
-                        text: "Demat account application submitted successfully.",
-                        icon: "success",
-                        button: "OK",
-                        closeOnClickOutside: false
-                    }).then((value) => {
-                        if (value) {
-                            window.open('https://hdfcsky.page.link/u9fo')
-                            window.location.reload();
-                           
-                        }
-                    });
+                    window.open("https://hdfcsky.page.link/u9fo");
+                    window.location.reload();
+                    // swal({
+                    //     title: "Success!",
+                    //     text: "Demat account application submitted successfully.",
+                    //     icon: "success",
+                    //     button: "OK",
+                    //     closeOnClickOutside: false
+                    // }).then((value) => {
+                    //     if (value) {
+                    //         window.open('https://hdfcsky.page.link/u9fo')
+                    //         window.location.reload();
+
+                    //     }
+                    // });
                     return false;
                 }
             },
-            
 
             error: function (response) {
                 console.log(response.status);
