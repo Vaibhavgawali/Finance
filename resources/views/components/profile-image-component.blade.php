@@ -37,7 +37,7 @@
                             <div class="form-group">
                                 <label for="user_id"></label>
                                 <input type="text" class="form-control" id="user_id" placeholder="user_id"
-                                    value=" {{ $data->id }}" hidden>
+                                    value=" {{ $data->id }}">
                             </div>
                             <br>
                             <div class="d-flex w-100 justify-content-center align-items-center ">
@@ -77,7 +77,7 @@
                         <div class="form-group">
                             <label for="user_id"></label>
                             <input type="text" class="form-control" id="user_id" placeholder="user_id"
-                                value=" {{ $data->user_id }}" hidden>
+                                value=" {{ $data->id }}" hidden>
                         </div>
                         <br>
                         <div class="d-flex w-100 justify-content-center align-items-center ">
