@@ -40,7 +40,7 @@
                         </form>
                     </div>
                     <div class="col-12 col-md-5">
-                        <img class="w-100" src="{{ asset('assets/images/demat/demataccount.png') }}" alt="" />
+                        <img class="w-100" src="{{ asset('assets/images/demat/demataccount.jpeg') }}" alt="" />
                     </div>
                 </div>
             </div>
