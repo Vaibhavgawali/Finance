@@ -598,10 +598,6 @@ $(document).ready(function () {
                     $("#itr_file").prop("files")[0]
                 );
 
-                console.log(formData); // Check formData in the console after appending
-
-                console.log(formData);
-
                 // Submit form data via AJAX
                 $.ajax({
                     url: "/loan",
@@ -618,25 +614,29 @@ $(document).ready(function () {
                         if (response.status == true) {
                             $(".error-message").remove();
                             // $("#loan_submit_btn").attr("disabled", true);
-                            window.open(
-                                "https://ugrocapital.com/lead-form?gp_code=MTg3NjUtICBBWFlCWkNEUFFfR1AxOTMy"
-                            );
-                            window.location.reload();
-                            // swal({
-                            //     title: "Success!",
-                            //     text: "Loan application submitted successfully.",
-                            //     icon: "success",
-                            //     button: "OK",
-                            //     closeOnClickOutside: false,
-                            // }).then((value) => {
-                            //     if (value) {
-                            //         window.open(
-                            //             "https://ugrocapital.com/lead-form?gp_code=MTg3NjUtICBBWFlCWkNEUFFfR1AxOTMy"
-                            //         );
-                            //         window.location.reload();
+                            // if (response.loan_type == "Business Loan") {
+                            //     window.open(
+                            //         "https://ugrocapital.com/lead-form?gp_code=MTg3NjUtICBBWFlCWkNEUFFfR1AxOTMy"
+                            //     );
+                            //     window.location.reload();
+                            //     return false;
+                            // }
 
-                            //     }
-                            // });
+                            swal({
+                                title: "Success!",
+                                text: "Loan application submitted successfully.",
+                                icon: "success",
+                                button: "OK",
+                                closeOnClickOutside: false,
+                            }).then((value) => {
+                                if (value) {
+                                    // window.open(
+                                    //     "https://ugrocapital.com/lead-form?gp_code=MTg3NjUtICBBWFlCWkNEUFFfR1AxOTMy"
+                                    // );
+
+                                    window.location.reload();
+                                }
+                            });
                             return false;
                         }
                     },

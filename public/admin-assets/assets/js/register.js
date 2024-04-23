@@ -91,6 +91,7 @@ $(document).ready(function () {
             user_type: user_type,
         };
 
+        $("#add_user_button").attr("disabled", true);
         var url = window.location.origin + "/register";
         $.ajax({
             type: "POST",
@@ -128,6 +129,7 @@ $(document).ready(function () {
                                 "</div>"
                         );
                     });
+                    $("#add_user_button").attr("disabled", false);
                 }
             },
         });

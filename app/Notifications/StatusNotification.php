@@ -6,20 +6,23 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\HtmlString;
 use App\Models\User;
 
-class RegistrationNotification extends Notification
+class StatusNotification extends Notification
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(User $user,$password)
+    public function __construct(User $user, $status, $remark, $application_type, $applicant_name, $application_date)
     {
-        $this->user=$user;
-        $this->password=$password;
+        $this->user = $user;
+        $this->status = $status;
+        $this->remark = $remark;
+        $this->application_type = $application_type;
+        $this->applicant_name = $applicant_name;
+        $this->application_date = $application_date;
     }
 
     /**
@@ -37,17 +40,21 @@ class RegistrationNotification extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return(new MailMessage)
+        $mailMessage = (new MailMessage)
         ->greeting('Dear, ' . $this->user->name)
-        ->line('Thanks for becoming a team member of BlarkaFin.')
-         ->line('Welcome you in the world of financial services.')
-        ->line('Please see below the login credentials:')
-        ->line('Email id: ' . $this->user->email)
-        ->line('Password: ' . $this->password)
+        ->line('Your application status changed to '. $this->status);
+
+        if ($this->remark) {
+            $mailMessage->line('Remark: ' . $this->remark);
+        }
+        $mailMessage ->line('Application Type: ' . $this->application_type)
+        ->line('Applicant Name: ' . $this->applicant_name)
+        ->line('Application Date: ' . $this->application_date)
         ->line('Do not reply to this mail. If you have any query, please write to info@blarkafin.com.')
         ->action('Click here to Login', url('/login'))
-        ->line('Apply for Loans/ Credit Cards/ Demat Account/ Insurance Earn good incentive.')
         ->salutation("Regards, \r\n Team Blarkafin");
+
+        return $mailMessage;
     }
 
     /**

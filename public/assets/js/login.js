@@ -58,6 +58,7 @@ $(document).ready(function () {
         };
 
         event.preventDefault();
+        $("#login_btn").attr("disabled", true);
 
         $.ajax({
             type: "POST",
@@ -92,6 +93,7 @@ $(document).ready(function () {
                                 "</div>"
                         );
                     });
+                    $("#login_btn").attr("disabled", false);
                 }
                 if (response.status === 401) {
                     $("#register_status").html(
@@ -99,6 +101,7 @@ $(document).ready(function () {
                             response.responseJSON.message +
                             "</div>"
                     );
+                    $("#login_btn").attr("disabled", false);
                 }
             },
         });

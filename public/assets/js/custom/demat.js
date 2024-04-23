@@ -103,6 +103,7 @@ $(document).ready(function () {
             adhar_num: adhar_num,
         };
 
+        $("#demat_btn").attr("disabled", true);
         var url = window.location.origin + "/demat";
         $.ajax({
             type: "POST",
@@ -150,6 +151,7 @@ $(document).ready(function () {
                                 "</div>"
                         );
                     });
+                    $("#demat_btn").attr("disabled", false);
                 }
             },
         });

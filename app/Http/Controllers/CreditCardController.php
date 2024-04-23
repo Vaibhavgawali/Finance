@@ -12,7 +12,7 @@ use Spatie\Permission\Models\Permission;
 use PDF;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
-
+use App\Notifications\StatusNotification;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -274,9 +274,14 @@ class CreditCardController extends Controller
             // Find the credit card record by its ID
             $creditCard = CreditCard::findOrFail($creditCardId);
 
+            $applicant_name=$creditCard->name;
+            $application_date=$creditCard->created_at;
+            $currentStatus = $creditCard->status;
+            $currentRemark = $creditCard->remark;
+
             $validator = Validator::make($request->all(), [
                 'status' => 'required|string',
-                'application_stage' => 'nullable|string',
+                // 'application_stage' => 'nullable|string',
                 'approval_date' => 'nullable|date',
                 'remark' => 'nullable|string'
             ]);
@@ -286,7 +291,25 @@ class CreditCardController extends Controller
             } 
             $isUpdated=$creditCard->update($request->all());
             if($isUpdated){
-                return Response(['message' => "Credit Card updated successfully"],200);
+                $referringUser = $creditCard->creditCardRefer;
+                if ($referringUser) {
+
+                    $newStatus = $request->status;
+                    $newRemark = $request->remark;
+
+                    // Check if status or remark has changed
+                    $statusChanged = $currentStatus !== $newStatus;
+                    $remarkChanged = $currentRemark !== $newRemark;
+
+                    // Send notification only if either status or remark has changed
+                    if ($statusChanged || $remarkChanged) {
+                        $application_type="Credit Card";
+
+                        /** Status notification */
+                        $referringUser->notify(new StatusNotification($referringUser,$newStatus,$newRemark,$application_type,$applicant_name,$application_date));
+                    }
+                    return Response(['message' => "Credit Card updated successfully"],200);
+                }
             }
             return Response(['message' => "Something went wrong"],500);
         }

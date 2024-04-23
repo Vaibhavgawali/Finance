@@ -12,7 +12,7 @@ use Spatie\Permission\Models\Permission;
 use PDF;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
-
+use App\Notifications\StatusNotification;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -242,9 +242,14 @@ class DematController extends Controller
             // Find the demat record by its ID
             $demat = Demat::findOrFail($id);
 
+            $applicant_name=$demat->name;
+            $application_date=$demat->created_at;
+            $currentStatus = $demat->status;
+            $currentRemark = $demat->remark;
+
             $validator = Validator::make($request->all(), [
                 'status' => 'required|string',
-                'application_stage' => 'nullable|string',
+                // 'application_stage' => 'nullable|string',
                 'approval_date' => 'nullable|date',
                 'remark' => 'nullable|string'
             ]);
@@ -255,7 +260,29 @@ class DematController extends Controller
 
             $isUpdated=$demat->update($request->all());
             if($isUpdated){
-                return Response(['message' => "Demat updated successfully"],200);
+                $referringUser = $demat->dematRefer;
+                if ($referringUser) {
+
+                    $newStatus = $request->status;
+                    $newRemark = $request->remark;
+
+                    // Check if status or remark has changed
+                    $statusChanged = $currentStatus !== $newStatus;
+                    $remarkChanged = $currentRemark !== $newRemark;
+
+                    // Send notification only if either status or remark has changed
+                    if ($statusChanged || $remarkChanged) {
+                        $application_type="Demat";
+
+                        /** Status notification */
+                        $referringUser->notify(new StatusNotification($referringUser,$newStatus,$newRemark,$application_type,$applicant_name,$application_date));
+                    }
+
+                    return Response(['message' => "Demat updated successfully"],200);
+                }else {
+                    return response(['message' => "Referring user not found"], 404);
+                }
+            
             }
             return Response(['message' => "Something went wrong"],500);
         }

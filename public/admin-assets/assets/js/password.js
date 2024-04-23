@@ -95,6 +95,7 @@ $(document).ready(function () {
             new_password: new_password,
             password_confirmation: password_confirmation,
         };
+        $("#reset_password_button").attr("disabled", true);
         var url = window.location.origin + `/reset-password/`;
 
         $.ajax({
@@ -113,14 +114,13 @@ $(document).ready(function () {
                         text: "Password changed successfully.",
                         icon: "success",
                         button: "OK",
-                        closeOnClickOutside: false
+                        closeOnClickOutside: false,
                     }).then((value) => {
                         if (value) {
                             window.location.href =
-                            window.location.origin + "/dashboard/";
+                                window.location.origin + "/dashboard/";
                         }
                     });
-                   
 
                     return false;
                 }
@@ -147,6 +147,7 @@ $(document).ready(function () {
                             errorContainer.html(messages);
                         }
                     });
+                    $("#reset_password_button").attr("disabled", false);
                 }
 
                 if (response.status === 404) {
@@ -164,6 +165,7 @@ $(document).ready(function () {
 
                         errorContainer.html(errorMessage);
                     });
+                    $("#reset_password_button").attr("disabled", false);
                 }
             },
         });

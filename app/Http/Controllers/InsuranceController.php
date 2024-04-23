@@ -206,9 +206,14 @@ class InsuranceController extends Controller
             // Find the demat record by its ID
             $insurance = Insurance::findOrFail($id);
 
+            $applicant_name=$insurance->name;
+            $application_date=$insurance->created_at;
+            $currentStatus = $insurance->status;
+            $currentRemark = $insurance->remark;
+
             $validator = Validator::make($request->all(), [
                 'status' => 'required|string',
-                'application_stage' => 'nullable|string',
+                // 'application_stage' => 'nullable|string',
                 'approval_date' => 'nullable|date',
                 'remark' => 'nullable|string'
             ]);
@@ -219,7 +224,27 @@ class InsuranceController extends Controller
 
             $isUpdated=$insurance->update($request->all());
             if($isUpdated){
-                return Response(['message' => "Insurance updated successfully"],200);
+                // $referringUser = $insurance->dematRefer;
+                if ($referringUser) {
+
+                    $newStatus = $request->status;
+                    $newRemark = $request->remark;
+
+                     // Check if status or remark has changed
+                     $statusChanged = $currentStatus !== $newStatus;
+                     $remarkChanged = $currentRemark !== $newRemark;
+ 
+                     // Send notification only if either status or remark has changed
+                     if ($statusChanged || $remarkChanged) {
+                         $application_type="Insurance";
+ 
+                         /** Status notification */
+                         $referringUser->notify(new StatusNotification($referringUser,$newStatus,$newRemark,$application_type,$applicant_name,$application_date));
+                     }
+                     return Response(['message' => "Insurance updated successfully"],200);
+                }else {
+                    return response(['message' => "Referring user not found"], 404);
+                }
             }
             return Response(['message' => "Something went wrong"],500);
         }

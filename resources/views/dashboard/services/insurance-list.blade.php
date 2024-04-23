@@ -36,7 +36,7 @@
                                     <th class="">Mobile</th>
                                     <th class="">Application Date</th>
                                     <th class="">Status</th>
-                                    <th class="">Application Stage</th>
+                                    {{-- <th class="">Application Stage</th> --}}
                                     <th class="">Approval Date</th>
                                     <th class="">Remarks</th>
                                     <th class="text-center" id="actionColumn">Actions</th>
@@ -71,7 +71,7 @@
                                             </div>
 
                                             <!-- Select tags -->
-                                            <div class="form-group pb-2">
+                                            {{-- <div class="form-group pb-2">
                                                 <label for="application_stage">Application Stage :</label>
                                                 <select class="form-control p-3" id="application_stage"
                                                     name="application_stage">
@@ -85,7 +85,7 @@
                                                     <option value="Rejected">Rejected</option>
                                                     <option value="Revoked">Revoked</option>
                                                 </select>
-                                            </div>
+                                            </div> --}}
 
 
                                             <!-- Date input -->
@@ -224,9 +224,9 @@
                                         {
                                             data: 'status'
                                         },
-                                        {
-                                            data: 'application_stage'
-                                        },
+                                        // {
+                                        //     data: 'application_stage'
+                                        // },
                                         {
                                             data: 'approval_date'
                                         },

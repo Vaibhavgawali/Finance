@@ -105,6 +105,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('assign-role/{id}', [UserController::class, 'assignRole']);
 
     Route::patch('demat-update-status/{id}', [DematController::class, 'updateStatus']);
+    Route::patch('loan-update-status/{id}', [LoanController::class, 'updateStatus']);
     Route::patch('insurance-update-status/{id}', [InsuranceController::class, 'updateStatus']);
     Route::patch('credit-card-update-status/{id}', [CreditCardController::class, 'updateStatus']);
 });

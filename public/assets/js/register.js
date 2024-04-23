@@ -1,5 +1,3 @@
-
-
 $(document).ready(function () {
     $("#add_user_button").click(function (e) {
         e.preventDefault();
@@ -81,6 +79,7 @@ $(document).ready(function () {
             return false;
         }
 
+        $("#add_user_button").attr("disabled", true);
         var data = {
             name: name,
             phone: phone,
@@ -101,13 +100,14 @@ $(document).ready(function () {
                 if (response.status == true) {
                     $(".error-message").remove();
 
-                    $("#add_user_button").attr("disabled", true);
+                    // $("#add_user_button").attr("disabled", true);
+
                     swal({
                         title: "Success!",
                         text: "Registered successfully login credentials sent on your email.",
                         icon: "success",
                         button: "OK",
-                        closeOnClickOutside: false
+                        closeOnClickOutside: false,
                     }).then((value) => {
                         if (value) {
                             window.location.href = `${window.location.origin}/${user_type}`;
@@ -131,6 +131,7 @@ $(document).ready(function () {
                                 "</div>"
                         );
                     });
+                    $("#add_user_button").attr("disabled", false);
                 }
             },
         });

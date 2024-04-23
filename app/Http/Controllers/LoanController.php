@@ -12,7 +12,7 @@ use Spatie\Permission\Models\Permission;
 use PDF;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
-
+use App\Notifications\StatusNotification;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -237,7 +237,7 @@ class LoanController extends Controller
             }
             $loan->save();
 
-            return Response(['status' => true, 'message' => "Loan created successfully !"], 200);
+            return Response(['status' => true, 'loan_type' => $request->loan_type ,'message' => "Loan created successfully !"], 200);
         }
 
         return Response(['status' => false, 'message' => "Something went wrong"], 500);
@@ -275,10 +275,14 @@ class LoanController extends Controller
         if($formMethod == "PATCH"){
             // Find the credit card record by its ID
             $loan = Loan::findOrFail($id);
-
+            $applicant_name=$loan->name;
+            $application_date=$loan->created_at;
+            $currentStatus = $loan->status;
+            $currentRemark = $loan->remark;
+            
             $validator = Validator::make($request->all(), [
                 'status' => 'required|string',
-                'application_stage' => 'nullable|string',
+                // 'application_stage' => 'nullable|string',
                 'approval_date' => 'nullable|date',
                 'remark' => 'nullable|string',
             ]);
@@ -289,7 +293,25 @@ class LoanController extends Controller
 
             $isUpdated=$loan->update($request->all());
             if($isUpdated){
-                return Response(['message' => "Loan updated successfully"],200);
+                $referringUser = $loan->loanRefer;
+                if ($referringUser) {
+
+                    $newStatus = $request->status;
+                    $newRemark = $request->remark;
+
+                    // Check if status or remark has changed
+                    $statusChanged = $currentStatus !== $newStatus;
+                    $remarkChanged = $currentRemark !== $newRemark;
+
+                    // Send notification only if either status or remark has changed
+                    if ($statusChanged || $remarkChanged) {
+                        $application_type="Loan";
+
+                        /** Status notification */
+                        $referringUser->notify(new StatusNotification($referringUser,$newStatus,$newRemark,$application_type,$applicant_name,$application_date));
+                    }
+                    return Response(['message' => "Loan updated successfully"],200);
+                }
             }
             return Response(['message' => "Something went wrong"],500);
         }
@@ -323,9 +345,14 @@ class LoanController extends Controller
             // Find the credit card record by its ID
             $loan = Loan::findOrFail($id);
 
+            $applicant_name=$loan->name;
+            $application_date=$loan->created_at;
+            $currentStatus = $loan->status;
+            $currentRemark = $loan->remark;
+
             $validator = Validator::make($request->all(), [
                 'status' => 'required|string',
-                'application_stage' => 'nullable|string',
+                // 'application_stage' => 'nullable|string',
                 'approval_date' => 'nullable|date',
                 'remark' => 'nullable|string',
             ]);
@@ -335,8 +362,27 @@ class LoanController extends Controller
             } 
 
             $isUpdated=$loan->update($request->all());
+
             if($isUpdated){
-                return Response(['message' => "Loan updated successfully"],200);
+                $referringUser = $loan->loanRefer;
+                if ($referringUser) {
+
+                    $newStatus = $request->status;
+                    $newRemark = $request->remark;
+
+                    // Check if status or remark has changed
+                    $statusChanged = $currentStatus !== $newStatus;
+                    $remarkChanged = $currentRemark !== $newRemark;
+
+                    // Send notification only if either status or remark has changed
+                    if ($statusChanged || $remarkChanged) {
+                        $application_type="Loan";
+
+                        /** Status notification */
+                        $referringUser->notify(new StatusNotification($referringUser,$newStatus,$newRemark,$application_type,$applicant_name,$application_date));
+                    }
+                    return Response(['message' => "Loan status updated successfully"],200);
+                }
             }
             return Response(['message' => "Something went wrong"],500);
         }
