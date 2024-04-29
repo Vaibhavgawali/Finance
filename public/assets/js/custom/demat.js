@@ -8,11 +8,13 @@ $(document).ready(function () {
         var phone = $("#phone").val();
         var pan_num = $("#pan_num").val();
         var adhar_num = $("#adhar_num").val();
+        var bank = $("#bank").val();
 
         $("#name_error").html("");
         $("#phone_error").html("");
         $("#pan_num_error").html("");
         $("#adhar_num_error").html("");
+        $("#bank_error").html("");
 
         if (
             name == "" ||
@@ -86,6 +88,18 @@ $(document).ready(function () {
             $("#phone").focus();
             return false;
         }
+        if(
+            bank == "" ||
+            bank == null ||
+            bank == "undefined" ||
+            bank == undefined)
+            {
+                $("#bank_error").html(
+                    '<div class=" invalid-feedback d-block">Bank name is required.</div>'
+                );
+                $("#bank").focus();
+                return false;
+            }
 
         function validatePhoneNumber(phone) {
             var phonePattern = /^[6-9]\d{9}$/;
@@ -105,6 +119,7 @@ $(document).ready(function () {
             phone: phone,
             pan_num: pan_num,
             adhar_num: adhar_num,
+            bank: bank
         };
 
         var url = window.location.origin + "/demat";
@@ -116,6 +131,12 @@ $(document).ready(function () {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
             success: function (response) {
+                let reditectUrl = '';
+                 if(data.bank==`hdfc`){
+                     reditectUrl = `https://hdfcsky.page.link/u9fo`;
+                }else if(data.bank==`icici`){
+                     reditectUrl = `https://secure.icicidirect.com/accountopening?rmcode=BLAR1122`;
+                }
                 if (response.status == true) {
                     $(".error-message").remove();
                     $("#demat_btn").attr("disabled", true);
@@ -127,7 +148,8 @@ $(document).ready(function () {
                         closeOnClickOutside: false
                     }).then((value) => {
                         if (value) {
-                            window.open('https://hdfcsky.page.link/u9fo')
+                            window.open(`${reditectUrl}`)
+                            console.log("reditectUrl",reditectUrl)
                             window.location.reload();
                            
                         }
