@@ -33,6 +33,7 @@
                                     <th class="">Sr. No</th>
                                     <th class="">Application Name</th>
                                     <th class="">Mobile</th>
+                                    <th class=''>Bank</th>
                                     <th class="">Application Date</th>
                                     <th class="">Status</th>
                                     {{-- <th class="">Application Stage</th> --}}
@@ -243,12 +244,19 @@
                                             data: 'phone'
                                         },
                                         {
+                                            data: 'bank',
+                                            render: function(data, type, row) {
+                                                return data.toUpperCase();
+                                            }
+                                        },
+                                        {
                                             data: 'created_at',
                                             render: function(data, type, row) {
                                                 return new Date(row.created_at).toISOString()
                                                     .split('T')[0];
                                             }
                                         },
+
                                         {
                                             data: 'status'
                                         },

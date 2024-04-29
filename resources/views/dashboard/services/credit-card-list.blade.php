@@ -245,110 +245,99 @@
                                                         <label for="office_address">Office Address</label>
                                                         <div class="input-group">
 
-                                                            <textarea class="form-control" id="office_address" rows="3" disabled></textarea>
+                                                        <textarea class="form-control" id="office_address" rows="3"
+                                                            disabled></textarea>
+                                                    </div>
+                                                </div>
+                                           </div>
+                                            <h3 class="my-3">User Documents</h3>
+                                            <div class="col-lg-4 stretch-card grid-margin">
+                                                <div class="card bg-gradient-primary card-img-holder text-white">
+                                                    <div class="card-body">
+                                                        <img src="{{ asset('admin-assets/assets/images/dashboard/circle.svg') }}"
+                                                            class="card-img-absolute" alt="circle-image">
+                                                        <h4 class="font-weight-normal mb-2">
+                                                        </h4>
+                                                        <h2 class="mb-2">Pancard File</h2>
+                                                        <div class="d-flex gap-3">
+                                                            <a href="" target="_blank" id="pancardLink"
+                                                            class="btn btn-gradient-secondary btn-icon-text">
+                                                            <i class="mdi mdi-file-check btn-icon-prepend"></i>View</a>
+                                                            <a href="" target="_blank" download id="pancardDownload"
+                                                            class="btn btn-gradient-danger btn-icon-text">
+                                                            <i class="mdi mdi-file-check btn-icon-prepend"></i>Download</a>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <h3 class="my-3">User Documents</h3>
-                                                <div class="col-lg-4 stretch-card grid-margin">
-                                                    <div class="card bg-gradient-primary card-img-holder text-white">
-                                                        <div class="card-body">
-                                                            <img src="{{ asset('admin-assets/assets/images/dashboard/circle.svg') }}"
-                                                                class="card-img-absolute" alt="circle-image">
-                                                            <h4 class="font-weight-normal mb-2">
-                                                            </h4>
-                                                            <h2 class="mb-2">Pancard File</h2>
-                                                            <div class="d-flex gap-3">
-                                                                <a href="" target="_blank" id="pancardLink"
-                                                                    class="btn btn-gradient-secondary btn-icon-text">
-                                                                    <i
-                                                                        class="mdi mdi-file-check btn-icon-prepend"></i>View</a>
-                                                                <a href="" target="_blank" download
-                                                                    id="pancardDownload"
-                                                                    class="btn btn-gradient-danger btn-icon-text">
-                                                                    <i
-                                                                        class="mdi mdi-file-check btn-icon-prepend"></i>Download</a>
-                                                            </div>
+                                            </div>
+                                            <div class="col-lg-4 stretch-card grid-margin">
+                                                <div class="card bg-gradient-secondary card-img-holder text-white">
+                                                    <div class="card-body ">
+                                                        <img src="{{ asset('admin-assets/assets/images/dashboard/circle.svg') }}"
+                                                            class="card-img-absolute" alt="circle-image">
+                                                        <h4 class="font-weight-normal mb-2">
+                                                        </h4>
+                                                        <h2 class="mb-2">Aadhar Front File</h2>
+                                                        <div class="d-flex gap-3">
+                                                            <a href="" target="_blank" id="aadharFrontLink"
+                                                            class="btn btn-gradient-success btn-icon-text">
+                                                            <i class="mdi mdi-file-check btn-icon-prepend"></i>View</a>
+                                                            <a href="" target="_blank" download id="aadharFrontDownload"
+                                                            class="btn btn-gradient-danger btn-icon-text">
+                                                            <i class="mdi mdi-file-check btn-icon-prepend"></i>Download</a>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-4 stretch-card grid-margin">
-                                                    <div class="card bg-gradient-secondary card-img-holder text-white">
-                                                        <div class="card-body ">
-                                                            <img src="{{ asset('admin-assets/assets/images/dashboard/circle.svg') }}"
-                                                                class="card-img-absolute" alt="circle-image">
-                                                            <h4 class="font-weight-normal mb-2">
-                                                            </h4>
-                                                            <h2 class="mb-2">Aadhar Front File</h2>
-                                                            <div class="d-flex gap-3">
-                                                                <a href="" target="_blank" id="aadharFrontLink"
-                                                                    class="btn btn-gradient-success btn-icon-text">
-                                                                    <i
-                                                                        class="mdi mdi-file-check btn-icon-prepend"></i>View</a>
-                                                                <a href="" target="_blank" download
-                                                                    id="aadharFrontDownload"
-                                                                    class="btn btn-gradient-danger btn-icon-text">
-                                                                    <i
-                                                                        class="mdi mdi-file-check btn-icon-prepend"></i>Download</a>
-                                                            </div>
+                                            </div>
+                                            <div class="col-lg-4 stretch-card grid-margin">
+                                                <div class="card bg-gradient-success card-img-holder text-white">
+                                                    <div class="card-body">
+                                                        <img src="{{ asset('admin-assets/assets/images/dashboard/circle.svg') }}"
+                                                            class="card-img-absolute" alt="circle-image">
+                                                        <h4 class="font-weight-normal mb-2">
+                                                        </h4>
+                                                        <h2 class="mb-2">Aadhar Back File</h2>
+                                                        <div class="d-flex gap-3">
+                                                            <a href="" target="_blank" id="aadharBackLink"
+                                                            class="btn btn-gradient-warning btn-icon-text">
+                                                            <i class="mdi mdi-file-check btn-icon-prepend"></i>View</a>
+                                                            <a href="" target="_blank" download id="aadharBackDownload"
+                                                            class="btn btn-gradient-danger btn-icon-text">
+                                                            <i class="mdi mdi-file-check btn-icon-prepend"></i>Download</a>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-4 stretch-card grid-margin">
-                                                    <div class="card bg-gradient-success card-img-holder text-white">
-                                                        <div class="card-body">
-                                                            <img src="{{ asset('admin-assets/assets/images/dashboard/circle.svg') }}"
-                                                                class="card-img-absolute" alt="circle-image">
-                                                            <h4 class="font-weight-normal mb-2">
-                                                            </h4>
-                                                            <h2 class="mb-2">Aadhar Back File</h2>
-                                                            <div class="d-flex gap-3">
-                                                                <a href="" target="_blank" id="aadharBackLink"
-                                                                    class="btn btn-gradient-warning btn-icon-text">
-                                                                    <i
-                                                                        class="mdi mdi-file-check btn-icon-prepend"></i>View</a>
-                                                                <a href="" target="_blank" download
-                                                                    id="aadharBackDownload"
-                                                                    class="btn btn-gradient-danger btn-icon-text">
-                                                                    <i
-                                                                        class="mdi mdi-file-check btn-icon-prepend"></i>Download</a>
-                                                            </div>
+                                            </div>
+                                            <div class="col-lg-4 stretch-card grid-margin">
+                                                <div class="card bg-gradient-warning card-img-holder text-white">
+                                                    <div class="card-body">
+                                                        <img src="{{ asset('admin-assets/assets/images/dashboard/circle.svg') }}"
+                                                            class="card-img-absolute" alt="circle-image">
+                                                        <h4 class="font-weight-normal mb-2">
+                                                        </h4>
+                                                        <h2 class="mb-2">ITR (1,2 year) / Salary Slip </h2>
+                                                        <div class="d-flex gap-3">
+                                                            <a href="" target="_blank" id="itrLink"
+                                                            class="btn btn-gradient-info btn-icon-text">
+                                                            <i class="mdi mdi-file-check btn-icon-prepend"></i>View</a>
+                                                            <a href="" target="_blank" download id="itrDownload"
+                                                            class="btn btn-gradient-danger btn-icon-text">
+                                                            <i class="mdi mdi-file-check btn-icon-prepend"></i>Download</a>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-4 stretch-card grid-margin">
-                                                    <div class="card bg-gradient-warning card-img-holder text-white">
-                                                        <div class="card-body">
-                                                            <img src="{{ asset('admin-assets/assets/images/dashboard/circle.svg') }}"
-                                                                class="card-img-absolute" alt="circle-image">
-                                                            <h4 class="font-weight-normal mb-2">
-                                                            </h4>
-                                                            <h2 class="mb-2">ITR (1,2 year) / Salary Slip </h2>
-                                                            <div class="d-flex gap-3">
-                                                                <a href="" target="_blank" id="itrLink"
-                                                                    class="btn btn-gradient-info btn-icon-text">
-                                                                    <i
-                                                                        class="mdi mdi-file-check btn-icon-prepend"></i>View</a>
-                                                                <a href="" target="_blank" download
-                                                                    id="itrDownload"
-                                                                    class="btn btn-gradient-danger btn-icon-text">
-                                                                    <i
-                                                                        class="mdi mdi-file-check btn-icon-prepend"></i>Download</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 stretch-card grid-margin">
-                                                    <div class="card bg-gradient-info card-img-holder text-white">
-                                                        <div class="card-body">
-                                                            <img src="{{ asset('admin-assets/assets/images/dashboard/circle.svg') }}"
-                                                                class="card-img-absolute" alt="circle-image">
-                                                            <h4 class="font-weight-normal mb-2">
-                                                            </h4>
-                                                            <h2 class="mb-2">Bank Statement <div class="card-text fs-6">
-                                                                    (last 6
-                                                                    month)</div>
-                                                            </h2>
+                                            </div>
+                                            <div class="col-lg-4 stretch-card grid-margin">
+                                                <div class="card bg-gradient-info card-img-holder text-white">
+                                                    <div class="card-body">
+                                                        <img src="{{ asset('admin-assets/assets/images/dashboard/circle.svg') }}"
+                                                            class="card-img-absolute" alt="circle-image">
+                                                        <h4 class="font-weight-normal mb-2">
+                                                        </h4>
+                                                        <h2 class="mb-2">Bank Statement <div class="card-text fs-6">
+                                                                (last 6
+                                                                month)</div>
+                                                        </h2>
 
                                                             <div class="d-flex gap-3">
                                                                 <a href="" target="_blank" id="bankStatementLink"

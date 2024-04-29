@@ -6,7 +6,8 @@
                 <h6>Registered on {{ $data->created_at->format('Y-m-d') }}</h6>
             </div>
         </div>
-
+       
+        
         <div class="profile-img-div text-center">
             @if (auth()->user()->id == $data->id)
                 @if ($data->profile && $data->profile->profile_image)
@@ -187,11 +188,18 @@
 
                     <div class="form-group">
                         <label for="state">State</label>
-                        <input type="text" class="form-control" name="state" id="state"
-                            placeholder="State" disabled
-                            value='{{ isset($data->address) ? $data->address->state : '' }}'>
+                        <select class="form-control p-3 " name="state" id="state" disabled>
+                            <option value="">Select State</option>
+                            @php
+                                $selectedState = isset($data->address) ? $data->address->state : '';
+                            @endphp
+                            @foreach($states as $state)
+                                <option value="{{ $state }}" {{ $selectedState == $state ? 'selected' : '' }}>{{ $state }}</option>
+                            @endforeach
+                        </select>
                         <div id="state_error"></div>
                     </div>
+                    
 
                     <div class="form-group">
                         <label for="city">City</label>

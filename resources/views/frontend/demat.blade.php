@@ -35,6 +35,14 @@
                                     placeholder="Mobile Number" />
                                 <div id="phone_error" class="text-danger mx-2"></div>
                             </div>
+                            <div class="form-group pb-3">
+                                <select name="bank" id="bank" class="form-control" id="bank">
+                                    <option value="" selected disabled>--Select Bank--</option>
+                                    <option value="icici">ICICI</option>
+                                    <option value="hdfc">HDFC</option>
+                                </select>
+                                <div id="bank_error" class="text-danger mx-2"></div>
+                            </div>
 
                             <button type="submit" id="demat_btn" class="btn btn-primary">Apply</button>
                         </form>
