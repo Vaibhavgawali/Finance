@@ -51,6 +51,7 @@ class DematController extends Controller
                     $query->where(function ($q) use ($search) {
                         $q->where('name', 'like', '%' . $search . '%')
                         ->orWhere('phone', 'like', '%' . $search . '%')
+                        ->orWhere('bank', 'like', '%' . $search . '%')
                         ->orWhere('status', 'like', '%' . $search . '%')
                         ->orWhere('application_stage', 'like', '%' . $search . '%')
                         ->orWhere('approval_date', 'like', '%' . $search . '%')
@@ -124,6 +125,7 @@ class DematController extends Controller
             'phone' => 'required|string|max:10',
             'pan_num' => ['required', 'string', 'max:10', 'regex:/^[A-Z]{5}\d{4}[A-Z]$/'],
             'adhar_num' => ['required', 'string', 'max:12', 'regex:/^\d{12}$/'],
+            'bank'      => ['required', 'string', 'max:255'],
         ];
 
         // Validate the request data
@@ -147,6 +149,7 @@ class DematController extends Controller
             'phone'=>$request->phone,
             'pan_num' => $request->pan_num,
             'adhar_num' => $request->adhar_num,
+            'bank' => $request->bank,
             'status'=>'Initiated'
         ]);
 
@@ -196,6 +199,7 @@ class DematController extends Controller
                 'phone' => 'required|string|max:10',
                 'pan_num' => ['required', 'string', 'max:10', 'regex:/^[A-Z]{5}\d{4}[A-Z]$/'],
                 'adhar_num' => ['required', 'string', 'max:12', 'regex:/^\d{12}$/'],
+                'bank'      => ['required', 'string', 'max:255'],
             ]);
 
             if($validator->fails()){
