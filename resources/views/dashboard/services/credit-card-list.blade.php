@@ -244,7 +244,7 @@
                                                             disabled></textarea>
                                                     </div>
                                                 </div>
-                                            </div>
+                                           </div>
                                             <h3 class="my-3">User Documents</h3>
                                             <div class="col-lg-4 stretch-card grid-margin">
                                                 <div class="card bg-gradient-primary card-img-holder text-white">
