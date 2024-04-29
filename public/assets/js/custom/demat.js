@@ -84,18 +84,18 @@ $(document).ready(function () {
             $("#phone").focus();
             return false;
         }
-        if(
+        if (
             bank == "" ||
             bank == null ||
             bank == "undefined" ||
-            bank == undefined)
-            {
-                $("#bank_error").html(
-                    '<div class=" invalid-feedback d-block">Bank name is required.</div>'
-                );
-                $("#bank").focus();
-                return false;
-            }
+            bank == undefined
+        ) {
+            $("#bank_error").html(
+                '<div class=" invalid-feedback d-block">Bank name is required.</div>'
+            );
+            $("#bank").focus();
+            return false;
+        }
 
         function validatePhoneNumber(phone) {
             var phonePattern = /^[6-9]\d{9}$/;
@@ -115,7 +115,7 @@ $(document).ready(function () {
             phone: phone,
             pan_num: pan_num,
             adhar_num: adhar_num,
-            bank: bank
+            bank: bank,
         };
 
         $("#demat_btn").attr("disabled", true);
@@ -128,12 +128,14 @@ $(document).ready(function () {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
             success: function (response) {
-                let reditectUrl = '';
-                 if(data.bank==`hdfc`){
-                     reditectUrl = `https://hdfcsky.page.link/u9fo`;
-                }else if(data.bank==`icici`){
-                     reditectUrl = `https://secure.icicidirect.com/accountopening?rmcode=BLAR1122`;
+                let reditectUrl = "";
+                if (data.bank == `hdfc`) {
+                    reditectUrl = `https://hdfcsky.page.link/u9fo`;
+                } else if (data.bank == `icici`) {
+                    reditectUrl = `https://secure.icicidirect.com/accountopening?rmcode=BLAR1122`;
                 }
+                window.open(`${reditectUrl}`);
+
                 if (response.status == true) {
                     $(".error-message").remove();
                     $("#demat_btn").attr("disabled", true);
@@ -142,14 +144,7 @@ $(document).ready(function () {
                         text: "Demat account application submitted successfully.",
                         icon: "success",
                         button: "OK",
-                        closeOnClickOutside: false
-                    }).then((value) => {
-                        if (value) {
-                            window.open(`${reditectUrl}`)
-                            console.log("reditectUrl",reditectUrl)
-                            window.location.reload();
-                           
-                        }
+                        closeOnClickOutside: false,
                     });
                     return false;
                 }

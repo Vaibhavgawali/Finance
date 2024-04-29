@@ -24,8 +24,8 @@ class DematController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->except('create','store');
-        $this->middleware(['role:Superadmin|Admin'])->only('show','edit','update','updateStatus');
+        $this->middleware('auth:sanctum')->except('create', 'store');
+        $this->middleware(['role:Superadmin|Admin'])->only('show', 'edit', 'update', 'updateStatus');
     }
 
     /**
@@ -35,7 +35,7 @@ class DematController extends Controller
     {
         if (Auth::check()) {
             $users = Demat::with('dematRefer')->orderBy('id', 'desc')->get();
-            
+
             if ($users) {
                 return view('dashboard.services.demat-list');
             }
@@ -45,11 +45,11 @@ class DematController extends Controller
 
     public function getDematTableData(Request $request)
     {
-        $data =Demat::with('dematRefer')
-                ->when(request()->has('search'), function ($query) {
-                    $search = request('search');
-                    $query->where(function ($q) use ($search) {
-                        $q->where('name', 'like', '%' . $search . '%')
+        $data = Demat::with('dematRefer')
+            ->when(request()->has('search'), function ($query) {
+                $search = request('search');
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%')
                         ->orWhere('phone', 'like', '%' . $search . '%')
                         ->orWhere('bank', 'like', '%' . $search . '%')
                         ->orWhere('status', 'like', '%' . $search . '%')
@@ -58,52 +58,52 @@ class DematController extends Controller
                         ->orWhereHas('dematRefer', function ($q) use ($search) {
                             $q->where('name', 'like', '%' . $search . '%');
                         });
-                    });
-                })
-                ->when(request()->filled('startDate') || request()->filled('endDate'), function ($query) {
-                    $startDate = request()->filled('startDate') ? Carbon::parse(request('startDate'))->startOfDay() : null;
-                    $endDate = request()->filled('endDate') ? Carbon::parse(request('endDate'))->endOfDay() : Carbon::now()->endOfDay();
-                    
-                    if ($startDate === null && $endDate !== null) {
-                        $query->where('created_at', '<=', $endDate);
-                    } else if ($startDate !== null && $endDate === null) {
-                        $query->where('created_at', '>=', $startDate);
-                    } else {
-                        $query->whereBetween('created_at', [$startDate, $endDate]);
-                    }
-                })
-                ->when(Auth::user()->hasRole('Distributor') || Auth::user()->hasRole('Retailer'), function ($query) {
-                    $logged_user_referral_id = auth()->user()->referral_id;
-                    $query->where(function ($q) use ($logged_user_referral_id) {
-                        $q->where('referred_by', $logged_user_referral_id)
-                            ->orWhereHas('dematRefer', function ($q) use ($logged_user_referral_id) {
-                                $q->where('referred_by', $logged_user_referral_id);
-                            });
-                    });
-                })
-                ->orderBy('id', 'desc')
-                ->get();
+                });
+            })
+            ->when(request()->filled('startDate') || request()->filled('endDate'), function ($query) {
+                $startDate = request()->filled('startDate') ? Carbon::parse(request('startDate'))->startOfDay() : null;
+                $endDate = request()->filled('endDate') ? Carbon::parse(request('endDate'))->endOfDay() : Carbon::now()->endOfDay();
 
-                            
-        if ($data) { 
-                return DataTables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('actions', function ($row) {
-                        // Check if user has Superadmin or Admin role
-                        if (auth()->user()->hasRole('Superadmin') || auth()->user()->hasRole('Admin')) {
-                            $actions = '<div class="d-flex justify-content-center gap-2"><a class="btn btn-sm btn-gradient-primary btn-rounded viewButton" data-demat-id="' . $row->id . '" >View</a>';  
-                            // $actions .= '<a class="btn btn-sm btn-gradient-warning btn-rounded editButton" data-demat-id="' . $row->id . '" >Edit</a>';  
-                            $actions .= '<a class="btn btn-sm btn-gradient-success btn-rounded statusButton" data-demat-id="' . $row->id . '" >Status</a>';  
-                            $actions .= '<form class="delete-finance-form" data-finance-route="demat" data-finance-id="' . $row->id . '">
+                if ($startDate === null && $endDate !== null) {
+                    $query->where('created_at', '<=', $endDate);
+                } else if ($startDate !== null && $endDate === null) {
+                    $query->where('created_at', '>=', $startDate);
+                } else {
+                    $query->whereBetween('created_at', [$startDate, $endDate]);
+                }
+            })
+            ->when(Auth::user()->hasRole('Distributor') || Auth::user()->hasRole('Retailer'), function ($query) {
+                $logged_user_referral_id = auth()->user()->referral_id;
+                $query->where(function ($q) use ($logged_user_referral_id) {
+                    $q->where('referred_by', $logged_user_referral_id)
+                        ->orWhereHas('dematRefer', function ($q) use ($logged_user_referral_id) {
+                            $q->where('referred_by', $logged_user_referral_id);
+                        });
+                });
+            })
+            ->orderBy('id', 'desc')
+            ->get();
+
+
+        if ($data) {
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('actions', function ($row) {
+                    // Check if user has Superadmin or Admin role
+                    if (auth()->user()->hasRole('Superadmin') || auth()->user()->hasRole('Admin')) {
+                        $actions = '<div class="d-flex justify-content-center gap-2"><a class="btn btn-sm btn-gradient-primary btn-rounded viewButton" data-demat-id="' . $row->id . '" >View</a>';
+                        // $actions .= '<a class="btn btn-sm btn-gradient-warning btn-rounded editButton" data-demat-id="' . $row->id . '" >Edit</a>';  
+                        $actions .= '<a class="btn btn-sm btn-gradient-success btn-rounded statusButton" data-demat-id="' . $row->id . '" >Status</a>';
+                        $actions .= '<form class="delete-finance-form" data-finance-route="demat" data-finance-id="' . $row->id . '">
                                             <button type="button" class="btn btn-sm btn-gradient-danger btn-rounded delete-finance-button">Delete</button>
                                         </form> </div>';
-                            return $actions;
-                        } else {
-                            return '';
-                        }
-                    })
-                    ->rawColumns(['actions'])
-                    ->make(true);                                                                                                                                                                                                                                                 
+                        return $actions;
+                    } else {
+                        return '';
+                    }
+                })
+                ->rawColumns(['actions'])
+                ->make(true);
         }
     }
 
@@ -130,13 +130,13 @@ class DematController extends Controller
 
         // Validate the request data
         $validator = Validator::make($request->all(), $rules);
-        
+
         // Check if validation fails
         if ($validator->fails()) {
             return Response(['status' => false, 'errors' => $validator->errors()], 422);
         }
 
-        $referral_id="";
+        $referral_id = "";
         if (Auth::user()) {
             $referral_id = Auth::user()->referral_id;
         } else {
@@ -144,21 +144,20 @@ class DematController extends Controller
         }
 
         $demat = Demat::create([
-            'referred_by'=>$referral_id,
-            'name'=>$request->name,
-            'phone'=>$request->phone,
+            'referred_by' => $referral_id,
+            'name' => $request->name,
+            'phone' => $request->phone,
             'pan_num' => $request->pan_num,
             'adhar_num' => $request->adhar_num,
             'bank' => $request->bank,
-            'status'=>'Initiated'
+            'status' => 'Initiated'
         ]);
 
-        if ($demat) {     
+        if ($demat) {
             return Response(['status' => true, 'message' => "Demat submitted successfully !"], 200);
         }
 
         return Response(['status' => false, 'message' => "Something went wrong"], 500);
-
     }
 
     /**
@@ -167,13 +166,11 @@ class DematController extends Controller
     public function show(string $id)
     {
         $demat = Demat::find($id);
-    
-        if($demat) {
-            return response()->json($demat);
 
+        if ($demat) {
+            return response()->json($demat);
         }
         return response()->json(['error' => 'Demat not found'], 404);
-  
     }
 
     /**
@@ -190,7 +187,7 @@ class DematController extends Controller
     public function update(Request $request, string $id)
     {
         $formMethod = $request->method();
-        if($formMethod == "PATCH"){
+        if ($formMethod == "PATCH") {
             // Find the demat record by its ID
             $demat = Demat::findOrFail($id);
 
@@ -202,19 +199,19 @@ class DematController extends Controller
                 'bank'      => ['required', 'string', 'max:255'],
             ]);
 
-            if($validator->fails()){
-                return Response(['message' => $validator->errors()],401);
-            } 
-
-            $isUpdated=$demat->update($request->all());
-
-            if($isUpdated){
-                return Response(['message' => "Demat updated successfully"],200);
+            if ($validator->fails()) {
+                return Response(['message' => $validator->errors()], 401);
             }
-            return Response(['message' => "Something went wrong"],500);
+
+            $isUpdated = $demat->update($request->all());
+
+            if ($isUpdated) {
+                return Response(['message' => "Demat updated successfully"], 200);
+            }
+            return Response(['message' => "Something went wrong"], 500);
         }
-        return Response(['message'=>"Invalid form method "],405);
-    }   
+        return Response(['message' => "Invalid form method "], 405);
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -227,7 +224,7 @@ class DematController extends Controller
             return Response(['status' => false, 'message' => "Demat not found"], 404);
         }
 
-         $isDeleted = $demat->delete();
+        $isDeleted = $demat->delete();
 
         if ($isDeleted) {
             return Response(['status' => true, 'message' => "Demat form deleted successfully"], 200);
@@ -242,12 +239,12 @@ class DematController extends Controller
     public function updateStatus(Request $request, string $id)
     {
         $formMethod = $request->method();
-        if($formMethod == "PATCH"){
+        if ($formMethod == "PATCH") {
             // Find the demat record by its ID
             $demat = Demat::findOrFail($id);
 
-            $applicant_name=$demat->name;
-            $application_date=$demat->created_at;
+            $applicant_name = $demat->name;
+            $application_date = $demat->created_at;
             $currentStatus = $demat->status;
             $currentRemark = $demat->remark;
 
@@ -258,12 +255,12 @@ class DematController extends Controller
                 'remark' => 'nullable|string'
             ]);
 
-            if($validator->fails()){
-                return Response(['message' => $validator->errors()],401);
-            } 
+            if ($validator->fails()) {
+                return Response(['message' => $validator->errors()], 401);
+            }
 
-            $isUpdated=$demat->update($request->all());
-            if($isUpdated){
+            $isUpdated = $demat->update($request->all());
+            if ($isUpdated) {
                 $referringUser = $demat->dematRefer;
                 if ($referringUser) {
 
@@ -276,20 +273,19 @@ class DematController extends Controller
 
                     // Send notification only if either status or remark has changed
                     if ($statusChanged || $remarkChanged) {
-                        $application_type="Demat";
+                        $application_type = "Demat";
 
                         /** Status notification */
-                        $referringUser->notify(new StatusNotification($referringUser,$newStatus,$newRemark,$application_type,$applicant_name,$application_date));
+                        $referringUser->notify(new StatusNotification($referringUser, $newStatus, $newRemark, $application_type, $applicant_name, $application_date));
                     }
 
-                    return Response(['message' => "Demat updated successfully"],200);
-                }else {
+                    return Response(['message' => "Demat updated successfully"], 200);
+                } else {
                     return response(['message' => "Referring user not found"], 404);
                 }
-            
             }
-            return Response(['message' => "Something went wrong"],500);
+            return Response(['message' => "Something went wrong"], 500);
         }
-        return Response(['message'=>"Invalid form method "],405);
+        return Response(['message' => "Invalid form method "], 405);
     }
 }
