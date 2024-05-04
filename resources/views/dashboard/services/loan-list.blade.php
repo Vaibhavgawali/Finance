@@ -75,6 +75,8 @@
                             </thead>
                         </table>
 
+                    </div>
+                    
                         <!-- Modal -->
                         <div class="modal fade" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="statusModal"
                             aria-hidden="true">
@@ -946,7 +948,6 @@
                                 }
                             });
                         </script>
-                    </div>
                 </div>
             </div>
         </div>
