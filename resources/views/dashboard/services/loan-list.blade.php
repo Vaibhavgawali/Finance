@@ -145,7 +145,7 @@
                         <!-- Modal -->
                         <div class="modal fade" id="viewModal" tabindex="-1" role="dialog"
                             aria-labelledby="viewModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                            <div class="modal-dialog  modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="viewModalLabel">Loan Application Form</h5>
@@ -507,11 +507,11 @@
                                             <div class="tab">
                                                 <div class="row">
                                                     <h3 class="my-3">User Documents</h3>
-                                                    <div class="col-lg-4 stretch-card grid-margin">
+                                                    <div class="col-lg-6 col-xxl-4 stretch-card grid-margin">
                                                         <div class="card bg-gradient-primary card-img-holder text-white">
                                                             <div class="card-body">
                                                                 <img src="{{ asset('admin-assets/assets/images/dashboard/circle.svg') }}"
-                                                                    class="card-img-absolute" alt="circle-image">
+                                                                    class="card-img-absolute  d-none d-sm-block" alt="circle-image">
                                                                 <h4 class="font-weight-normal mb-2">
                                                                 </h4>
                                                                 <h2 class="mb-2">Identity Proof (Adhaar, PAN, Passport )
@@ -530,11 +530,11 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-4 stretch-card grid-margin">
+                                                    <div class="col-lg-6 col-xxl-4 stretch-card grid-margin">
                                                         <div class="card bg-gradient-secondary card-img-holder text-white">
                                                             <div class="card-body ">
                                                                 <img src="{{ asset('admin-assets/assets/images/dashboard/circle.svg') }}"
-                                                                    class="card-img-absolute" alt="circle-image">
+                                                                    class="card-img-absolute  d-none d-sm-block" alt="circle-image">
                                                                 <h4 class="font-weight-normal mb-2">
                                                                 </h4>
                                                                 <h2 class="mb-2">Residence Proof</h2>
@@ -553,11 +553,11 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-4 stretch-card grid-margin">
+                                                    <div class="col-lg-6 col-xxl-4 stretch-card grid-margin">
                                                         <div class="card bg-gradient-success card-img-holder text-white">
                                                             <div class="card-body">
                                                                 <img src="{{ asset('admin-assets/assets/images/dashboard/circle.svg') }}"
-                                                                    class="card-img-absolute" alt="circle-image">
+                                                                    class="card-img-absolute  d-none d-sm-block" alt="circle-image">
                                                                 <h4 class="font-weight-normal mb-2">
                                                                 </h4>
                                                                 <h2 class="mb-2">Employment Proof</h2>
@@ -575,11 +575,11 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-4 stretch-card grid-margin">
+                                                    <div class="col-lg-6 col-xxl-4 stretch-card grid-margin">
                                                         <div class="card bg-gradient-warning card-img-holder text-white">
                                                             <div class="card-body">
                                                                 <img src="{{ asset('admin-assets/assets/images/dashboard/circle.svg') }}"
-                                                                    class="card-img-absolute" alt="circle-image">
+                                                                    class="card-img-absolute  d-none d-sm-block" alt="circle-image">
                                                                 <h4 class="font-weight-normal mb-2">
                                                                 </h4>
                                                                 <h2 class="mb-2">Income Proof</h2>
@@ -597,11 +597,11 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-4 stretch-card grid-margin">
+                                                    <div class="col-lg-6 col-xxl-4 stretch-card grid-margin">
                                                         <div class="card bg-gradient-info card-img-holder text-white">
                                                             <div class="card-body">
                                                                 <img src="{{ asset('admin-assets/assets/images/dashboard/circle.svg') }}"
-                                                                    class="card-img-absolute" alt="circle-image">
+                                                                    class="card-img-absolute  d-none d-sm-block" alt="circle-image">
                                                                 <h4 class="font-weight-normal mb-2">
                                                                 </h4>
                                                                 <h2 class="mb-2">ITR (1,2 year) / Salary Slip <div

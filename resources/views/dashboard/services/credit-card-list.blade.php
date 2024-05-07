@@ -251,11 +251,11 @@
                                              </div>
                                         </div>
                                          <h3 class="my-3">User Documents</h3>
-                                         <div class="col-lg-4 stretch-card grid-margin">
+                                         <div class="col-lg-6 col-xxl-4 stretch-card grid-margin">
                                              <div class="card bg-gradient-primary card-img-holder text-white">
                                                  <div class="card-body">
-                                                     <img src="{{ asset('admin-assets/assets/images/dashboard/circle.svg') }}"
-                                                         class="card-img-absolute" alt="circle-image">
+                                                     <img  src="{{ asset('admin-assets/assets/images/dashboard/circle.svg') }}"
+                                                         class="card-img-absolute d-none d-sm-block" alt="circle-image">
                                                      <h4 class="font-weight-normal mb-2">
                                                      </h4>
                                                      <h2 class="mb-2">Pancard File</h2>
@@ -270,11 +270,11 @@
                                                  </div>
                                              </div>
                                          </div>
-                                         <div class="col-lg-4 stretch-card grid-margin">
+                                         <div class="col-lg-6 col-xxl-4 stretch-card grid-margin">
                                              <div class="card bg-gradient-secondary card-img-holder text-white">
                                                  <div class="card-body ">
                                                      <img src="{{ asset('admin-assets/assets/images/dashboard/circle.svg') }}"
-                                                         class="card-img-absolute" alt="circle-image">
+                                                         class="card-img-absolute d-none d-sm-block" alt="circle-image">
                                                      <h4 class="font-weight-normal mb-2">
                                                      </h4>
                                                      <h2 class="mb-2">Aadhar Front File</h2>
@@ -289,11 +289,11 @@
                                                  </div>
                                              </div>
                                          </div>
-                                         <div class="col-lg-4 stretch-card grid-margin">
+                                         <div class="col-lg-6 col-xxl-4 stretch-card grid-margin">
                                              <div class="card bg-gradient-success card-img-holder text-white">
                                                  <div class="card-body">
                                                      <img src="{{ asset('admin-assets/assets/images/dashboard/circle.svg') }}"
-                                                         class="card-img-absolute" alt="circle-image">
+                                                         class="card-img-absolute d-none d-sm-block" alt="circle-image">
                                                      <h4 class="font-weight-normal mb-2">
                                                      </h4>
                                                      <h2 class="mb-2">Aadhar Back File</h2>
@@ -308,11 +308,11 @@
                                                  </div>
                                              </div>
                                          </div>
-                                         <div class="col-lg-4 stretch-card grid-margin">
+                                         <div class="col-lg-6 col-xxl-4 stretch-card grid-margin">
                                              <div class="card bg-gradient-warning card-img-holder text-white">
                                                  <div class="card-body">
                                                      <img src="{{ asset('admin-assets/assets/images/dashboard/circle.svg') }}"
-                                                         class="card-img-absolute" alt="circle-image">
+                                                         class="card-img-absolute d-none d-sm-block" alt="circle-image">
                                                      <h4 class="font-weight-normal mb-2">
                                                      </h4>
                                                      <h2 class="mb-2">ITR (1,2 year) / Salary Slip </h2>
@@ -327,11 +327,11 @@
                                                  </div>
                                              </div>
                                          </div>
-                                         <div class="col-lg-4 stretch-card grid-margin">
+                                         <div class="col-lg-6 col-xxl-4 stretch-card grid-margin">
                                              <div class="card bg-gradient-info card-img-holder text-white">
                                                  <div class="card-body">
                                                      <img src="{{ asset('admin-assets/assets/images/dashboard/circle.svg') }}"
-                                                         class="card-img-absolute" alt="circle-image">
+                                                         class="card-img-absolute d-none d-sm-block" alt="circle-image">
                                                      <h4 class="font-weight-normal mb-2">
                                                      </h4>
                                                      <h2 class="mb-2">Bank Statement <div class="card-text fs-6">
