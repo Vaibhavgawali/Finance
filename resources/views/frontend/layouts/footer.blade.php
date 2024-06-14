@@ -45,7 +45,8 @@
                 <div class="col-md-12">
                     <div class="de-flex">
                         <div class="de-flex-col">
-                            &copy; Copyright 2024 -BlarkaFin Associate with GIBL  Developed by &nbsp;<a href="https://zynovvatech.com">
+                            &copy; Copyright 2024 -BlarkaFin Associate with GIBL Developed by &nbsp;<a
+                                href="https://zynovvatech.com">
                                 ZynovvaTech</a>
                         </div>
 
@@ -118,6 +119,35 @@
             },
             resetCallback: function() {
                 newTyped();
+            }
+        });
+    });
+
+
+    $(function() {
+        var data = {
+            InsurerID: "ABCD1234",
+            InsurerName: "ABCD1234",
+            EnquiryType: "ABCD1234",
+            TotalPremium: "ABCD1234",
+            EnquiryNo: "ABCD1234",
+            BusinessID: "ghijk12345",
+            PolicyNo: "ABCD1234",
+            PolicyStatus: "ABCD1234",
+            VehicleNo: "ABCD1234",
+            PolicyHolderName: "ABCD1234"
+        };
+        var url = window.location.origin + "/insurance/callback";
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            data: data,
+            success: function(data) {
+                console.log(data);
             }
         });
     });

@@ -12,12 +12,11 @@ use Yajra\DataTables\DataTables;
 use Validator;
 use Carbon\Carbon;
 
-use App\Notifications\StatusNotification;
 
 use App\Models\Insurance;
 use App\Models\InsuranceCallback;
 
-class InsuranceController extends Controller
+class InsuranceController_old extends Controller
 {
     public function __construct()
     {
@@ -42,16 +41,13 @@ class InsuranceController extends Controller
 
     public function getInsuranceTableData(Request $request)
     {
-        $data = InsuranceCallback::with('insuranceRefer')->when(request()->has('search'), function ($query) {
+        $data = Insurance::when(request()->has('search'), function ($query) {
             $search = request('search');
             $query->where(function ($q) use ($search) {
-                $q->where('PolicyHolderName', 'like', '%' . $search . '%')
-                    ->orWhere('InsurerName', 'like', '%' . $search . '%')
-                    ->orWhere('PolicyStatus', 'like', '%' . $search . '%')
-                    ->orWhere('VehicleNo', 'like', '%' . $search . '%')
-                    ->orWhere('EnquiryNo', 'like', '%' . $search . '%')
-                    ->orWhere('EnquiryType', 'like', '%' . $search . '%')
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('phone', 'like', '%' . $search . '%')
                     ->orWhere('status', 'like', '%' . $search . '%')
+                    ->orWhere('application_stage', 'like', '%' . $search . '%')
                     ->orWhere('approval_date', 'like', '%' . $search . '%');
             });
         })
@@ -69,6 +65,9 @@ class InsuranceController extends Controller
             })
             ->when(Auth::user()->hasRole('Distributor') || Auth::user()->hasRole('Retailer'), function ($query) {
                 $logged_user_referral_id = auth()->user()->referral_id;
+                // $query->where(function ($q) use ($logged_user_referral_id) {
+                //     $q->where('referral_id', $logged_user_referral_id);
+                // });
                 $query->where(function ($q) use ($logged_user_referral_id) {
                     $q->where('referral_id', $logged_user_referral_id)
                         ->orWhereIn('referral_id', function ($subquery) use ($logged_user_referral_id) {
@@ -151,7 +150,7 @@ class InsuranceController extends Controller
      */
     public function show(string $id)
     {
-        $insurance = InsuranceCallback::find($id);
+        $insurance = Insurance::find($id);
 
         if ($insurance) {
             return response()->json($insurance);
@@ -180,7 +179,7 @@ class InsuranceController extends Controller
      */
     public function destroy(string $id)
     {
-        $insurance = InsuranceCallback::find($id);
+        $insurance = Insurance::find($id);
 
         if (!$insurance) {
             return Response(['status' => false, 'message' => "Insurance not found"], 404);
@@ -203,15 +202,16 @@ class InsuranceController extends Controller
         $formMethod = $request->method();
         if ($formMethod == "PATCH") {
             // Find the demat record by its ID
-            $insurance = InsuranceCallback::findOrFail($id);
+            $insurance = Insurance::findOrFail($id);
 
-            $applicant_name = $insurance->PolicyHolderName;
+            $applicant_name = $insurance->name;
             $application_date = $insurance->created_at;
             $currentStatus = $insurance->status;
             $currentRemark = $insurance->remark;
 
             $validator = Validator::make($request->all(), [
                 'status' => 'required|string',
+                // 'application_stage' => 'nullable|string',
                 'approval_date' => 'nullable|date',
                 'remark' => 'nullable|string'
             ]);
@@ -222,7 +222,7 @@ class InsuranceController extends Controller
 
             $isUpdated = $insurance->update($request->all());
             if ($isUpdated) {
-                $referringUser = $insurance->insuranceRefer;
+                // $referringUser = $insurance->dematRefer;
                 if ($referringUser) {
 
                     $newStatus = $request->status;
@@ -249,6 +249,7 @@ class InsuranceController extends Controller
         return Response(['message' => "Invalid form method "], 405);
     }
 
+
     public function insuranceCallback(Request $request)
     {
         $validatedData = $request->validate([
@@ -263,7 +264,7 @@ class InsuranceController extends Controller
             'VehicleNo' => 'nullable|string|max:255',
             'PolicyHolderName' => 'required|string|max:255',
         ]);
-
+        // dd($request->BusinessID);
         $insurance = InsuranceCallback::create([
             'referred_by' => $request->BusinessID,
             'InsurerID' => $request->InsurerID,
@@ -280,6 +281,7 @@ class InsuranceController extends Controller
 
         return Response(['success' => true, 'message' => 'Data stored successfully'], 200);
     }
+
 
     public function policyStatus(Request $request)
     {
